@@ -25,10 +25,15 @@
 		
 	}
 	
-	#rogoImg{
+	.head {
+		text-align: left;
+	}
+	
+	.rogoImg{
 		padding: 20px;
 		grid-column: 1/2;
 		grid-row: 1/2;
+		width: 250px;
 	}
 	
 	.top_right{
@@ -41,28 +46,38 @@
 	}
 	
 	.top{
+		width: 420px;
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 2fr 1fr 1fr 1fr;
 		grid-template-rows: 50px;
+		grid-auto-columns: auto;
+		column-gap : 1px;
 	}
 	
 	.top_li_1 {
-		list-style: none;
-		grid-column: 1/2;
-		grid-row: 1/2;
-		font-size: 16px;
-	}
-	
-	.top_li_2 {
 		list-style: none;
 		grid-column: 2/3;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
-	.top_li_3 {
+	.top_li_2 {
 		list-style: none;
 		grid-column: 3/4;
+		grid-row: 1/2;
+		font-size: 16px;
+	}
+	
+	.top_li_3 {
+		list-style: none;
+		grid-column: 4/5;
+		grid-row: 1/2;
+		font-size: 16px;
+	}
+	
+	.top_li_4 {
+		list-style: none;
+		grid-column: 1/2;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
@@ -84,6 +99,7 @@
 	}
 	
 	.search_btn{
+		cursor: pointer;
 		width: 80px;
 		height: 43.99px;
 		background-color: #ff4d54;
@@ -178,29 +194,42 @@
 	<div class="container" align="center">
 		
 		<header class="head">
-			
-			<img id="rogoImg" src="uploadFile/logo_standard.svg" width="250" align="left">	
 		
-		</header>
+			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/logo_standard.svg"> </a>
 			
+		</header>
+			<c:set var="dto" value="${memberName }" />
 			<div class="top_right">
 				<ul class="top">
-					<li class="top_li_1"><a href="#">고객센터</a></li>
-					<li class="top_li_2"><a href="#">마이페이지</a></li>
-					<li class="top_li_3"><a href="<%=request.getContextPath() %>/user/member_login.jsp">로그인</a></li>
+
+					<c:if test="${empty memberName }">
+						<li class="top_li_1"><a href="#">고객센터</a></li>
+						<li class="top_li_2"><a href="<%=request.getContextPath()%>/member_login.do">마이페이지</a></li>					
+						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_login.do">로그인</a></li>
+					</c:if>
+					
+					<c:if test="${!empty memberName }">
+						<li class="top_li_1"><a href="#">고객센터</a></li>
+						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
+						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
+						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
+					</c:if>
+					
 				</ul>
 			</div>
 			
 		
 		<div class="search">
-			<form method="post" action="<%=request.getContextPath() %>/main.jsp">
+			<form method="post" action="<%=request.getContextPath() %>/main.do">
 				<input class="search_text" type="text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;<input class="search_btn" type="submit" value="검색">
 			</form>	
 		</div>
 		
 		<nav class="navi">
 			<ul class="menu">
-				<li class="menu_li_1"><a href="main.jsp">홈</a></li>
+			
+				<li class="menu_li_1"><a href="<%=request.getContextPath() %>/main.do">홈</a></li>
+				
 				<li class="menu_li_2"><a href="#">챌린지 조회</a></li>
 				<li class="menu_li_3"><a href="#">챌린지 개설</a></li>
 				<li class="menu_li_4"><a href="#">내 챌린지</a></li>
