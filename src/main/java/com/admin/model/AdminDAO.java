@@ -12,6 +12,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.chall.model.UserDTO;
+
 public class AdminDAO {
 	Connection con = null;
 	PreparedStatement st = null;
@@ -32,7 +34,7 @@ public class AdminDAO {
 	public void openConn() {
 		
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -200,9 +202,10 @@ public class AdminDAO {
 			rs = st.executeQuery();
 			if(rs.next()) {
 				if(rs.getString("admin_name").equals(admin_name)) {
-					sql = "update admin_member set admin_pwd = ?";
+					sql = "update admin_member set admin_pwd = ? where admin_name = ?";
 					st = con.prepareStatement(sql);
 					st.setString(1,key);
+					st.setString(2,admin_name);
 					result = st.executeUpdate();
 				}else {
 					result = -1;
@@ -210,6 +213,75 @@ public class AdminDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		return result;
+	}
+	public List<UserDTO> getUserList(int startNo, int lastNo) {
+		List<UserDTO> list = new ArrayList<UserDTO>();
+		int count = 0;
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from user_member order by mem_num desc)a where rownum <= ?) where rnum >= ? ";
+			st = con.prepareStatement(sql);
+			st.setInt(1,lastNo);
+			st.setInt(2,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				UserDTO dto = new UserDTO();
+				dto.setMem_num(rs.getInt("mem_num"));
+				dto.setMem_id(rs.getString("mem_id"));
+				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_pwd(rs.getString("mem_pwd"));
+				dto.setMem_age(rs.getInt("mem_age"));
+				dto.setMem_phone(rs.getString("mem_phone"));
+				dto.setMem_addr(rs.getString("mem_addr"));
+				dto.setMem_xp(rs.getInt("mem_xp"));
+				dto.setMem_level(rs.getString("mem_level"));
+				dto.setRegdate(rs.getString("regdate"));
+				dto.setMem_money(rs.getInt("mem_money"));
+				dto.setMem_reward(rs.getInt("mem_reward"));
+				dto.setChallenge_count(rs.getInt("challenge_count"));
+				dto.setChallenge_complete_count(rs.getInt("challenge_complete_count"));
+				dto.setMem_report_count(rs.getInt("mem_report_count"));
+				list.add(dto);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public int gettotalrecord() {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from user_member";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public int deleteMember(int mem_num) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "delete from user_member where mem_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,mem_num);
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
 		}
 		return result;
 	}
