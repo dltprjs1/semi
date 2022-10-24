@@ -50,16 +50,20 @@
 	}
 	
 	.log_content{
+		display: grid;
+		place-items: center;
 		grid-column: 2/3;
 		grid-row: 2/3;	
 	}
 	
 	.log_form {
-		align-items: center;
+		display: grid;
+		place-items: center;
 		width : 500px;
 		border : 1px solid gray;
 		border-radius: 10px;
 		padding: 20px;
+		padding-top: 40px;
 	}
 	
 	.login_title{

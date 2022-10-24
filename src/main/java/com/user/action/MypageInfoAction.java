@@ -28,7 +28,7 @@ public class MypageInfoAction implements Action {
 		
 		forward.setRedirect(false);
 		
-		forward.setPath("mypageInfo.do");
+		forward.setPath("user/member_mypage.jsp");
 		
 		return forward;
 	}
