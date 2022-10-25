@@ -28,8 +28,8 @@
 						<td>${dto.mem_id }</td>
 						<td>${dto.mem_name }</td>
 						<td>${dto.mem_level }</td>
-						<td><a href="<%=request.getContextPath()%>/report_content.do?num=${dto.mem_num}&page=${page}">${dto.mem_report_count }</a></td>
-						<td><input type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?mem_num=${dto.mem_num }&page=${page }'" value="삭제하기"></td>
+						<td><a href="<%=request.getContextPath()%>/report_content.do?mem_id=${dto.mem_id}&page=${page}">${dto.mem_report_count }</a></td>
+						<td><input type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?mem_id=${dto.mem_id }&page=${page }'" value="삭제하기"></td>
 					</tr>
 			</c:forEach>
 				</table>

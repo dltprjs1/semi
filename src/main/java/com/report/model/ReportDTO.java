@@ -1,10 +1,10 @@
-package com.admin.model;
+package com.report.model;
 
 public class ReportDTO {
 	private int report_num;
 	private int report_count;
-	private int report_content;
-	private int chall_num_fk;
+	private String report_content;
+	private String chall_title;
 	private String mem_id_reported;
 	private String mem_id_report;
 	public int getReport_num() {
@@ -19,17 +19,20 @@ public class ReportDTO {
 	public void setReport_count(int report_count) {
 		this.report_count = report_count;
 	}
-	public int getReport_content() {
+	
+	public String getReport_content() {
 		return report_content;
 	}
-	public void setReport_content(int report_content) {
+	public void setReport_content(String report_content) {
 		this.report_content = report_content;
 	}
-	public int getChall_num_fk() {
-		return chall_num_fk;
+	
+	
+	public String getChall_title() {
+		return chall_title;
 	}
-	public void setChall_num_fk(int chall_num_fk) {
-		this.chall_num_fk = chall_num_fk;
+	public void setChall_title(String chall_title) {
+		this.chall_title = chall_title;
 	}
 	public String getMem_id_reported() {
 		return mem_id_reported;
