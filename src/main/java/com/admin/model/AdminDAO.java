@@ -278,6 +278,10 @@ public class AdminDAO {
 			st = con.prepareStatement(sql);
 			st.setInt(1,mem_num);
 			result = st.executeUpdate();
+			sql = "update user_member set mem_num = mem_num - 1 where mem_num > ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,mem_num);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
