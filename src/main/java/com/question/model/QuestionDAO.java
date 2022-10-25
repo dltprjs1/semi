@@ -1,0 +1,155 @@
+package com.question.model;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.chall.model.UserDTO;
+
+public class QuestionDAO {
+	Connection con = null;
+	PreparedStatement st = null;
+	ResultSet rs = null;
+	String sql = null;
+
+	private static QuestionDAO instance;
+	private QuestionDAO() {  }  // 기본 생성자
+	public static QuestionDAO getInstance() {
+
+		if(instance == null) {
+			instance = new QuestionDAO();
+		}
+
+		return instance;
+	}
+
+	public void openConn() {
+		
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
+		String user = "ADMIN";
+		String password = "WelcomeTeam2";
+	
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, user, password);
+	
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	} // openConn() END
+
+	public void closeConn(ResultSet rs,
+			PreparedStatement st, Connection con) {
+
+		try {
+			if(rs != null) rs.close();
+
+			if(st != null) st.close();
+
+			if(con != null) con.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}  // closeConn() 메서드 end
+	public List<QuestionDTO> getQuestionList(int startNo, int lastNo) {
+		List<QuestionDTO> list = new ArrayList<QuestionDTO>();
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from private_q order by p_q_num desc)a where rownum <= ? ) where rnum >= ? ";
+			st = con.prepareStatement(sql);
+			st.setInt(1,lastNo);
+			st.setInt(2,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				QuestionDTO dto = new QuestionDTO();
+				dto.setP_q_num(rs.getInt("p_q_num"));
+				dto.setP_q_chall_num(rs.getInt("p_q_chall_num"));
+				dto.setP_q_title(rs.getString("p_q_title"));
+				dto.setP_q_content(rs.getString("p_q_content"));
+				dto.setP_q_category_num(rs.getInt("p_q_category_num"));
+				dto.setP_q_regdate(rs.getString("p_q_regdate"));
+				dto.setP_q_answer_cont(rs.getString("p_q_answer_cont"));
+				dto.setP_q_answer_regdate(rs.getString("p_q_answer_regdate"));
+				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
+				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
+				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public int gettotalrecord() {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from private_q";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public QuestionDTO getQuestionContent(int p_q_num) {
+		QuestionDTO dto = null;
+		openConn();
+		try {
+			sql = "select * from private_q where p_q_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,p_q_num);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				dto = new QuestionDTO();
+				dto.setP_q_num(rs.getInt("p_q_num"));
+				dto.setP_q_chall_num(rs.getInt("p_q_chall_num"));
+				dto.setP_q_title(rs.getString("p_q_title"));
+				dto.setP_q_content(rs.getString("p_q_content"));
+				dto.setP_q_category_num(rs.getInt("p_q_category_num"));
+				dto.setP_q_regdate(rs.getString("p_q_regdate"));
+				dto.setP_q_answer_cont(rs.getString("p_q_answer_cont"));
+				dto.setP_q_answer_regdate(rs.getString("p_q_answer_regdate"));
+				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
+				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
+				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return dto;
+	}
+	public int writeanswer(QuestionDTO dto) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "update private_q set p_q_answer_num = p_q_answer_num + 1 , p_q_answer_cont = ? , p_q_answer_regdate = sysdate where p_q_num = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, dto.getP_q_answer_cont());
+			st.setInt(2,dto.getP_q_num());
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+}

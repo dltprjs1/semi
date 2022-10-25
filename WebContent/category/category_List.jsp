@@ -12,7 +12,7 @@
 	<div align="center">
 		<h3>카테고리 리스트</h3>
 		<c:set var="list" value="${list }"/>
-		<table border="1" cellspacing="0" width="500">
+		<table border="1" cellspacing="0" width="600">
 			<tr>
 				<th>카테고리 번호</th>
 				<th>카테고리 코드</th>
@@ -26,8 +26,11 @@
 						<td>${dto.category_num }</td>
 						<td>${dto.category_code }</td>
 						<td>${dto.category_name }</td>
-						<td><img src="${dto.category_image }" width="100" height="100"></td>
-						<td align="center"><input type="button" value="삭제" onclick="location.href='<%=request.getContextPath()%>/category_delete.do?category_num=${dto.category_num }'"></td>
+						<td><img src="<%=request.getContextPath() %>/uploadFile/${dto.category_image }" width="100" height="100"></td>
+						<td align="center">							
+							<input type="button" value="수정" onclick="location.href='<%=request.getContextPath()%>/category_modify.do?category_num=${dto.category_num }'"> |
+							<input type="button" value="삭제" onclick="location.href='<%=request.getContextPath()%>/category_delete.do?category_num=${dto.category_num }'">
+						</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -38,7 +41,7 @@
 			</c:if>
 			<tr>
 				<td colspan="5" align="center">
-					<input type="button" value="카테고리 추가" onclick="location.href='<%=request.getContextPath()%>/create_category.do'">
+					<input type="button" value="카테고리 추가" onclick="location.href='<%=request.getContextPath()%>/category/create_category.jsp'">
 				</td>
 			</tr>
 		</table>

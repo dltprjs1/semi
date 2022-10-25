@@ -15,21 +15,24 @@ import com.chall.controller.ActionForward;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class CategoryInsertAction implements Action {
+public class CategoryModifyOkAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)throws IOException, Exception {
-		String filedirectory = "C:\\Users\\user1\\git\\team2_semi_challengers\\WebContent\\uploadFile";
+		
+		String filedirectory ="C:\\\\Users\\\\user1\\\\git\\\\team2_semi_challengers\\\\WebContent\\\\uploadFile";
 		int filesize = 10*1024*1024;
 		MultipartRequest mr = new MultipartRequest(request, filedirectory, filesize, "UTF-8",new DefaultFileRenamePolicy());
+		
+		int category_num = Integer.parseInt(mr.getParameter("category_num").trim());
 		String category_code = mr.getParameter("category_code").trim();
 		String category_name = mr.getParameter("category_name").trim();
-		//String category_image = mr.getFilesystemName("category_image").trim();
 		
 		CategoryDTO dto = new CategoryDTO();
+		
+		dto.setCategory_num(category_num);
 		dto.setCategory_code(category_code);
 		dto.setCategory_name(category_name);
-		//dto.setCategory_image(category_image);
 		
 		CategoryDAO dao = CategoryDAO.getInstance();
 		File category_image = mr.getFile("category_image");
@@ -71,18 +74,22 @@ public class CategoryInsertAction implements Action {
 			dto.setCategory_image(fileDBName);
 			
 		}
-		int res = dao.insertCategory(dto);
+		
+		int res = dao.CategoryModify(dto);
 		PrintWriter out = response.getWriter();
 		ActionForward forward = new ActionForward();
+		
 		if(res > 0) {
 			forward.setRedirect(true);
 			forward.setPath("category_control.do");
 		}else {
 			out.println("<script>");
-			out.println("alert('추가 실패!')");
+			out.println("alert('수정 실패!')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
+		
 		return forward;
 	}
+
 }
