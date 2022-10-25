@@ -16,8 +16,14 @@ public class UserDTO {
 	private int mem_reward;
 	private int challenge_count;
 	private int challenge_complete_count;
+	private int mem_report_count;
 	
-	
+	public int getMem_report_count() {
+		return mem_report_count;
+	}
+	public void setMem_report_count(int mem_report_count) {
+		this.mem_report_count = mem_report_count;
+	}
 	public int getMem_num() {
 		return mem_num;
 	}

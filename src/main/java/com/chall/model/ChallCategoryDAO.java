@@ -5,20 +5,22 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ExampleDAO {
+public class ChallCategoryDAO {
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	String sql = "";
 	
-	private static ExampleDAO instance;
+	private static ChallCategoryDAO instance;
 		
-	private ExampleDAO() {} 
+	private ChallCategoryDAO() {} 
 	
-	public static ExampleDAO getinstance() {
+	public static ChallCategoryDAO getinstance() {
 		if(instance == null) {
-			instance = new ExampleDAO();
+			instance = new ChallCategoryDAO();
 		}
 		return instance;
 	}
@@ -28,7 +30,7 @@ public class ExampleDAO {
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -57,32 +59,31 @@ public class ExampleDAO {
 	} // closeConn() END
 	
 	
-	// DB에 연결하여 challenge_category 테이블의 값을 가져올 수 있는지 테스트하는 메서드
-	public String testDB() {
-	
-		String result = "";
-	
+	// 카테고리 목록을 불러오는 메서드
+	public List<ChallCategoryDTO> getCategoryList() {
+		
+		List<ChallCategoryDTO> list = new ArrayList<ChallCategoryDTO>();
+		
 		try {
-	
 			openConn();
-	
-			sql ="select * from challenge_category";
+			sql = "select category_name, category_image from challenge_category order by category_num";
 			pstmt = con.prepareStatement(sql);
-	
 			rs = pstmt.executeQuery();
-	
-			if(rs.next()) {
-				result = rs.getString(1);
+			while(rs.next()) {
+				
+				ChallCategoryDTO dto = new ChallCategoryDTO();
+				
+				dto.setCategory_name(rs.getString("category_name"));
+				
+				list.add(dto);
 			}
-	
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeConn(rs, pstmt, con);
 		}
-	
-		return result;
-	
-	} // testDB() END
+		return list;
+	}	// getCategoryList() END
 	
 }

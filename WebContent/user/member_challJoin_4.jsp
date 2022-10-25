@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+<title>4/5 : 챌린지 개설</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <style type="text/css">
 
-	.join3hr {
+	.join_hr {
 		border: 0;
     	height: 3px;
     	background: #ff4d54;
@@ -22,9 +22,9 @@
    <jsp:include page="/include/chall_top.jsp" />
    
 		<div align="center">
-			<hr class="join3hr" width="50%" color="red">
-			<h3><b>챌린지 개설하기</b></h3>
-			<hr class="join3hr" width="50%">
+			<br>
+			<h3><b>이 챌린지에 참여하기 위한 조건은 무엇인가요?</b></h3>
+			<hr class="join_hr" width="50%" color="red">
 			<br>
 			
 			
@@ -53,8 +53,8 @@
 			
 			
 			<br><br>
-			<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin3.do'">이전</button>
-			<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/어디로갈까요??'">챌린지 개설하기</button>
+			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin3.do'">이전</button>
+			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin5.do'">다음</button>
 		</div>
 		<br>
    		<div class="progress">

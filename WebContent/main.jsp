@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Challengers</title>
 </head>
 <body>
 	<jsp:include page="include/chall_top.jsp" />
