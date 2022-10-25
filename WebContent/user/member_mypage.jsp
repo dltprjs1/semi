@@ -7,9 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>챌린저스 : 회원정보 조회/수정</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+// 주소 폼
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode() {
     new daum.Postcode({
@@ -64,7 +67,22 @@ function sample4_execDaumPostcode() {
             }
         }
     }).open();
+    
+
+	
+
 }
+
+//check() 함수 시작
+function check(){
+	
+}
+
+function emailChange(){
+	${"#email_domain"}.val(${"#email_select"}.val());
+}
+
+
 </script>
 
 <style type="text/css">
@@ -148,9 +166,11 @@ function sample4_execDaumPostcode() {
 		font-size: 16px;
 		border-radius: 5px;		
 	}
-	
-	
 </style>
+<%
+	int member_no = Integer.parseInt(request.getParameter("no"));
+
+%>
 </head>
 <body>
 	<jsp:include page="../include/chall_top.jsp" />
@@ -167,12 +187,12 @@ function sample4_execDaumPostcode() {
 			<nav class="my_navi">
 					<ul>
 						<li><a href="<%=request.getContextPath() %>/member_mypage.do?no=${dto.mem_num}">회원 정보 조회/수정</a></li>
-						<li><a>나의 챌린지 현황</a></li>
-						<li><a>나의 예치금.상금</a></li>
-						<li><a>나의 레벨.배지</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mychall.do?no=${dto.mem_num}">나의 챌린지 현황</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mymoney.do?no=${dto.mem_num}">나의 예치금.상금</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mylevel.do?no=${dto.mem_num}">나의 레벨.배지</a></li>
 					</ul>
 			</nav>
-			
+			<br>
 			<div class="my_title">
 				<h2>회원 정보 조회/수정</h2>
 			</div>
@@ -195,23 +215,39 @@ function sample4_execDaumPostcode() {
 						</tr>
 						
 						<tr>
+							<th>이메일</th>
+							<td>
+								<input id="email_id" type="text" value="" required > @ <input id="email_domain" type="text" value="" required > 
+								<select id="email_select" onchange="emailChange()" >
+									<option >--선택--</option>
+									<option value="naver.com">naver.com</option>
+									<option value="gmail.com">gmail.com</option>
+									<option value="hanmail.net">hanmail.net</option>
+									<option value="yahoo.com">yahoo.com</option>
+									<option value="nate.com">nate.com</option>
+									<option value="">직접입력</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
 							<th>현재 비밀번호</th>
 							<td>
-								<input type="password" name="pwd">
+								<input type="password" name="pwd" required>
 							</td>
 						</tr>
 						
 						<tr>
 							<th>변경할 비밀번호</th>
 							<td>
-								<input type="password" name="pwd">
+								<input type="password" name="pwd" required>
 							</td>
 						</tr>
 						
 						<tr>
 							<th>변경할 비밀번호 확인</th>
 							<td>
-								<input type="password" name="pwd_check">
+								<input type="password" name="pwd_check" required>
 							</td>
 						</tr>
 						
@@ -225,7 +261,7 @@ function sample4_execDaumPostcode() {
 						<tr>
 							<th>연락처</th>
 							<td>
-								<input type="text" value="${dto.mem_phone }">
+								<input type="text" value="${dto.mem_phone }" required>
 							</td>
 						</tr>
 						
@@ -244,7 +280,7 @@ function sample4_execDaumPostcode() {
 						
 						<tr>
 							<td colspan="2" align="center">
-								<input class="update_btn" type="submit" value="수정">
+								<input class="update_btn" type="submit" value="수정" onClick="return check()">
 							</td>						
 						<tr>
 					</table>

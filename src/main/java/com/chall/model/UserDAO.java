@@ -186,4 +186,41 @@ public class UserDAO {
 		return dto;
 	}	// getMemberInfo() 메소드 end
 	
+	// 카카오 이메일로 DB에 존재하는 회원인지 확인하는 메소드.
+	public String savedUserCheck(String email) {
+		
+		String savedUser = null;
+		
+		UserDTO dto = null;
+		
+		try {
+			openConn();
+			
+			sql = "select * from user_member where mem_email=?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {	// 카카오에서 받아온 이메일을 가진 회원이 이미 있으면 yes
+				savedUser = "yes";
+			}else {
+				savedUser = "no";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return savedUser;
+		
+	} // savedUserCheck() 메소드 end
+	
+
+	
 }

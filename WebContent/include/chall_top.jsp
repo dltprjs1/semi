@@ -214,7 +214,7 @@
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
 					</c:if>
-					
+			
 				</ul>
 			</div>
 			
