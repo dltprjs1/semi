@@ -1,7 +1,11 @@
+<%@page import="com.chall.model.UserDTO"%>
+<%@page import="com.chall.model.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	UserDTO user_content = (UserDTO)request.getAttribute("user_content");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,37 +18,61 @@
 	.pagination {
 		justify-content: center;
 	}
+	#table td{
+		text-align: center;
+	}
+	#table th{
+		text-align: center;
+	}
 	
 </style>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/chall_top.jsp" />
 	<div align="center">
-		<c:set var="list" value="${list }"/>
-		<h3>회원 목록 전체 리스트</h3>
-		<c:if test="${!empty list }">
-				<table border="1" cellspacing="0" width="30%" align="center">
+		<h3>1:1문의 리스트</h3>
+		<br>
+		<c:set var="list" value="${list }" />
+		<c:set var="user_content" value="${user_content }"/>
+		<table id="table" border="1" cellspacing="0" width="800">
+			<tr>
+				<th>문의 번호</th>
+				<th>챌린지</th>
+				<th>회원 아이디</th>
+				<th>제 목</th>
+				<th>등록일</th>
+				<th>재등록</th>
+				<th>답변유무</th>
+			</tr>
+			<c:if test="${!empty list }">
+				<c:forEach items="${list }" var="dto">
 					<tr>
-						<th>회원 번호</th>
-						<th>회원 아이디</th>
-						<th>회원 이름</th>
-						<th>회원 레벨</th>
-						<th>신고 누적 횟수</th>
-						<th>회원 삭제</th>
+						<td>${dto.p_q_num }</td>
+						<td>${dto.p_q_chall_num}</td>
+						<td>${dto.p_q_user_num}</td>
+						<td><a href="<%=request.getContextPath()%>/question_content.do?p_q_num=${dto.p_q_num}&page=${page}&p_q_user_num=${dto.p_q_user_num }">${dto.p_q_title}</a></td>
+						<td>${dto.p_q_regdate}</td>
+						<td>
+							<c:if test="${dto.p_q_again_num != 0}">
+							Yes
+							</c:if>
+							<c:if test="${dto.p_q_again_num == 0}">
+							No
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${dto.p_q_answer_num != 0}">
+							Yes
+							</c:if>
+							<c:if test="${dto.p_q_answer_num == 0}">
+							No
+							</c:if>
+						</td>
 					</tr>
-			<c:forEach items="${list }" var="dto">
-					<tr align="center">
-						<td>${dto.mem_num }</td>
-						<td>${dto.mem_id }</td>
-						<td>${dto.mem_name }</td>
-						<td>${dto.mem_level }</td>
-						<td><a href="<%=request.getContextPath()%>/report_content.do?mem_id=${dto.mem_id}&page=${page}">${dto.mem_report_count }</a></td>
-						<td><input type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?mem_id=${dto.mem_id }&page=${page }'" value="삭제하기"></td>
-					</tr>
-			</c:forEach>
-				</table>
-		</c:if>
-	<nav>
+				</c:forEach>
+			</c:if>
+		</table>
+		<nav>
 		  <ul class="pagination">
 		    <li class="page-item">
 		      <a class="page-link" 
@@ -81,6 +109,6 @@
 		  </ul>
 		</nav>
 	</div>
-	<jsp:include page="../include/chall_bottom.jsp"/>
+	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 </html>
