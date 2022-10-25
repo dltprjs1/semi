@@ -3,6 +3,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	// 시작일 버튼 생성 코드
 	String pattern1 = "MM.dd (E)"; SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(pattern1);
@@ -33,12 +34,22 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+<title>3/5 : 챌린지 개설</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+$("#image").on("change", function() {
+    if ($("#image")[0].files.length > 2) {
+        alert("You can select only 2 images");
+    } else {
+        $("#imageUploadForm").submit();
+    }
+});
+</script>
 <style type="text/css">
 
-	.join3hr {
+	.join_hr {
 		border: 0;
     	height: 3px;
     	background: #ff4d54;
@@ -51,9 +62,9 @@
    <jsp:include page="/include/chall_top.jsp" />
    
 		<div align="center">
-			<hr class="join3hr" width="50%" color="red">
-			<h3><b>챌린지 개설하기</b></h3>
-			<hr class="join3hr" width="50%">
+			<br>
+			<h3><b>챌린지를 만들어주세요!</b></h3>
+			<hr class="join_hr" width="50%" color="red">
 			<br>
 			
 			
@@ -85,28 +96,28 @@
 			
 			<br><br>
 			<h5>챌린지 기간</h5>
-			<input type="radio" class="btn-check" name="duration" id="option10" autocomplete="off">
-			<label class="btn btn-secondary" for="option10">1주 동안</label>
-			<input type="radio" class="btn-check" name="duration" id="option11" autocomplete="off">
-			<label class="btn btn-secondary" for="option11">2주 동안</label>
+			<c:forEach begin="1" end="8" var="i">
+				<input type="radio" class="btn-check" name="duration" id="duRadio${i }" autocomplete="off">
+				<label class="btn btn-secondary" for="duRadio${i }">${i }주 동안</label>
+			</c:forEach>
 			
 			
 			<br><br>
 			<h5>시작일</h5>
-			<input type="radio" class="btn-check" name="startDate" id="option12" autocomplete="off">
-			<label class="btn btn-secondary" for="option12"><%=day1 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="option13" autocomplete="off">
-			<label class="btn btn-secondary" for="option13"><%=day2 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="option14" autocomplete="off">
-			<label class="btn btn-secondary" for="option14"><%=day3 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="option15" autocomplete="off">
-			<label class="btn btn-secondary" for="option15"><%=day4 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="option16" autocomplete="off">
-			<label class="btn btn-secondary" for="option16"><%=day5 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="option17" autocomplete="off">
-			<label class="btn btn-secondary" for="option17"><%=day6 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="option18" autocomplete="off">
-			<label class="btn btn-secondary" for="option18"><%=day7 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio1" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio1"><%=day1 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio2" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio2"><%=day2 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio3" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio3"><%=day3 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio4" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio4"><%=day4 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio5" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio5"><%=day5 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio6" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio6"><%=day6 %></label>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio7" autocomplete="off">
+			<label class="btn btn-secondary" for="staDateRadio7"><%=day7 %></label>
 			
 			
 			<br><br>
@@ -128,6 +139,10 @@
 			  <tr align="center">
 			  	<td>O</td>
 			  	<td>X</td>
+			  </tr>
+			  <tr>
+			  	<td><input name="image[]" id="image" type="file" multiple accept="image/jpg, image/jpeg, image/png, image/gif"></td>
+			  	<td><input type="file" multiple accept="image/jpg, image/jpeg, image/png, image/gif"></td>
 			  </tr>
 			</table>
 			
@@ -166,8 +181,8 @@
 			
 			
 			<br><br>
-			<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin2.do'">이전</button>
-			<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin4.do'">다음</button>
+			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin2.do'">이전</button>
+			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin4.do'">다음</button>
 		</div>
 		<br>
    		<div class="progress">

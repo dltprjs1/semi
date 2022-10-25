@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+<title>1/5 : 챌린지 개설</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
 	function check() {
@@ -17,11 +18,23 @@
 
 	  if (checkBox1.checked == true && checkBox2.checked == true && checkBox3.checked == true){
 		 location.href="member_challJoin2.do";
+			/* $.ajax({
+				type : "post",
+				url : "member_challJoin_2.jsp",
+				datatype : "html",
+				success : function(data) {
+					document.body.innerHTML = data;
+				},
+				
+				error : function(data) {
+					alert("에러가 발생하였습니다.~~~");
+				}
+			}); */
 	  } else {
 		 location.href="#";
 	  }
 	}
-
+	
 </script>
 </head>
 <body>
