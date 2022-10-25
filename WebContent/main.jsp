@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<jsp:include page="include/chall_top.jsp" />
 	<article align="center">
 		<hr width="65%" color="gray">

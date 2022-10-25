@@ -12,7 +12,7 @@ import com.chall.controller.ActionForward;
 import com.chall.model.UserDAO;
 import com.chall.model.UserDTO;
 
-public class LoginCheckAction implements Action {
+public class LoginOkAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
