@@ -1,4 +1,4 @@
-package com.chall.model;
+package com.user.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
