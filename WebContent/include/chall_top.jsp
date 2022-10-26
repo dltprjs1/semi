@@ -10,6 +10,13 @@
 	initial-scale=1.0 : 브라우저에서 페이지를 처음로드 할 때 초기 확대 / 축소 수준을 설정. -->
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+
+<!-- CS센터 페이지에서 쓰는 부분 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="../CSS/CScenter.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="../JS/CScenter.js"></script>
+
 <style type="text/css">
 	
 	body {
