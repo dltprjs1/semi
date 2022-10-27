@@ -45,6 +45,7 @@
 			
 			<br><br><br>
 			<button type="submit" class="btn btn-dark">다음</button>
+			<!-- 버튼은 비활성화되어있다가 라디오버튼 하나라도 선택하면 활성화되게 -->
 			</form>
 		</div>
 		<br>
