@@ -1,7 +1,13 @@
+<%@page import="com.user.model.UserDAO"%>
+<%@page import="com.question.model.QuestionDAO"%>
+<%@page import="com.question.model.QuestionDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.user.model.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -93,6 +99,11 @@
 		grid-column: 1/2;
 		grid-row: 1/2;
 		font-size: 16px;
+	}
+	.top_li_5 {
+		list-style: none;
+		font-size: 16px;
+		top : 100;
 	}
 	
 	.search{
@@ -199,19 +210,18 @@
 	.footer a{
 		color: gray;
 	}
-
 </style>
 </head>
 <body>
-
 	<div class="container" align="center">
 		
 		<header class="head">
 		
 			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/logo_standard.svg"> </a>
-			
+
 		</header>
 			<c:set var="dto" value="${memberName }" />
+			<c:set var="list" value="${list }"/>
 			<div class="top_right">
 				<ul class="top">
 
@@ -226,19 +236,33 @@
 						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
+
+						<c:if test="${!empty list}">
+							<span class="top_li_5">
+										<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
+										${fn:length(list)}
+									<c:forEach var="check" items="${list }">
+									<c:if test="${check.p_q_check == 1 }">
+									</c:if>
+									<c:if test="${check.p_q_check == 0 }">
+										<p></p>
+									</c:if>
+									</c:forEach>
+							</span>
+						</c:if>
 					</c:if>
-			
+
 				</ul>
 			</div>
-			
-		
+
+
 		<div class="search">
 			<form id="form_searchText" method="post" onsubmit="return false;">
 				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
 				<input id="search_btn" class="search_btn" type="button" value="검색">
 			</form>	
 		</div>
-		
+
 		<nav class="navi">
 			<ul class="menu">
 			
@@ -254,4 +278,24 @@
 	<hr width=100% align="center">
 
 	<%-- 이하 영역은 본문 영역이 됨 --%>
- 	
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+	<%-- $(function(){
+		$(".top_li_5").mouseout(function(){
+			<%
+				//String member_id = request.getParameter("mem_id").trim();
+				UserDAO dao = UserDAO.getinstance();
+				UserDTO dto = dao.getMember("jheo");
+				QuestionDAO dao_q = QuestionDAO.getInstance();
+				List<QuestionDTO> list = dao_q.getAnswerCheck(dto.getMem_num());
+				HttpSession session1 = request.getSession();
+				session1.setAttribute("list",list);
+			%>
+				console.log("aslkjdlkasd");
+		$(".top_li_5").mouseout(function(){
+			location.reload();
+		}
+		});
+	}) --%>
+	
+</script>
