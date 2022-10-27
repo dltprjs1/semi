@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
-import com.chall.model.UserDAO;
+import com.user.model.UserDAO;
 
 public class KakaoLoginOkAction implements Action {
 
