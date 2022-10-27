@@ -29,18 +29,20 @@
 			<br>
 			
 			<form id="form" method="post" action="member_challJoin_5.do">
-			<h5>예치금</h5>
+			<h5>예치금</h5><!-- 필수항목 -->
 			<a>고정 예치금은 최소 1천원부터 가능합니다.(천원 단위 가능)</a><label>&nbsp;&nbsp;
 			<input type="checkbox" name="color" value="red" checked>고정 예치금</label>
-			<!-- 고정 예치금 체크풀면 최대 예치금 입력칸 보이게 하기 -->
+			<!-- 고정 예치금 체크풀면 최대 예치금 입력칸 보이게 하고 설명 문구 변경(아래) -->
+			<!-- 최소 1만원 ~ 최대 20만원 (만원 단위 가능) -->
 			<br>
 			<textarea name="depositDefault" rows="1" cols="30" placeholder="예) 1000"></textarea>원 ~
 			<textarea name="depositMax" rows="1" cols="30" placeholder="예) 200000"></textarea>원
-			
+			<!-- depositMax는 depositDefault보다 커야함 -->
 			
   			
   			<br><br>
-			<h5>비공개 참여 코드</h5>
+  			<!-- 비공개챌린지 선택 시에만 나타나야 함 -->
+			<h5>비공개 참여 코드</h5><!-- 필수항목 -->
 			<a>프라이빗한 챌린지를 위해, 우리만의 코드를 정해보세요.</a><br>
 			<textarea name="privateCode" cols="25" rows="1" id="title" placeholder="예) 1234, 우리는챌린저스"></textarea>
 			
@@ -48,7 +50,8 @@
 			<br><br>
 			<h5>최대 모집 인원 설정하기</h5>
 			<a>참가자 모집 인원을 제한하고 싶은 경우 설정할 수 있어요.</a>
-			<!-- <a>참가자 모집 인원을 제한하고 싶은 경우 설정할 수 있어요. (최소 2명 ~ 최대 1,000명)</a> -->
+			<!-- 라디오 버튼 누르면 입력창, 추가 설명 문구(아래) 나오게 하기 -->
+			<!-- 추가 설명 문구 : 참가자 모집 인원을 제한하고 싶은 경우 설정할 수 있어요. (최소 2명 ~ 최대 1,000명) -->
 			<div class="form-check form-switch">
 			  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
 			</div>
@@ -60,6 +63,7 @@
 			<br><br>
 			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
 			<button type="submit" class="btn btn-dark">다음</button>
+			<!-- 버튼은 비활성화되어있다가 필수항목 모두 선택하면 활성화되게 -->
 			</form>
 		</div>
 		<br>

@@ -45,6 +45,7 @@
 			<hr width="50%" color="red">
 			<br>
 			<button type="button" class="btn btn-dark" onclick="check()">네, 약속할게요!</button>
+			<!-- 버튼은 비활성화되어있다가 체크박스 3개 모두 체크되면 활성화되게 -->
 		</div>
    <jsp:include page="/include/chall_bottom.jsp" />
 </body>
