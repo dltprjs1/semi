@@ -64,12 +64,8 @@ function execDaumPostcode() {
             }
         }
     }).open();
-    
-
-	
 
 }
-
 
 </script>
 <style type="text/css">
@@ -198,7 +194,7 @@ function execDaumPostcode() {
 							<h3 class="join_title">비밀번호</h3>
 							<input class="input_box" type="password" name="pwd" id="pwd">
 							<h3 class="join_title">비밀번호 확인</h3>
-							<input class="input_box" type="password"  name="pwd2" id="pwd2">
+							<input class="input_box" type="password" id="pwd2">
 						</div>	
 						
 						<!-- 이름 입력 -->

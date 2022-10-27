@@ -17,7 +17,7 @@ public class UserDTO {
 	private int challenge_count;
 	private int challenge_complete_count;
 	private int mem_report_count;
-	private int mem_birth;
+	private String mem_birth;
 	private String mem_gender;
 	private String mem_email;
 	
@@ -28,10 +28,10 @@ public class UserDTO {
 	public void setMem_email(String mem_email) {
 		this.mem_email = mem_email;
 	}
-	public int getMem_birth() {
+	public String getMem_birth() {
 		return mem_birth;
 	}
-	public void setMem_birth(int mem_birth) {
+	public void setMem_birth(String mem_birth) {
 		this.mem_birth = mem_birth;
 	}
 	public String getMem_gender() {

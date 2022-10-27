@@ -28,7 +28,7 @@ public class UserDAO {
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -220,7 +220,52 @@ public class UserDAO {
 		return savedUser;
 		
 	} // savedUserCheck() 메소드 end
-	
+
+	// user_member 테이블에 회원을 추가하는 메소드.
+	public int insertMember(UserDTO dto) {
+		
+		int result = 0, count = 0;
+		
+		try {
+			openConn();
+			
+			// 회원번호 최댓값 구하기
+			sql = "select max(mem_num) from user_member";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1) + 1;
+			}
+			
+			// 생년월일로 나이 구하기
+			
+			sql = "insert into user_member (mem_num, mem_id, mem_pwd, mem_name, mem_age, mem_gender, mem_email, mem_phone, mem_addr, regdate, mem_birth ) values(?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?)";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, count);
+			pstmt.setString(2, dto.getMem_id());
+			pstmt.setString(3, dto.getMem_pwd());
+			pstmt.setString(4, dto.getMem_name());
+			pstmt.setInt(5, dto.getMem_age());
+			pstmt.setString(6, dto.getMem_gender());
+			pstmt.setString(7, dto.getMem_email());
+			pstmt.setString(8, dto.getMem_phone());
+			pstmt.setString(9, dto.getMem_addr());
+			pstmt.setString(10, dto.getMem_birth());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+		
+	}	// insertMember() 메소드 end
 
 	
 }
