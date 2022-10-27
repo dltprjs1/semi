@@ -1,4 +1,4 @@
-package com.chall.model;
+package com.user.model;
 
 public class UserDTO {
 	
@@ -17,7 +17,29 @@ public class UserDTO {
 	private int challenge_count;
 	private int challenge_complete_count;
 	private int mem_report_count;
+	private int mem_birth;
+	private String mem_gender;
+	private String mem_email;
 	
+	
+	public String getMem_email() {
+		return mem_email;
+	}
+	public void setMem_email(String mem_email) {
+		this.mem_email = mem_email;
+	}
+	public int getMem_birth() {
+		return mem_birth;
+	}
+	public void setMem_birth(int mem_birth) {
+		this.mem_birth = mem_birth;
+	}
+	public String getMem_gender() {
+		return mem_gender;
+	}
+	public void setMem_gender(String mem_gender) {
+		this.mem_gender = mem_gender;
+	}
 	public int getMem_report_count() {
 		return mem_report_count;
 	}
