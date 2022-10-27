@@ -16,6 +16,19 @@
 	initial-scale=1.0 : 브라우저에서 페이지를 처음로드 할 때 초기 확대 / 축소 수준을 설정. -->
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+
+<!-- CS센터 페이지에서 쓰는 부분 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="../CSS/CScenter.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="../JS/CScenter.js"></script>
+<script type="text/javascript" src="../searchJS/location.js"></script>
+<script type="text/javascript" src="searchJS/location.js"></script>
+<!-- <script type="text/javascript" src="../searchJS/move.js"></script>
+<script type="text/javascript" src="searchJS/move.js"></script> -->
+
+
+
 <style type="text/css">
 	
 	body {
@@ -197,17 +210,15 @@
 	.footer a{
 		color: gray;
 	}
-
 </style>
 </head>
 <body>
-
 	<div class="container" align="center">
 		
 		<header class="head">
 		
 			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/logo_standard.svg"> </a>
-			
+
 		</header>
 			<c:set var="dto" value="${memberName }" />
 			<c:set var="list" value="${list }"/>
@@ -225,7 +236,7 @@
 						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
-						
+
 						<c:if test="${!empty list}">
 							<span class="top_li_5">
 										<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
@@ -240,17 +251,18 @@
 							</span>
 						</c:if>
 					</c:if>
-			
+
 				</ul>
 			</div>
-			
-		
+
+
 		<div class="search">
-			<form method="post" action="<%=request.getContextPath() %>/main.do">
-				<input class="search_text" type="text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;<input class="search_btn" type="submit" value="검색">
+			<form id="form_searchText" method="post" onsubmit="return false;">
+				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
+				<input id="search_btn" class="search_btn" type="button" value="검색">
 			</form>	
 		</div>
-		
+
 		<nav class="navi">
 			<ul class="menu">
 			
@@ -268,7 +280,6 @@
 	<%-- 이하 영역은 본문 영역이 됨 --%>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-
 	<%-- $(function(){
 		$(".top_li_5").mouseout(function(){
 			<%
