@@ -13,7 +13,7 @@
 			<h3>챌린저스 메인 페이지</h3>
 		<hr width="65%" color="gray">
 		<br>
-		
+	<div class="kakao"></div>	
 		<a href="<%=request.getContextPath()%>/member_login.do">[회원 로그인]</a>
 		&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
 		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a>

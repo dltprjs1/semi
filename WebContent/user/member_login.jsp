@@ -178,12 +178,12 @@ Kakao.init("b3c649792fd4d054a8b60299da478e2d"); //발급받은 키 중 javascrip
 */
 
 
-	// 카카오 로그인
+	// 카카오 로그인2
 	function kakaoLogin(){
 		// 1. 카카오 간편 로그인 요청. (서비스 서버에서 인가 코드를 사용해 REST API로 토큰 받기를 요청하여 로그인을 완료)
 		Kakao.Auth.authorize({
 			// 인가 코드를 전달받을 서비스 서버의 URI(카카오 개발자 사이트에 등록)
-			redirectUri: '${REDIRECT_URI}',	
+			redirectUri: 'http://localhost:8282/Semi_Challengers/main.jsp',	
 			// 2-1 추가 항목 동의 받을 내용.
 			scope: 'profile_nickname , gender, account_email, birthday, profile_image, openid',
 			// 2-2 약관 선택해 동의 받기 요청 시 사용. scope와 동일하게 작성.
@@ -191,42 +191,45 @@ Kakao.init("b3c649792fd4d054a8b60299da478e2d"); //발급받은 키 중 javascrip
 			// 2-3 카카오 자동 로그인 기능.
 			prompts: 'login',
 			
-/* 보안 관련 내용 나중에.	
+  //보안 관련 내용 나중에.	
 			// state: 카카오 로그인 과정 중 동일한 값을 유지하는 임의의 문자열(정해진 형식 없음).
 			// 각 사용자의 로그인 요청에 대한 state 값은 고유.(Cross-Site Request Forgery(CSRF) 공격을 방어하기 위함.)
 			// 인가 코드 요청, 인가 코드 응답, 토큰 발급 요청의 state 값 일치 여부로 요청 및 응답 유효성 확인 가능.
-			state: ,
+			// state: ,
 			// 2-4 OpenID Connect ID 토큰 발급하기.
 			// OpenID Connect(카카오 계정에 등록된 사용자 정보)를 통해 ID 토큰을 함께 발급받을 경우, ID 토큰 재생 공격을 방지하기 위해 사용
 			// ID 토큰 유효성 검증 시 대조할 임의의 문자열(정해진 형식 없음)
-			nonce: '${NONCE}',
-*/			
+			// nonce: '${NONCE}',
+		// 보안 나중에	
 		});
+		
 	// 간편 로그인 이외의 카카오 API(위의 2-1~2-4)를 클라이언트에서 JavaScript SDK로 호출하려면 액세스 토큰(Access token) 값을 할당해야 함. 
 		// 2. 토큰 할당하기.(Kakao.Auth.setAccessToken() 함수를 호출해서 서비스 서버에서 전달받은 액세스 토큰 값을 JavaScript SDK에서 사용하도록 할당.) 
 		Kakao.Auth.setAccessToken('${ACCESS_TOKEN}');
+	
 		// 3. 현재 로그인한 사용자의 카카오계정 정보를 불러오기.
 		// url 값을 /v2/user/me로 지정해 Kakao.API.request() 함수를 호출
 		Kakao.API.request({
 			  url: '/v2/user/me',
 			  data: {
-				// 프로퍼티 키로 사용자 정보 요청. 특정 사용자 정보만 지정
-			    property_keys: ['kakao_account.profile', 'kakao_account.name', 'kakao_account.email', 'kakao_account.birthday', 'kakao_account.gender'],
-			  	// 프로퍼티스로 사용자 정보 저장.
-			    properties: {
-			        '${CUSTOM_PROPERTY_KEY}': '${CUSTOM_PROPERTY_VALUE}',
-			      },
-			  },
+				    properties: {
+				      'kakao_email': 'kakao_account.email',
+				    },	
+			    },	
 			})
 			  .then(function(response) {
 			    console.log(response);
-			    document.location.href = "member_login.do";
+			    $(".kakao").append(kakao_email);
 			  })
 			  .catch(function(error) {
 			    console.log(error);
 			  });
 		
 	}
+
+
+
+
 
 </script>	
 </head>
