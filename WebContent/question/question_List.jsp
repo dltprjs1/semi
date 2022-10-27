@@ -1,5 +1,5 @@
-<%@page import="com.chall.model.UserDTO"%>
-<%@page import="com.chall.model.UserDAO"%>
+<%@page import="com.user.model.UserDTO"%>
+<%@page import="com.user.model.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

@@ -12,7 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.chall.model.UserDTO;
+import com.user.model.UserDTO;
 
 public class AdminDAO {
 	Connection con = null;

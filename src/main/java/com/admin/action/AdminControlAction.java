@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.admin.model.AdminDAO;
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
-import com.chall.model.UserDTO;
+import com.user.model.UserDTO;
 
 public class AdminControlAction implements Action{
 
