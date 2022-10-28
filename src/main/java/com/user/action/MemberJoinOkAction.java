@@ -27,13 +27,14 @@ public class MemberJoinOkAction implements Action {
 		String emailDomain = request.getParameter("email_domain").trim();
 		String nationNo = request.getParameter("nationNo").trim();
 		String phoneNo = request.getParameter("phoneNo").trim();
-		String postcode = request.getParameter("postcode").trim();			// 우편번호
+		int postcode = Integer.parseInt(request.getParameter("postcode").trim());	// 우편번호
 		String roadAddress = request.getParameter("roadAddress").trim();		// 도로명주소
 		String jibunAddress = request.getParameter("jibunAddress").trim();	// 지번주소
+		String detailAddress = request.getParameter("detailAddress").trim();	// 상세주소
 		String extraAddress = request.getParameter("extraAddress").trim(); 	// 주소 참고항목(대략적인 분류)
 		
 		// 주소 합치기 : [우편번호] 도로명주소/지번주소/상세주소/참고항목(동)
-		String  member_addr = "["+postcode+"]"+roadAddress+"/"+jibunAddress+"/"+extraAddress;
+		String  member_addr = "["+postcode+"]"+roadAddress+"/"+jibunAddress+"/"+detailAddress+"/"+extraAddress;
 		
 		// 이메일 합치기
 		String member_email = emailId + "@"+ emailDomain;
@@ -59,12 +60,24 @@ public class MemberJoinOkAction implements Action {
 		dto.setMem_id(member_id);
 		dto.setMem_pwd(member_pwd);
 		dto.setMem_name(member_name);
-		dto.setMem_age(member_age);
-		dto.setMem_gender(member_gender);
-		dto.setMem_email(member_email);
-		dto.setMem_phone(member_phone);
-		dto.setMem_addr(member_addr);
 		dto.setMem_birth(member_birth);
+		dto.setMem_gender(member_gender);
+		dto.setMem_age(member_age);
+		
+		dto.setMem_email(member_email);
+		dto.setEmailId(emailId);
+		dto.setEmailDomain(emailDomain);
+		
+		dto.setMem_phone(member_phone);
+		dto.setNationNo(nationNo);
+		dto.setPhoneNo(phoneNo);
+		
+		dto.setMem_addr(member_addr);
+		dto.setPostcode(postcode);
+		dto.setRoadAddress(roadAddress);
+		dto.setJibunAddress(jibunAddress);
+		dto.setDetailAddress(detailAddress);
+		dto.setExtraAddress(extraAddress);
 		
 		UserDAO dao = UserDAO.getinstance();
 		

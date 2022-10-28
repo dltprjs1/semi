@@ -67,6 +67,46 @@ function execDaumPostcode() {
 
 }
 
+	// 선택한 이메일 도메인 셀렉트 박스의 value를 input 창의 value로 넣어주는 함수.
+	function chageDomainSelect(){
+		
+	    $("#email_domain").val($("#input_domain").val());
+	    
+	} // chageDomainSelect() 함수 end
+	
+	
+	// id 속성값이 reqInfo인 span 영역에 "필수 정보입니다." 라는 문자열을 출력하는 메소드
+	// 각  인풋 창들 넘ㄴ어갈 때 값이 없으면 필수정보입니다 출력. 인풋창 아이디를 인자로 받기...
+	// 인풋창 아이디 변수 선언
+	
+	
+	
+	// 문서의 body 부분 읽고 제이쿼리 실행.
+	$(function(){
+		
+		function reqInfoMsg(inputID){
+			let msg = '<font color="red">필수 정보입니다.</font>';
+		$('#id').append(msg);
+		}	
+		
+		// 마우스가 입력창을 벗어났을 때 입력값이 없으면 필수 입력 문자열 출력
+		$(#id).blur(function(){
+			if($(#id).val() ==''){
+				let msg = '<font color="red">필수 정보입니다.</font>';
+					$('#id').append(msg);
+			}
+		});
+	
+	});
+	
+	// 회원정보 유효성 검사
+	$. ajax({
+		url : ,	// 요청이 전송될 URL 주소
+		type: "get",	// http 요청 방식	
+	
+	});
+	
+	
 </script>
 <style type="text/css">
 
@@ -124,7 +164,7 @@ function execDaumPostcode() {
 	}
 	
 	.input_box_email1 {
-		width: 207.5px;
+		width: 130.9px;
 		height: 50px;
 		border: 1px solid lightgray;
 		padding: 0px 0px 0px 15px;
@@ -186,15 +226,18 @@ function execDaumPostcode() {
 						<!-- 아이디 입력 -->
 						<div class="join_id">		
 							<h3 class="join_title">아이디</h3>
-							<input class="input_box" type="text" name="id">
+							<input class="input_box" type="text" name="id" id="id">
+							<span id="idReqMsg"></span>
 						</div>
 						
 						<!-- 비밀번호 입력 -->
 						<div class="join_pwd">						
 							<h3 class="join_title">비밀번호</h3>
 							<input class="input_box" type="password" name="pwd" id="pwd">
+							<span id="idCheck"></span>
 							<h3 class="join_title">비밀번호 확인</h3>
 							<input class="input_box" type="password" id="pwd2">
+							<span id="idCheck"></span>
 						</div>	
 						
 						<!-- 이름 입력 -->
@@ -213,7 +256,7 @@ function execDaumPostcode() {
 						<div class="join_gender">
 							<h3 class="join_title">성별</h3>
 							<select class="input_select" name="gender" id="gender">
-								<option>--성별--</option>
+								<option value="none">--성별--</option>
 								<option value="M">남자</option>
 								<option value="F">여자</option>
 							</select>
@@ -224,7 +267,8 @@ function execDaumPostcode() {
 						<div class="join_email">
 							<h3 class="join_title">이메일</h3>
 							<input class="input_box_email1" type="text" id="email_id" name="email_id"> @ 								
-							<select class="input_box_email1" id="email_domain" name="email_domain">
+							<input class="input_box_email1" type="text" id="email_domain" name="email_domain" value="${dto.emailDomain }">
+							<select class="input_box_email1" id="input_domain" onchange="chageDomainSelect()" >
 									<option >--선택--</option>
 									<option value="naver.com">naver.com</option>
 									<option value="gmail.com">gmail.com</option>

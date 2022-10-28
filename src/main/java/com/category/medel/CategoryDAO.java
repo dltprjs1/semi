@@ -12,7 +12,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.chall.model.UserDTO;
 
 public class CategoryDAO {
 	Connection con = null;

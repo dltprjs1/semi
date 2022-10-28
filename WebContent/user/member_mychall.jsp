@@ -7,18 +7,28 @@
 <title>챌린저스 : 나의 챌린지 현황</title>
 <style type="text/css">
 	
+	body {
+	 width: 100vw;
+	 height: 100vh;
+	 margin : 0;
+	}
+		
+	/* 마이 페이지 공통 위치 잡기*/
 	.my_container{
 		display: grid;
+		place-items: center;
 		grid-template-columns: 1fr 3fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr 4fr 1fr;
+		grid-template-rows: 80px 150px 100px 100px 100px;
 	}
-
+	
+	/* 마이페이지 공통 CSS */
 	.mypage {
 		grid-column: 2/3;
 		grid-row: 1/2;
 	}
 		
 	.my_navi{
+		width: 100%;
 		grid-column: 2/3;
 		grid-row: 2/3;
 	}
@@ -27,13 +37,16 @@
 		text-decoration: none;
 		color: #fff;
 	}
-		
+	
 	.my_title{
 		grid-column: 2/3;
-		grid-row: 3/4;
-		margin-top: 20px;
+		grid-row: 3/4;	
 	}
-
+	
+	.my_article{
+		grid-column: 2/3;
+		grid-row: 4/5;	
+	}
 	
 	.my_navi ul {
 		display: grid;
@@ -51,13 +64,17 @@
 		font-weight: bold;
 	}
 	
-	.mypage_container h1 {
-		font-size: 35px;
+	
+	.my_container h1 {
+		font-size: 32px;
+		font-weight: bolder;
 	}
 	
-	.mypage_container h2 {
-		font-size: 20px;
+	.my_container h2 {
+		font-size: 24px;
 	}
+	/*-----------마이페이지 공통 CSS end-----------*/
+	
 	
 	.mychall_atricle {
 		grid-column: 2/3;

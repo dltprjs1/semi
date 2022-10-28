@@ -174,6 +174,22 @@ public class UserDAO {
 				dto.setMem_reward(rs.getInt("mem_reward"));
 				dto.setChallenge_count(rs.getInt("challenge_count"));
 				dto.setChallenge_complete_count(rs.getInt("challenge_complete_count"));
+				dto.setMem_report_count(rs.getInt("mem_report_count"));
+				dto.setMem_email(rs.getString("mem_email"));
+				dto.setMem_gender(rs.getString("mem_gender"));
+				dto.setMem_img(rs.getString("mem_img"));
+				dto.setChallenge_made_count(rs.getInt("challenge_made_count"));
+				dto.setChallenge_rating(rs.getInt("challenge_rating"));
+				dto.setMem_birth(rs.getString("mem_birth"));
+				dto.setPostcode(rs.getInt("postcode"));
+				dto.setRoadAddress(rs.getString("roadaddress"));
+				dto.setJibunAddress(rs.getString("jibunaddress"));
+				dto.setDetailAddress(rs.getString("detailaddress"));
+				dto.setExtraAddress(rs.getString("extraaddress"));
+				dto.setEmailId(rs.getString("emailid"));
+				dto.setEmailDomain(rs.getString("emaildomain"));
+				dto.setNationNo(rs.getString("nationno"));
+				dto.setPhoneNo(rs.getString("phoneno"));
 			}
 			
 		} catch (SQLException e) {
@@ -239,7 +255,7 @@ public class UserDAO {
 			
 			// 생년월일로 나이 구하기
 			
-			sql = "insert into user_member (mem_num, mem_id, mem_pwd, mem_name, mem_age, mem_gender, mem_email, mem_phone, mem_addr, regdate, mem_birth ) values(?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?)";
+			sql = "insert into user_member (mem_num, mem_id, mem_pwd, mem_name, mem_age, mem_gender, mem_email, mem_phone, mem_addr, regdate, mem_birth, emailid, emaildomain, postcode, roadAddress, jibunAddress, detailAddress, extraAddress, nationNo , phoneNo) values(?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? )";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -253,6 +269,15 @@ public class UserDAO {
 			pstmt.setString(8, dto.getMem_phone());
 			pstmt.setString(9, dto.getMem_addr());
 			pstmt.setString(10, dto.getMem_birth());
+			pstmt.setString(11, dto.getEmailId());
+			pstmt.setString(12, dto.getEmailDomain());
+			pstmt.setInt(13, dto.getPostcode());
+			pstmt.setString(14, dto.getRoadAddress());
+			pstmt.setString(15, dto.getJibunAddress());
+			pstmt.setString(16, dto.getDetailAddress());
+			pstmt.setString(17, dto.getExtraAddress());
+			pstmt.setString(18, dto.getNationNo());
+			pstmt.setString(19, dto.getPhoneNo());
 			
 			result = pstmt.executeUpdate();
 			

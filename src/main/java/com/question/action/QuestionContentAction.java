@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
-import com.chall.model.UserDAO;
-import com.chall.model.UserDTO;
 import com.question.model.QuestionDAO;
 import com.question.model.QuestionDTO;
 
