@@ -28,7 +28,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp" />
+	<jsp:include page="../include/admin_top.jsp" />
 	<div align="center">
 		<h3>1:1문의 리스트</h3>
 		<br>

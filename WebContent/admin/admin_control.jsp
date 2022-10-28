@@ -18,7 +18,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/admin_top.jsp"/>
 	<div align="center">
 		<c:set var="list" value="${list }"/>
 		<h3>회원 목록 전체 리스트</h3>

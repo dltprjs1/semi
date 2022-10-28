@@ -18,7 +18,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/admin_top.jsp"/>
 	<div align="center">
 		<form method="post" action="question_update_check.do">
 		<input type="hidden" name="p_q_num" value="<%=content.getP_q_num() %>">

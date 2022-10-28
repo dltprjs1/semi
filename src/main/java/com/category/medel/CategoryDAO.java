@@ -179,4 +179,28 @@ public class CategoryDAO {
 		}
 		return result;
 	}
+	public String getSubList(int category_num) {
+		String result = "";
+		openConn();
+		try {
+			sql = "select * from challenge_category_sub where category_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,category_num);
+			rs = st.executeQuery();
+			result += "<subs>";
+			while(rs.next()) {
+				result += "<sub>";
+				result += "<sub_category_num>" + rs.getInt("sub_category_num") + "</sub_category_num>";
+				result += "<sub_category_name>" + rs.getString("sub_category_name") + "</sub_category_name>";
+				result += "<category_num>" + rs.getInt("category_num") + "</category_num>";
+				result += "</sub>";
+			}
+			result += "</subs>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
 }

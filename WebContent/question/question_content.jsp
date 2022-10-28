@@ -22,7 +22,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp" />
+	<jsp:include page="../include/admin_top.jsp" />
 	<div align="center">
 		<c:set var="content" value="${content }" />
 		<table border="1" cellspacing="0">

@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/admin_top.jsp"/>
 	<div align="center">
 		<c:set var="admin_id" value="${admin_id }"/>
 		<c:set var="admin_name" value="${admin_name }"/>
@@ -28,6 +28,10 @@
 		<br>
 		<hr width="65%" color="tomato">
 		<a href="<%=request.getContextPath() %>/FAQ_control.do">공지사항 관리</a>
+		<hr width="65%" color="tomato">
+		<br>
+		<hr width="65%" color="tomato">
+		<a href="<%=request.getContextPath() %>/challenge_content.do">공지사항 관리</a>
 		<hr width="65%" color="tomato">
 	</div>
 	<jsp:include page="../include/chall_bottom.jsp"/>

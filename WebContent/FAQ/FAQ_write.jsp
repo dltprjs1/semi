@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/admin_top.jsp"/>
+	<div align="center">
 		<h3>공지사항 작성 폼 페이지</h3>
 		<form method="post" action="<%=request.getContextPath() %>/FAQ_insert.do">
 			<table border="1" cellspacing="0">
@@ -26,12 +27,21 @@
 				<tr>
 					<th>카테고리</th>
 					<td>
-						<input name="faq_category">
+						<select name="faq_category">
+							<option value="1">인증</option>
+							<option value="2">결제</option>
+							<option value="3">상금</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="작성">
 					</td>
 				</tr>
 			</table>
 		</form>
+	</div>
 	<jsp:include page="../include/chall_bottom.jsp"/>
-
 </body>
 </html>

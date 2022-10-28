@@ -13,20 +13,26 @@
 	.pagination {
 		justify-content: center;
 	}
-	
-</style>
-<style type="text/css">
-	
 	#FAQ th{
 		text-align: center;
 	}
 	#FAQ td{
 		text-align: center;
 	}
+	#FAQ_title{
+		color: black;
+		font-weight: bold;
+	}
+	#FAQ_content{
+		color: gray;
+		font-weight: normal;
+		font-family: monospace;
+		font-size: 12px;
+	}
 </style>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/admin_top.jsp"/>
 	<div align="center">
 		<b>공지사항 리스트 페이지</b>
 		<c:set var="list" value="${list }"/>
@@ -41,7 +47,7 @@
 			<c:forEach items="${list }" var="dto">
 			<tr>
 				<td>${dto.faq_num }</td>
-				<td>${dto.faq_title }</td>
+				<td width="500" id="FAQ_title"><a href="<%=request.getContextPath() %>/FAQ_content.do?faq_num=${dto.faq_num }&page=${page}">${dto.faq_title }</a><br></td>
 				<td>${dto.faq_regdate.substring(0,10) }</td>
 				<td>
 					<c:if test="${dto.faq_category_num == 1}" >
@@ -59,7 +65,7 @@
 			</c:forEach>
 			</c:if>
 			<tr>
-				<td><input type="button" value="글쓰기" onclick="location.href='<%=request.getContextPath()%>/FAQ_write.do'"></td>
+				<td colspan="4" align="center"><input type="button" value="글쓰기" onclick="location.href='<%=request.getContextPath()%>/FAQ_write.do'"></td>
 			</tr>
 		</table>
 		<nav>
@@ -101,4 +107,10 @@
 	</div>
 	<jsp:include page="../include/chall_bottom.jsp"/>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+
+	
+
+</script>
 </html>
