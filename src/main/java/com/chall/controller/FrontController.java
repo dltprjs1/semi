@@ -36,9 +36,7 @@ public class FrontController extends HttpServlet {
 		Properties pro = new Properties();
 
 		FileInputStream fis = new FileInputStream(
-
 				"C:\\Users\\user1\\git\\team2_semi_challengers\\src\\main\\java\\com\\chall\\controller\\mapping.properties");
-
 		pro.load(fis);
 
 		String value = pro.getProperty(command);
@@ -49,6 +47,8 @@ public class FrontController extends HttpServlet {
 
 			String url_1 = st.nextToken();
 			String url_2 = st.nextToken();
+			
+			System.out.println(url_2);
 
 			try {
 				Class<?> url = Class.forName(url_2);
