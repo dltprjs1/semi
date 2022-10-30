@@ -12,7 +12,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-
 public class CategoryDAO {
 	Connection con = null;
 	PreparedStatement st = null;

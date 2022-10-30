@@ -27,8 +27,6 @@
 	String pattern7 = "MM.dd (E)"; SimpleDateFormat simpleDateFormat7 = new SimpleDateFormat(pattern7);
 	Calendar cal7 = Calendar.getInstance(); cal7.add(Calendar.DAY_OF_MONTH, 6); String day7 = simpleDateFormat7.format(cal7.getTime());
 	// 시작일 버튼 생성 코드 end
-	
-	// 인증 가능 시간 코드
 %>
 <!DOCTYPE html>
 <html>
@@ -39,13 +37,62 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-$("#image").on("change", function() {
-    if ($("#image")[0].files.length > 2) {
-        alert("You can select only 2 images");
+
+// 이미지 미리보기 메서드
+function previewFile1() { 
+    var preview = document.querySelector('#image1'); 
+    var file = document.querySelector('#file1').files[0]; 
+    var reader  = new FileReader(); 
+    reader.onloadend = function () { 
+          preview.src = reader.result; 
+   } 
+   if (file) { 
+         reader.readAsDataURL(file); 
+     } else { 
+         preview.src = ""; 
+  } 
+} 
+function previewFile2() { 
+    var preview = document.querySelector('#image2'); 
+    var file = document.querySelector('#file2').files[0]; 
+    var reader  = new FileReader(); 
+    reader.onloadend = function () { 
+          preview.src = reader.result; 
+   } 
+   if (file) { 
+         reader.readAsDataURL(file); 
+     } else { 
+         preview.src = ""; 
+  } 
+}
+// 이미지 미리보기 메서드 end
+
+// 파일 5개 이상 업로드 방지 메서드
+ 
+/*var // Define maximum number of files.
+  max_file_number = 3,
+  // Define your form id or class or just tag.
+  $form = $('#form'), 
+  // Define your upload field class or id or tag.
+  $file_upload = $('#file3', $form), 
+  // Define your submit class or id or tag.
+  $button = $('#submit', $form); 
+
+  // Disable submit button on page ready.
+  $button.prop('disabled', 'disabled');
+
+  $file_upload.on('change', function () {
+    var number_of_images = $(this)[0].files.length;
+    if (number_of_images > max_file_number) {
+      alert(`You can upload maximum ${max_file_number} files.`);
+      $(this).val('');
+      $button.prop('disabled', 'disabled');
     } else {
-        $("#imageUploadForm").submit();
+      $button.prop('disabled', false);
     }
-});
+  });*/
+//파일 5개 이상 업로드 방지 메서드 end
+
 </script>
 <style type="text/css">
 
@@ -67,63 +114,66 @@ $("#image").on("change", function() {
 			<hr class="join_hr" width="50%" color="red">
 			<br>
 			
-			
-			<h5>챌린지 제목</h5>
-  			<textarea cols="25" rows="1" id="title" placeholder="예) 1만보 걷기"></textarea>
-			
+			<form id="form" method="post" action="member_challJoin_4.do">
+			<h5>챌린지 제목</h5><!-- 필수항목 -->
+			<!-- 입력칸 오른쪽 아래 글자수 실시간으로 띄워주기 -->
+  			<textarea name="title" cols="25" rows="1" id="title" placeholder="예) 1만보 걷기"></textarea>
+  			
 			
 			<br><br>
-			<h5>인증 빈도</h5>
-			<input type="radio" class="btn-check" name="cycle" id="option1" autocomplete="off" checked>
+			<h5>인증 빈도</h5><!-- 필수항목 -->
+			<!-- (후순위) 인증 빈도에 따라 시작일과 설명 문구 변경해줘야 함 -->
+			<input type="radio" class="btn-check" name="cycle" id="option1" value="everyDay" autocomplete="off" checked>
 			<label class="btn btn-secondary" for="option1">매일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option2" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option2" value="weekDayAll" autocomplete="off">
 			<label class="btn btn-secondary" for="option2">평일 매일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option3" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option3" value="weekEndAll" autocomplete="off">
 			<label class="btn btn-secondary" for="option3">주말 매일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option4" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option4" value="1day" autocomplete="off">
 			<label class="btn btn-secondary" for="option4">주 1일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option5" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option5" value="2day" autocomplete="off">
 			<label class="btn btn-secondary" for="option5">주 2일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option6" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option6" value="3day" autocomplete="off">
 			<label class="btn btn-secondary" for="option6">주 3일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option7" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option7" value="4day" autocomplete="off">
 			<label class="btn btn-secondary" for="option7">주 4일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option8" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option8" value="5day" autocomplete="off">
 			<label class="btn btn-secondary" for="option8">주 5일</label>
-			<input type="radio" class="btn-check" name="cycle" id="option9" autocomplete="off">
+			<input type="radio" class="btn-check" name="cycle" id="option9" value="6day" autocomplete="off">
 			<label class="btn btn-secondary" for="option9">주 6일</label>
 			
 			
 			<br><br>
-			<h5>챌린지 기간</h5>
+			<h5>챌린지 기간</h5><!-- 필수항목 -->
 			<c:forEach begin="1" end="8" var="i">
-				<input type="radio" class="btn-check" name="duration" id="duRadio${i }" autocomplete="off">
+				<input type="radio" class="btn-check" name="duration" id="duRadio${i }" autocomplete="off" value="${i }">
 				<label class="btn btn-secondary" for="duRadio${i }">${i }주 동안</label>
 			</c:forEach>
 			
 			
 			<br><br>
-			<h5>시작일</h5>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio1" autocomplete="off">
+			<h5>시작일</h5><!-- 필수항목 -->
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio1" value="<%=day1 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio1"><%=day1 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio2" autocomplete="off">
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio2" value="<%=day2 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio2"><%=day2 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio3" autocomplete="off">
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio3" value="<%=day3 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio3"><%=day3 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio4" autocomplete="off">
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio4" value="<%=day4 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio4"><%=day4 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio5" autocomplete="off">
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio5" value="<%=day5 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio5"><%=day5 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio6" autocomplete="off">
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio6" value="<%=day6 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio6"><%=day6 %></label>
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio7" autocomplete="off">
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio7" value="<%=day7 %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio7"><%=day7 %></label>
 			
+			<!-- 선택한 시작일과 챌린지 기간을 실시간으로 텍스트로 보여주기 -->
 			
 			<br><br>
-			<h5>인증 방법</h5>
-  			<textarea cols="55" rows="3" id="guide" placeholder="예) 오늘 날짜와 걸음 수가 적힌 만보기 캡쳐 화면 업로드"></textarea>
-  			<br>
+			<h5>인증 방법</h5><!-- 필수항목 -->
+  			<textarea name="guide" cols="55" rows="3" id="guide" placeholder="예) 오늘 날짜와 걸음 수가 적힌 만보기 캡쳐 화면 업로드"></textarea>
+  			<br><!-- 입력칸 오른쪽 아래 글자수 실시간으로 띄워주기 -->
   			<a>* 챌린지가 시작되면 인증 방법을 수정할 수 없습니다. 신중히 작성해주세요. <br>
   			* 참가자들이 혼란을 겪지 않도록 정확한 기준과 구체적인 인증방법을 적어주세요. <br>
   			* 유저 챌린지에서 발생한 분쟁에는 챌린저스가 관여하지 않습니다.</a>
@@ -133,30 +183,32 @@ $("#image").on("change", function() {
 			<h5>인증샷 예시</h5>
 			<table>
 			  <tr>
-			    <td><img alt="인증 성공 예시 사진" height="300" width="300" border="2" src="<%=request.getContextPath()%>/uploadFile/regi_shot_success.jpg" class="rounded mx-auto d-block"></td>
-			    <td><img alt="인증 실패 예시 사진" height="300" width="300" border="2" src="<%=request.getContextPath()%>/uploadFile/regi_shot_fail.jpg" class="rounded mx-auto d-block"></td>
+			    <td><img id="image1" height="300" width="300" border="2" src="<%=request.getContextPath()%>/uploadFile/regi_shot_success.jpg" class="rounded mx-auto d-block"></td>
+			    <td><img id="image2" height="300" width="300" border="2" src="<%=request.getContextPath()%>/uploadFile/regi_shot_fail.jpg" class="rounded mx-auto d-block"></td>
 			  <tr>
 			  <tr align="center">
 			  	<td>O</td>
 			  	<td>X</td>
 			  </tr>
-			  <tr>
-			  	<td><input name="image[]" id="image" type="file" multiple accept="image/jpg, image/jpeg, image/png, image/gif"></td>
-			  	<td><input type="file" multiple accept="image/jpg, image/jpeg, image/png, image/gif"></td>
+			  <tr><!-- 업로드 방법 : '파일 올리기'클릭(X) -> 카메라 그림있는 네모칸 클릭(O) -->
+			  	<td><input type="file" name="success" id="file1" accept="image/jpg, image/jpeg, image/png, image/gif"
+			  	onchange="previewFile1()"></td>
+			  	<td><input type="file" name="fail" id="file2" accept="image/jpg, image/jpeg, image/png, image/gif"
+			  	onchange="previewFile2()"></td>
 			  </tr>
 			</table>
 			
 			
 			<br><br>
-			<h5>인증 가능 시간</h5>
+			<h5>인증 가능 시간</h5><!-- 필수항목 -->
 			<table>
 				<tr align="center">
 					<td>시작 시간</td>
 					<td>종료 시간</td>
 				</tr>
 				<tr>
-					<td><input type="time" value="00:00"></td>
-					<td><input type="time" value="23:59"></td>
+					<td><input name="startTime" type="time" value="00:00"></td>
+					<td><input name="endTime" type="time" value="23:59"></td>
 				</tr>
 			</table>
 			
@@ -165,25 +217,23 @@ $("#image").on("change", function() {
 			<h5>챌린지 소개</h5>
 			<a>사진과 글을 추가해 챌린지를 소개해보세요. <br>
   			혹시 알아요 리더님의 글에 반해서 의지가 불타오를지!</a><br>
-  			<textarea cols="55" rows="3" id="guide" placeholder="예) 매일 1만보 걷고 건강해지기! 오늘부터 같이 해봐요 :)"></textarea>
+  			<!-- 입력칸 오른쪽 아래 글자수 실시간으로 띄워주기 -->
+  			<textarea name="cont" cols="55" rows="3" id="guide" placeholder="예) 매일 1만보 걷고 건강해지기! 오늘부터 같이 해봐요 :)"></textarea>
   			<br>
 			
 			<a>소개 사진 올리기</a><br>
-			<input type="file">
-			
-			
-			
-			
-			
-			
-			
-			
+			<input name="discript_imgs" type="file" id="file3" name="file3[]" multiple="multiple" onselect="onSelect(event)">
+			<!-- 최대 5장 업로드 가능하게 하고 모두 미리보기 해줘야 함 -->
 			
 			
 			<br><br>
-			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin2.do'">이전</button>
-			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin4.do'">다음</button>
+			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
+			<button type="button" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
+			<button type="submit" class="btn btn-dark">다음</button>
+			<!-- 버튼은 비활성화되어있다가 필수항목 모두 선택하면 활성화되게 -->
+		</form>
 		</div>
+		
 		<br>
    		<div class="progress">
   			<div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25 %</div>

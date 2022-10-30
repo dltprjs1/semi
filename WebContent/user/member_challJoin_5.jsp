@@ -11,20 +11,10 @@
 <script type="text/javascript">
 	
 	function display(){
+		
 	    var categoryName = document.getElementsByName("categoryName");
 	    for(i=0; i<categoryName.length; i++){
 	        if(categoryName[i].checked == true){
-	        	<%-- if(categoryName[i].value == "운동"){
-	        		alert("운동 이미지")
-	        		document.getElementById("mainImg").src = "<%=request.getContextPath()%>/uploadFile/food.png"; 
-	        	}
-	        	if else(categoryName[i].value == "식습관"){
-	        		alert("식습관 이미지")
-	        		document.getElementById("mainImg").src = "<%=request.getContextPath()%>/uploadFile/food.png"; 
-	        	}else {
-	        		
-	        	} --%>
-	        	
 	        	switch(categoryName[i].value) {
 	    		case "운동" :
 	    			document.getElementById("mainImg").src = "<%=request.getContextPath()%>/uploadFile/run.png"; 
@@ -70,9 +60,10 @@
 			<h3><b>이제 다 왔어요! 사람들이 쉽게 찾을 수 있게 완성해주세요!</b></h3>
 			<hr class="join_hr" width="50%" color="red">
 			<br>
+			<form id="form" method="post" action="member_challJoin_final.do">
 			
 			
-			<h5>카테고리 선택</h5>
+			<h5>카테고리 선택</h5><!-- 필수항목 -->
 			<a>어느 카테고리에 챌린지를 노출할까요?</a>
 			<br>
 			<c:if test="${!empty categoryList }">
@@ -88,24 +79,27 @@
 			<h5>대표사진</h5>
 			<a>챌린지를 잘 설명할 수 있는 사진으로 선택해주세요. 멋진 썸네일은 인기의 비결!</a><br>
 			<br>
-			<input type="file" name="mainImgFile_custom">
-			<!-- 서블릿에서 받을 때 if(mainImgFile_custom == null)해서 기본 이미지 파일명 넘겨주기 -->
-			<!-- 자바스크립트에서 name=mainImgFile_default로 기본 이미지 파일명 초기화해주기 -->
+			<!-- 등록한 사진 미리보기 해줘야 함 -->
+			<input type="file" name="mainImgFile">
 			<img id="mainImg" alt="대표 사진" height="200" width="200" border="2" src="<%=request.getContextPath()%>/uploadFile/run.png" class="rounded mx-auto d-block">
 			
 			
 			<br><br>
 			<h5>검색 키워드 입력</h5>
 			<a>어떻게 검색하면 챌린지를 찾을 수 있게 할까요? (최대 3개)</a><br>
+			<!-- 버튼 누르면 입력창이 나타나야 함 -->
 			<button onclick="">+ 추가하기</button>
-			<input placeholder="입력" class="add_btn" style="width:7%;"> <input placeholder="입력" class="add_btn" style="width:7%;"> <input placeholder="입력" class="add_btn" style="width:7%;">
+			<input name="keyword" placeholder="입력" class="add_btn" style="width:7%;">
+			<input name="keyword" placeholder="입력" class="add_btn" style="width:7%;">
+			<input name="keyword" placeholder="입력" class="add_btn" style="width:7%;">
 			
 			
 			
 			
 			<br><br>
-			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin4.do'">이전</button>
-			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/어디로갈까요??'">챌린지 개설하기</button>
+			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
+			<button type="submit" class="btn btn-dark">챌린지 개설하기</button>
+			</form>
 		</div>
 		<br>
    		<div class="progress">

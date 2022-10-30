@@ -17,19 +17,7 @@
 	  let checkBox3 = document.getElementById("promise3");
 
 	  if (checkBox1.checked == true && checkBox2.checked == true && checkBox3.checked == true){
-		 location.href="member_challJoin2.do";
-			/* $.ajax({
-				type : "post",
-				url : "member_challJoin_2.jsp",
-				datatype : "html",
-				success : function(data) {
-					document.body.innerHTML = data;
-				},
-				
-				error : function(data) {
-					alert("에러가 발생하였습니다.~~~");
-				}
-			}); */
+		 location.href="member_challJoin_2.do";
 	  } else {
 		 location.href="#";
 	  }
@@ -57,6 +45,7 @@
 			<hr width="50%" color="red">
 			<br>
 			<button type="button" class="btn btn-dark" onclick="check()">네, 약속할게요!</button>
+			<!-- 버튼은 비활성화되어있다가 체크박스 3개 모두 체크되면 활성화되게 -->
 		</div>
    <jsp:include page="/include/chall_bottom.jsp" />
 </body>
