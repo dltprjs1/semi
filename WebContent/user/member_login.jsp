@@ -260,7 +260,7 @@ Kakao.init("b3c649792fd4d054a8b60299da478e2d"); //발급받은 키 중 javascrip
 				</form>
 	
 				<ul class="find_join">
-					<li><a href="<%=request.getContextPath() %>/member_find.do">비밀번호 찾기&nbsp;</a></li>
+					<li><a href="<%=request.getContextPath() %>/member_findPwd.do">비밀번호 찾기&nbsp;</a></li>
 					<li><b class="bar">|</b><a href="<%=request.getContextPath() %>/member_find.do">&nbsp;아이디 찾기&nbsp;</a></li>
 					<li><b class="bar">|</b><a href="<%=request.getContextPath() %>/member_join.do">&nbsp;회원가입</a></li>
 				</ul>

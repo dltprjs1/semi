@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="include/chall_top.jsp" />
 	<article align="center">
-		<hr width="65%" color="gray">
+		<hr width="65%" color`="gray">
 			<h3>챌린저스 메인 페이지</h3>
 		<hr width="65%" color="gray">
 		<br>
