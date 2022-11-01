@@ -1,10 +1,22 @@
 package com.user.model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 
 public class UserDAO {
 	Connection con = null;
@@ -28,7 +40,7 @@ public class UserDAO {
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:\\NCS\\download\\apache-tomcat-9.0.65-windows-x64\\apache-tomcat-9.0.65\\Wallet_ProjectChallengers";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -291,6 +303,109 @@ public class UserDAO {
 		return result;
 		
 	}	// insertMember() 메소드 end
-
+	
+	
+	// 카카오에서 액세스 토큰 받아오는 메소드.
+	// 카카오 로그인 완료 후 받은 인가코드를 매개변수로 할당
+	public String getAccessToken (String auth_code) {
+		String access_token = "";
+		String refresh_token = "";
+		String reqURL = "https://kauth.kakao.com/oauth/token";
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			            
+			//    POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			            
+			//    POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=617a393522b6cb65ea54d2ed4350878e");
+			sb.append("&redirect_uri=http://localhost:8282/Semi_Challengers/member_kakaoLoginOk.do");
+			sb.append("&code=" + auth_code);
+			bw.write(sb.toString());
+			bw.flush();
+			            
+			//    결과 코드가 200이라면 성공
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+			 
+			//요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+			BufferedReader br = new BufferedReader(new java.io.InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+			            
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+			            
+			//Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+			            
+			access_token = element.getAsJsonObject().get("access_token").getAsString();
+			refresh_token = element.getAsJsonObject().get("refresh_token").getAsString();
+			            
+			System.out.println("access_token : " + access_token);
+			System.out.println("refresh_token : " + refresh_token);
+			            
+			br.close();
+			bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+		} 
+		return access_token;
+	}
+	
+	// 카카오 사용자 정보를 받아오는 메소드
+	public HashMap<String, Object> getKakaoUserInfo (String access_token) {
+		HashMap<String, Object> kakaoUserInfo  = new HashMap<>();
+	    String reqURL = "https://kapi.kakao.com/v2/user/me";
+	    try{
+	    	URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + access_token);   
+	        int responseCode = conn.getResponseCode();       
+	        BufferedReader br = new BufferedReader(new java.io.InputStreamReader(conn.getInputStream(),"UTF-8")); 
+	        String line = "";
+	        String result = "";    
+	        while ((line = br.readLine()) != null) {
+	        	result += line;
+	        }
+	        JsonParser parser = new JsonParser();
+	        JsonElement element = parser.parse(result);
+	        String id = element.getAsJsonObject().get("id").getAsString();
+	        JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();    
+	        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+	        
+	        String profile_image = properties.getAsJsonObject().get("profile_image").getAsString();
+	        JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();    
+	        String email = kakao_account.getAsJsonObject().get("email").getAsString();
+	        String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
+	        String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+	        
+	        
+	        kakaoUserInfo.put("id", id);
+	        kakaoUserInfo.put("nickname", nickname);
+	        
+	        
+	        kakaoUserInfo.put("profile_image", profile_image);
+	        kakaoUserInfo.put("email", email);
+	        kakaoUserInfo.put("birthday", birthday);
+	        kakaoUserInfo.put("gender", gender);
+	        System.out.println(properties);
+	        br.close();
+	            
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	        
+	    return kakaoUserInfo;
+	}
 	
 }
