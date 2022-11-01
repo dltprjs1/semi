@@ -50,6 +50,8 @@ public class FindPwdAuthAction implements Action{
 		p.put("mail.smtp.socketFactory.port", "465");
 		p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		p.put("mail.smtp.socketFactory.fallback", "false");
+		p.put("mail.smtp.ssl.protocols", "TLSv1.2"); // 추가된 코드
+		p.put("mail.smtp.ssl.enable", "true");  // 추가된 코드
 		
 		try {
 			Authenticator auth = new Gmail();
@@ -73,8 +75,15 @@ public class FindPwdAuthAction implements Action{
 			out.println("</script>");
 			out.close();
 		}
+		
+		ActionForward forward = new ActionForward();
+		
+		forward.setRedirect(true);
+		
+		// 이메일 인증 페이지로 이동
+		forward.setPath("member_findPwdAuth.do");
 			
-		return null;
+		return forward;
 	}
 
 }
