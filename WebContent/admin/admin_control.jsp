@@ -15,35 +15,139 @@
 		justify-content: center;
 	}
 	
+	.header {
+	background-color: #F6F7F9;
+	height: 247px;
+	padding: 60px 0px 30px;
+}
+
+.h_container {
+	margin-left: 120px;
+}
+
+.h_container2 {
+	border: none;
+	width: 30px;
+	display: inline-block;
+	height: 66px;
+	background-color: white;
+	border-radius: 7px;
+}
+
+.search {
+	width: 350px;
+	height: 66px;
+	font-size: 20px;
+	border: none;
+	border-radius: 7px;
+	position: absolute;
+}
+
+img {
+	margin-top: 20px;
+}
+
+.header2 {
+	background-color: #F6F7F9;
+}
+
+.h_bottom {
+	margin-left: 100px;
+}
+.h_bottom div{
+	display: inline-block;
+}
+
+.list li {
+	display: inline-block;
+	width: px;
+	margin-left: 200px;
+}
+
+.list li b {
+}
+
+.h_underline {
+	margin-top: 20px;
+	border: solid;
+	height: 3px;
+}
+
+/* .member_list{
+	margin-left: 120px;
+} */
+.member_list th{
+	font-size: 20px;
+	text-align: center;
+	border-radius: 7px;
+	border-radius: 7px;
+	font-family: "paybooc-Light", sans-serif;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+	text-decoration: none;
+	font-weight: 600;
+	transition: 0.25s;
+	background-color: #519d9e;
+	color: black;
+}
+.member_list td{
+	height: 100px;
+	font-weight: bold;
+	text-align: center;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.btn{
+	  border: 3px solid #f8e6e0;
+      color: #6e6e6e;
+}
+.btn:hover {
+	 background-color: #f8e6e0;
+     color: #6e6e6e;
+}
+
 </style>
 </head>
 <body>
 	<jsp:include page="../include/admin_top.jsp"/>
-	<div align="center">
 		<c:set var="list" value="${list }"/>
-		<h3>회원 목록 전체 리스트</h3>
+		<div class="header">
+			<div class="h_container">
+				<h4>검색어를 입력해 주십시오.</h4>
+				<div class="h_container2">
+					<img .class="eee"
+						src="https://chlngers.com/assets/svgs/icon-search-line-black.svg"
+						width="30" height="30">
+				</div>
+				<input class="search" name="search">
+			</div>
+		</div>
+		<br>
+		<br>
+		<div align="center">
+		<table class="member_list" width="1000px">
 		<c:if test="${!empty list }">
-				<table border="1" cellspacing="0" width="30%" align="center">
-					<tr>
-						<th>회원 번호</th>
-						<th>회원 아이디</th>
-						<th>회원 이름</th>
-						<th>회원 레벨</th>
+			<tr>
+						<th>아이디</th>
+						<th>이름</th>
+						<th>레벨</th>
 						<th>신고 누적 횟수</th>
 						<th>회원 삭제</th>
-					</tr>
+			</tr>
 			<c:forEach items="${list }" var="dto">
-					<tr align="center">
-						<td>${dto.mem_num }</td>
+			<tr>
 						<td>${dto.mem_id }</td>
 						<td>${dto.mem_name }</td>
 						<td>${dto.mem_level }</td>
 						<td><a href="<%=request.getContextPath()%>/report_content.do?mem_id=${dto.mem_id}&page=${page}">${dto.mem_report_count }</a></td>
-						<td><input type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?mem_id=${dto.mem_id }&page=${page }'" value="삭제하기"></td>
-					</tr>
+						<td><input class="btn" type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?mem_id=${dto.mem_id }&page=${page }'" value="삭제하기"></td>
+			</tr>
 			</c:forEach>
-				</table>
 		</c:if>
+		</table>
+		</div>
+		<br>
+		<br>
+		
 	<nav>
 		  <ul class="pagination">
 		    <li class="page-item">
@@ -80,7 +184,6 @@
 		    </c:if>
 		  </ul>
 		</nav>
-	</div>
 	<jsp:include page="../include/chall_bottom.jsp"/>
 </body>
 </html>

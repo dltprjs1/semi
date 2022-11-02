@@ -12,8 +12,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--  width=device-width : 장치의 화면 너비를 따르도록 페이지 너비를 설정.(장치에 따라 다름)
-	initial-scale=1.0 : 브라우저에서 페이지를 처음로드 할 때 초기 확대 / 축소 수준을 설정. -->
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <style type="text/css">

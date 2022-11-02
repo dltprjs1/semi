@@ -9,116 +9,230 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	.list li {
-		display : inline-block; 
-		
-	}
-</style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<style type="text/css">
+.header {
+	background-color: #F6F7F9;
+	height: 247px;
+	padding: 60px 0px 30px;
+}
+
+.h_container {
+	margin-left: 120px;
+}
+
+.h_container2 {
+	border: none;
+	width: 30px;
+	display: inline-block;
+	height: 66px;
+	background-color: white;
+	border-radius: 7px;
+}
+
+.search {
+	width: 350px;
+	height: 66px;
+	font-size: 20px;
+	border: none;
+	border-radius: 7px;
+	position: absolute;
+}
+
+img {
+	margin-top: 20px;
+}
+.category_div{
+	display: inline-block;
+	margin-left: 120px;
+}
+.category_list li{
+	display: inline-block;
+}
+.block{
+	display: block;
+}
+.category_list{
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: 250px 250px 250px;
+}
+.category_list li{
+	list-style: none;
+	
+}
+.category_list li h2{
+	color: black;
+}
+.category_list li:hover{
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+.category_list li:hover .tkdtpqhrl{
+	background-color: #519d9e;
+    color: #9dc8c8;
+}
+
+.category_list li span:hover{
+	background-color: #519d9e;
+    color: #9dc8c8;
+}
+.category_list li:nth-of-type(1){
+	grid-column: 2/3;
+	grid-row: 1/2;
+
+}
+.category_list li:nth-of-type(2){
+	grid-column: 3/4;
+	grid-row: 1/2;
+}
+.category_list li:nth-of-type(3){
+	grid-column: 4/5;
+	grid-row: 1/2;
+}
+.category_list li:nth-of-type(4){
+	grid-column: 2/3;
+	grid-row: 2/3;
+}
+.category_list li:nth-of-type(5){
+	grid-column: 3/4;
+	grid-row: 2/3;
+}
+.category_list li:nth-of-type(6){
+	grid-column: 4/5;
+	grid-row: 2/3;
+}
+.category_list li:nth-of-type(7){
+	grid-column: 2/3;
+	grid-row: 3/4;
+}
+.category_list li:nth-of-type(8){
+	grid-column: 3/4;
+	grid-row: 3/4;
+}
+.category_list li:nth-of-type(9){
+	grid-column: 4/5;
+	grid-row: 3/4;
+}
+
+.tkdtpqhrl{
+	border: 3px solid #519d9e;
+    color: darkgray;
+	position: relative;
+    padding: 7px 15px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+.tkdtpqhrl:hover{
+	background-color: #519d9e;
+    color: #9dc8c8;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../include/admin_top.jsp"/>
-	<div align="center">
 	<c:set var="list" value="${list }"/>
-		<h3>카테고리 리스트</h3>
-		<img id="eco" src="<%=request.getContextPath() %>/uploadFile/eco.png" width="200" height="200">
-		<span id="ecc"></span>
-		<img id="eto" src="<%=request.getContextPath() %>/uploadFile/etc.png" width="200" height="200">
-		<span id="etc"></span>
-		<div id="3">
-		<img id="food" src="<%=request.getContextPath() %>/uploadFile/food.png" width="200" height="200">
-		<span id="foc"></span>
-		<img id="hobby" src="<%=request.getContextPath() %>/uploadFile/hobby.png" width="200" height="200">
-		<span id="hoc"></span>
-		<img id="life" src="<%=request.getContextPath() %>/uploadFile/life.png" width="200" height="200">
-		<span id="lic"></span>
-		<div id="6">
-		<img id="mind" src="<%=request.getContextPath() %>/uploadFile/mind.png" width="200" height="200"><br>
-		<span id="mic"></span>
-		<img id="run" src="<%=request.getContextPath() %>/uploadFile/run.png" width="200" height="200">
-		<span id="ruc"></span>
-		<img id="study" src="<%=request.getContextPath() %>/uploadFile/코딩-이모지.jpg" width="200" height="200">
-		<span id="stc"></span>
-	</div>
+		<div class="header">
+			<div class="h_container">
+				<h4>검색어를 입력해 주십시오.</h4>
+				<div class="h_container2">
+					<img .class="eee"
+						src="https://chlngers.com/assets/svgs/icon-search-line-black.svg"
+						width="30" height="30">
+				</div>
+				<input class="search" name="search">
+			</div>
+		</div>
+		<div class="all">
+			<ul class="category_list">
+				<li>
+					<div class="training">
+						<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=1">
+							<img src="../uploadFile/admin/운동.png" width="64" height="54">
+							<h2>운 동</h2>
+							<span class="tkdtpqhrl"> 상세보기 + </span>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="eating">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=2">
+						<img src="uploadFile/admin/식습관.png" width="64" height="54">
+						<h2>식습관</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="life">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=3">
+						<img src="uploadFile/admin/생활.png" width="64" height="54">
+						<h2>생 활</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="mind">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=4">
+						<img src="uploadFile/admin/정서.png" width="64" height="54">
+						<h2>정 서</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="hobby">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=5">
+						<img src="uploadFile/admin/취미.png" width="64" height="54">
+						<h2>취 미</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="environment">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=6">
+						<img src="uploadFile/admin/환경.png" width="64" height="54">
+						<h2>환경+펫</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="etc">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=7">
+						<img src="uploadFile/admin/기타.png" width="64" height="54">
+						<h2>기 타</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="study">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=8">
+						<img src="uploadFile/admin/공부.png" width="64" height="54">
+						<h2>공 부</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+				<li>
+					<div class="selfcare">
+					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=9">
+						<img src="uploadFile/admin/공부.png" width="64" height="54">
+						<h2>셀프케어</h2>
+						<span class="tkdtpqhrl"> 상세보기 + </span>
+					</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	<input type="button" value="카테고리 추가" onclick="location.href='<%=request.getContextPath()%>/category/create_category.jsp'">
 	<jsp:include page="../include/chall_bottom.jsp"/>
 </body>
-<script type="text/javascript">
-	
-			
-	$(document).ready(function(){
-		$.ajaxSetup({
-			ContentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			type : "post"
-		});
-		
-		function sub(s_c){
-			$.ajax({
-				
-				url : "/Semi_Challengers/category/sub_category_ajax.jsp",
-				data : {category_num : s_c},
-				datatype : "xml",
-				success : function(data){
-					let li = "";
-						li += "<ul class = 'list'>";
-					$(data).find("sub").each(function(){
-						li += "<li>"+$(this).find("sub_category_name").text()+"</li>&nbsp;";
-					});
-						li += "</ul>"
-						if(s_c == 1){$("#ruc").append(li);}
-						if(s_c == 2){$("#foc").append(li);}
-						if(s_c == 3){$("#lic").append(li);}
-						if(s_c == 4){$("#mic").append(li);}
-						if(s_c == 5){$("#hoc").append(li);}
-						if(s_c == 6){$("#ecc").append(li);}
-						if(s_c == 7){$("#etc").append(li);}
-						if(s_c == 8){$("#suc").append(li);}
-						if(s_c == 9){$("#sec").append(li);}
-				},
-				error : function(){
-					alert('데이터 통신 에러')
-				}
-			});
-		}
-		$("#eco").on("click",function(){
-			var s_c = 6;
-			sub(s_c);
-		});
-		$("#eto").on("click",function(){
-			var s_c = 7;
-			sub(s_c);
-		});
-		$("#run").on("click",function(){
-			var s_c = 1;
-			sub(s_c);
-		});
-		$("#food").on("click",function(){
-			var s_c = 2;
-			sub(s_c);
-		});
-		$("#life").on("click",function(){
-			var s_c = 3;
-			sub(s_c);
-		});
-		$("#mind").on("click",function(){
-			var s_c = 4;
-			sub(s_c);
-		});
-		$("#hobby").on("click",function(){
-			var s_c = 5;
-			sub(s_c);
-		});
-		$("#study").on("click",function(){
-			var s_c = 8;
-			sub(s_c);
-		});
-		$("#selfcare").on("click",function(){
-			var s_c = 9;
-			sub(s_c);
-		});
 
-	});
-	
-	
-</script>
 </html>

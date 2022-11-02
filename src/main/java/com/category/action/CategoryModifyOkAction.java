@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.category.medel.CategoryDAO;
 import com.category.medel.CategoryDTO;
+import com.category.medel.SubDTO;
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.oreilly.servlet.MultipartRequest;
@@ -27,8 +28,13 @@ public class CategoryModifyOkAction implements Action {
 		int category_num = Integer.parseInt(mr.getParameter("category_num").trim());
 		String category_code = mr.getParameter("category_code").trim();
 		String category_name = mr.getParameter("category_name").trim();
+		String sub_category = mr.getParameter("sub_category_name").trim();
+		String sub_category_input = mr.getParameter("category_name_input").trim();
+		
+		
 		
 		CategoryDTO dto = new CategoryDTO();
+		SubDTO s_dto = new SubDTO();
 		
 		dto.setCategory_num(category_num);
 		dto.setCategory_code(category_code);
@@ -36,7 +42,6 @@ public class CategoryModifyOkAction implements Action {
 		
 		CategoryDAO dao = CategoryDAO.getInstance();
 		File category_image = mr.getFile("category_image");
-		
 		if(category_image != null) {  // 첨부파일이 존재하는 경우
 			
 			// 우선은 첨부파일의 이름을 알아야 함.
@@ -74,7 +79,15 @@ public class CategoryModifyOkAction implements Action {
 			dto.setCategory_image(fileDBName);
 			
 		}
+		if(sub_category.equals(":::서브 카테고리:::")) {
+			dao.insertSub(category_num,sub_category_input);
+		}
 		
+		if(sub_category_input.isEmpty()) {
+			dao.deleteSub(sub_category);
+		}
+		
+		dao.subCategoryModify(sub_category,sub_category_input);
 		int res = dao.CategoryModify(dto);
 		PrintWriter out = response.getWriter();
 		ActionForward forward = new ActionForward();
@@ -88,8 +101,6 @@ public class CategoryModifyOkAction implements Action {
 			out.println("history.back()");
 			out.println("</script>");
 		}
-		
 		return forward;
 	}
-
 }

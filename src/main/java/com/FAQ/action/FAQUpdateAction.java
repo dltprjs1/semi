@@ -35,7 +35,7 @@ public class FAQUpdateAction implements Action {
 		ActionForward forward = new ActionForward();
 		if(res > 0) {
 			forward.setRedirect(true);
-			forward.setPath("FAQ_content.do?faq_num="+faq_num+"&page="+page);
+			forward.setPath("FAQ_control.do?faq_num="+faq_num+"&page="+page);
 		}else {
 			out.println("<script>");
 			out.println("alert('수정 실패!')");

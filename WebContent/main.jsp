@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Challengers</title>
+<style type="text/css">
+	
+</style>
 </head>
 <body>
 	<jsp:include page="include/chall_top.jsp" />

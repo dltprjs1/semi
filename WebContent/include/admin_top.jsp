@@ -12,8 +12,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--  width=device-width : 장치의 화면 너비를 따르도록 페이지 너비를 설정.(장치에 따라 다름)
-	initial-scale=1.0 : 브라우저에서 페이지를 처음로드 할 때 초기 확대 / 축소 수준을 설정. -->
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <style type="text/css">
@@ -22,13 +20,17 @@
 	 width: 100vw;
 	 height: 100vh;
 	 margin : 0;
+	 
 	}
 	
 	.container {
 		display : grid;
 		grid-template-columns: repeat(6, 1fr);
-		grid-template-rows: 100px 80px 66.665px;
-		
+		grid-template-rows: 100px 80px;
+		position: sticky;
+		background-color : white;
+	 	/* top: 0; */
+	 	border-bottom: 1px solid lightgray;
 	}
 	
 	.head {
@@ -54,7 +56,7 @@
 	.top{
 		width: 420px;
 		display: grid;
-		grid-template-columns: 2fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
 		grid-template-rows: 50px;
 		grid-auto-columns: auto;
 		column-gap : 1px;
@@ -62,32 +64,34 @@
 	
 	.top_li_1 {
 		list-style: none;
-		grid-column: 2/3;
+		grid-column: 3/4;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
 	.top_li_2 {
 		list-style: none;
-		grid-column: 3/4;
+		grid-column: 4/5;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
 	.top_li_3 {
 		list-style: none;
-		grid-column: 4/5;
+		grid-column: 5/6;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
 	.top_li_4 {
 		list-style: none;
-		grid-column: 1/2;
+		grid-column: 2/3;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	.top_li_5 {
+		grid-column: 1/2;
+		grid-row: 1/2;	
 		list-style: none;
 		font-size: 16px;
 		top : 100;
@@ -113,7 +117,7 @@
 		cursor: pointer;
 		width: 80px;
 		height: 43.99px;
-		background-color: #ff4d54;
+		background-color:#289828;
 		color : white;
 		font-weight : bold;
 		font-size: 16px;
@@ -123,7 +127,7 @@
 	
 	.navi {
 		grid-column: 1/7;
-		grid-row: 3/4;
+		grid-row: 2/3;
 		float:left; 
 		text-align: center;
 	}
@@ -158,7 +162,7 @@
 	
 	
 	.menu li:hover{
-		background-color: #ff4d54;
+		background-color: #289828;
 	}
 	
 	.menu_li_1 {
@@ -197,16 +201,16 @@
 	.footer a{
 		color: gray;
 	}
-
+	
+	
 </style>
 </head>
 <body>
-
 	<div class="container" align="center">
 		
 		<header class="head">
 		
-			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/logo_standard.svg"> </a>
+			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/challengers_manager_logo.png"> </a>
 			
 		</header>
 			<c:set var="dto" value="${admin_name }" />
@@ -214,33 +218,18 @@
 			<div class="top_right">
 				<ul class="top">
 					<c:if test="${!empty admin_name }">
-						<%-- <li class="top_li_1"><a href="<%=request.getContextPath()%>/admin_control.do">회원 관리</a></li>
-						<li class="top_li_2"><a href="<%=request.getContextPath() %>/category_control.do">카테고리 관리</a></li>	
-						<li class="top_li_3"><a href="<%=request.getContextPath() %>/admin_customer_center.do">고객센터 관리</a></li> --%>
 						<li class="top_li_4"><b>${admin_name }</b> 관리자님 안녕하세요!</li>
 					</c:if>
-			
 				</ul>
 			</div>
 			
-		
-		<div class="search">
-			<form method="post" action="<%=request.getContextPath() %>/main.do">
-				<input class="search_text" type="text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;<input class="search_btn" type="submit" value="검색">
-			</form>	
-		</div>
-		
 		<nav class="navi">
 			<ul class="menu">
-			
 				<li class="menu_li_4"><a href="<%=request.getContextPath()%>/admin/admin_home.jsp">관리자 홈</a></li>
 				<li class="menu_li_1"><a href="<%=request.getContextPath()%>/admin_control.do">회원 관리</a></li>
 				<li class="menu_li_2"><a href="<%=request.getContextPath() %>/category_control.do">카테고리 관리</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/admin_customer_center.do">고객센터 관리</a></li>
 			</ul>
 		</nav>
-		
 	</div>
-	<hr width=100% align="center">
-
 	<%-- 이하 영역은 본문 영역이 됨 --%>
