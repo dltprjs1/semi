@@ -32,8 +32,15 @@ public class UserDTO {
 	private String extraAddress;
 	private String emailId;
 	private String emailDomain;
+	private String kakaoAccount;
 	
 	
+	public String getKakaoAccount() {
+		return kakaoAccount;
+	}
+	public void setKakaoAccount(String kakaoAccount) {
+		this.kakaoAccount = kakaoAccount;
+	}
 	public String getNationNo() {
 		return nationNo;
 	}
