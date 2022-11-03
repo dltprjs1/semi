@@ -1,24 +1,14 @@
-<%@page import="com.question.model.QuestionDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	QuestionDTO content = (QuestionDTO)request.getAttribute("content");
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-
-	function question_answer() {
-		location.href="category_question.do";
-	}
-	
-</script>
 <style type="text/css">
-	#container{
+
+#container{
 	background-color: #F6F7F9;
 }
 .header {
@@ -99,8 +89,13 @@ img {
 	border: none;
 	border-radius: 7px;
 }
-.btn{
-	margin-left : 120px;
+
+.btn {
+	margin-left: 120px;
+}
+
+.btn input {
+	
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -114,43 +109,50 @@ img {
 	background-color: #519d9e;
 	color: black;
 }
-.btn:hover{
+
+.btn input:hover {
 	background-color: #77af9c;
 	color: #d7fff1;
 }
 </style>
 </head>
 <body>
+	<c:set var="dto" value="${dto }" />
 	<jsp:include page="../include/admin_top.jsp" />
-		<c:set var="content" value="${content }" />
-		<form method="post" action="question_answer.do">
-		<input type="hidden" name="p_q_num" value="<%=content.getP_q_num() %>">
-		<input type="hidden" name="p_q_user_num" value="<%=content.getP_q_user_num() %>">		
-		<div id="container">
-		<div class="header">
+	<div id="container">
+	<form method="post"
+		action="<%=request.getContextPath()%>/FAQ_update.do">
+		<input type="hidden" name="faq_num" value="${dto.faq_num }"> <input
+			type="hidden" name="page" value="${param.page }">
+			<div class="header">
 				<div class="h_container">
 					<h2>제 목</h2>
-					<input class="search" value="<%=content.getP_q_title()%>" readonly>
+					<input class="search" name="faq_title" value="${dto.faq_title }">
 				</div>
 				<div class="h_container_cate">
 					<h2>카테고리</h2>
-					<input class="category_name"value="<%=content.getP_q_category_num()%>" readonly>
+					<select class="category_name" name="faq_category_num">
+						<option>:::카테고리 선택:::</option>
+						<option value="1">인증</option>
+						<option value="2">결제</option>
+						<option value="3">상금</option>
+					</select>
 				</div>
 				<div class="header2"></div>
 				<div class="h_container_cont">
 					<h2>내 용</h2>
-					<textarea class="cont" rows="20" cols="100" readonly><%=content.getP_q_content() %></textarea>
+					<textarea class="cont" rows="20" cols="100" name="faq_content">${dto.faq_content }"></textarea>
 				</div>
-				<div class="h_container_cont">
-					<h2>답 변</h2>
-					<textarea class="cont" rows="20" cols="100" name="p_q_answer_cont"></textarea>
-				</div>
-				<br>
-				<br>
-				<input class="btn" type="submit" value="답변하기" onclick="<%=request.getContextPath()%>/category_control.do">
 			</div>
+			<br>
+			<br>
+			<div class="btn">
+				<input type="submit" value="수정하기">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath() %>/FAQ_delete.do?faq_num=${dto.faq_num }&page=${param.page }'">
 			</div>
-			</form>
+	</form>
+	</div>
 	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 </html>

@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Challengers</title>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="searchJS/main_list.js"></script>
 <script type="text/javascript" src="searchJS/history.js"></script>
+
 </head>
 <body>
 	<jsp:include page="include/chall_top.jsp" />

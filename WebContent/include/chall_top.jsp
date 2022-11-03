@@ -12,8 +12,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--  width=device-width : 장치의 화면 너비를 따르도록 페이지 너비를 설정.(장치에 따라 다름)
-	initial-scale=1.0 : 브라우저에서 페이지를 처음로드 할 때 초기 확대 / 축소 수준을 설정. -->
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 
@@ -67,7 +65,7 @@
 	.top{
 		width: 420px;
 		display: grid;
-		grid-template-columns: 2fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
 		grid-template-rows: 50px;
 		grid-auto-columns: auto;
 		column-gap : 1px;
@@ -75,32 +73,34 @@
 	
 	.top_li_1 {
 		list-style: none;
-		grid-column: 2/3;
+		grid-column: 3/4;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
 	.top_li_2 {
 		list-style: none;
-		grid-column: 3/4;
+		grid-column: 4/5;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
 	.top_li_3 {
 		list-style: none;
-		grid-column: 4/5;
+		grid-column: 5/6;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	
 	.top_li_4 {
 		list-style: none;
-		grid-column: 1/2;
+		grid-column: 2/3;
 		grid-row: 1/2;
 		font-size: 16px;
 	}
 	.top_li_5 {
+		grid-column: 1/2;
+		grid-row: 1/2;	
 		list-style: none;
 		font-size: 16px;
 		top : 100;
@@ -224,7 +224,7 @@
 			<c:set var="list" value="${list }"/>
 			<div class="top_right">
 				<ul class="top">
-
+					
 					<c:if test="${empty memberName }">
 						<li class="top_li_1"><a href="#">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath()%>/member_login.do">마이페이지</a></li>					
@@ -239,17 +239,12 @@
 
 						<c:if test="${!empty list}">
 							<span class="top_li_5">
-										<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
-										${fn:length(list)}
-									<c:forEach var="check" items="${list }">
-									<c:if test="${check.p_q_check == 1 }">
-									</c:if>
-									<c:if test="${check.p_q_check == 0 }">
-										<p></p>
-									</c:if>
-									</c:forEach>
+											<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
+											${fn:length(list)}
 							</span>
 						</c:if>
+						
+						
 					</c:if>
 
 				</ul>
@@ -278,24 +273,3 @@
 	<hr width=100% align="center">
 
 	<%-- 이하 영역은 본문 영역이 됨 --%>
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript">
-	<%-- $(function(){
-		$(".top_li_5").mouseout(function(){
-			<%
-				//String member_id = request.getParameter("mem_id").trim();
-				UserDAO dao = UserDAO.getinstance();
-				UserDTO dto = dao.getMember("jheo");
-				QuestionDAO dao_q = QuestionDAO.getInstance();
-				List<QuestionDTO> list = dao_q.getAnswerCheck(dto.getMem_num());
-				HttpSession session1 = request.getSession();
-				session1.setAttribute("list",list);
-			%>
-				console.log("aslkjdlkasd");
-		$(".top_li_5").mouseout(function(){
-			location.reload();
-		}
-		});
-	}) --%>
-	
-</script>
