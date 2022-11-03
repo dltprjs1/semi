@@ -17,11 +17,12 @@ $(document).ready(function() {
 			datatype : "xml",
 			success : function(data){
 				
-				$(".list tr:gt(0)").remove();
+				$(".chall_list tr:gt(0)").remove();
 					
 				let table = "";
 				
 				$(data).find("chall_list").each(function() {
+				
 					table += "<tr>";
 					table += "<td>" +$(this).find("chall_title").text()+ "</td>";
 					table += "<td>" +$(this).find("chall_cont").text()+ "</td>";
@@ -29,7 +30,7 @@ $(document).ready(function() {
 					
 				});
 				
-				$(".list tr:eq(0)").after(table);
+				$(".chall_list tr:eq(0)").after(table);
 
 				
 			},
@@ -47,3 +48,4 @@ $(document).ready(function() {
 		window.location = document.location.href;
 	});*/
 });
+
