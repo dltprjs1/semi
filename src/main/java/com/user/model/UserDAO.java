@@ -3,6 +3,7 @@ package com.user.model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -316,11 +317,11 @@ public class UserDAO {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			            
-			//    POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 			            
-			//    POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
@@ -582,39 +583,6 @@ public class UserDAO {
 		return result;		
 	}	// insertMemberWithKakao() 메소드 end
 	
-	// 버리기ㅜㅠㅠㅠ
-	// 현재 세션 사용중인 회원이 카카오 계정으로 로그인한 회원이면 True를 반환하는 메소드.
-	public boolean iskakaoAccount(int memberNum) {
-		
-		boolean isKakaoMember = true;
-		
-		try {
-			openConn();
-			
-			sql = "select kakaoaccount from user_member where mem_Num = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, memberNum);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				System.out.println("현재 세션 카카오 로그인 계정인 지?>>>" + rs.getString("kakaoaccount"));
-				if(rs.getString("kakaoaccount")=="YES") {
-					isKakaoMember = true;
-				}else {
-					isKakaoMember = false;
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return isKakaoMember;
-	} // iskakaoAccount() 메소드 end
-
 	// 카카오 연동 계정을 로그아웃 시키는 메소드
 	public int logoutWithKakao (String access_token, String k_id) {
 		int responseCode = 0;
@@ -668,6 +636,30 @@ public class UserDAO {
 	    return responseCode;	// 200이면 로그아웃 성공.
 	} // logoutWithKakao() 메소드 end	
 
+	public void unlink(String access_Token) {
+	    String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String result = "";
+	        String line = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println(result);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}	
 
 	
 	

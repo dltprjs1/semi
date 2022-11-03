@@ -31,6 +31,7 @@ public class KakaoLoginOkAction implements Action{
 		
 		// 카카오에서 액세스 토큰 받아오는 메소드 호출.
 		String access_token = dao.getAccessToken(auth_code);
+		System.out.println("로그인 시 access_token : " + access_token);
 		
 		// 카카오 사용자 정보를 받아오는 메소드 호출
 		HashMap<String, Object> kakaoUserInfo = dao.getKakaoUserInfo(access_token);
@@ -74,6 +75,7 @@ public class KakaoLoginOkAction implements Action{
 			session.setAttribute("memberNum", dto.getMem_num());
 			session.setAttribute("list",list);
 			session.setAttribute("member_id", dto.getMem_id());
+			session.setAttribute("access_token", access_token);
 		
 			forward.setRedirect(true);
 			

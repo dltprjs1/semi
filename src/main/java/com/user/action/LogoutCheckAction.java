@@ -37,17 +37,14 @@ public class LogoutCheckAction implements Action {
 		UserDTO dto = dao.getMemberInfo(member_num);
 		String kakaoAccount = dto.getKakaoAccount();
 		
-		System.out.println("현재 로그인 된 회원의 카카오 계정 연동 여부"+kakaoAccount);
+		System.out.println("현재 로그인 된 회원의 카카오 계정 연동 여부 : "+kakaoAccount);
 		// 카카오로 로그인한 회원은 카카오 로그인 API에 따라 로그아웃 처리.
 		if(kakaoAccount == "YES") {	// 카카오 로그인한 회원인 경우
 			
-			// 인가 코드 받아오기.
-			String auth_code = request.getParameter("code");			
-			// 카카오에서 액세스 토큰 받아오는 메소드 호출.
-			String access_token = dao.getAccessToken(auth_code);
+			// 카카오에서 받은 액세스 토큰 세션으로 가져오기.
+			dao.logout((String)session.getAttribute("access_token"));
+			session.invalidate();	
 			
-			System.out.println("로그아웃 code >>> " + auth_code);
-			System.out.println("로그아웃 토큰 >>> " + access_token);
 			
 			String k_id = (String) session.getAttribute("memberId");
 			
