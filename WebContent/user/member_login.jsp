@@ -6,50 +6,8 @@
 <meta charset="UTF-8">
 <title>챌린저스 : 로그인</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/v1/kakao.min.js"></script>
+<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/v1/kakao.min.js"></script> -->
 
-<script>
-// JavaScript 키 : b3c649792fd4d054a8b60299da478e2d
-// REST API 키 : 617a393522b6cb65ea54d2ed4350878e
-
-	function kakaoLogin(){
-	window.Kakao.init("b3c649792fd4d054a8b60299da478e2d");//발급받은 키 중 javascript키를 사용해준다.
-	// Kakao.Auth.authorize() : 간편 로그인 실행하는 함수
-	
-		window.Kakao.Auth.login({
-			scope: 'profile_nickname, account_email, gender, age_range',
-			redirectUri: '${REDIRECT_URI}',
-			nonce: '${NONCE}',
-			success: function(authObj){
-				console.log(authObj);
-				
-				window.Kakao.API.request({
-					url:'/v2/user/me',
-					success: function(response){
-						//사용자 정보를 가져오기.
-						let account= response.kakao_account;
-						$('#form-kakao-login input[name=email]').val(account.email);
-						$('#form-kakao-login input[name=name]').val(account.profile.nickname);
-						$('#form-kakao-login input[name=img]').val(account.profile.img);
-						// 사용자 정보가 포함된 폼을 서버로 제출한다.
-						document.querySelector('#form-kakao-login').submit();						
-					},
-					
-					fail: function(error){
-						// 경고창에 에러메시지 표시
-						alert('카카오 로그인 처리 중 오류가 발생했습니다.');
-					}
-				}); // api request 끝
-				
-			},// success 결과.
-			fail:function(error){
-				// 경고창에 에러메시지 표시
-				alert('카카오 로그인 처리 중 오류가 발생했습니다.');
-			}// fail 결과.
-		});
-	}	// kakaoLogin() 함수 end
-
-</script>
 <style type="text/css">
 	
 	body {
@@ -168,6 +126,9 @@
 	
 	
 </style>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
+  integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -197,20 +158,20 @@
 				</form>
 	
 				<ul class="find_join">
-					<li><a href="<%=request.getContextPath() %>/member_find.do">비밀번호 찾기&nbsp;</a></li>
-					<li><b class="bar">|</b><a href="<%=request.getContextPath() %>/member_find.do">&nbsp;아이디 찾기&nbsp;</a></li>
+					<li><a href="<%=request.getContextPath() %>/member_findPwd.do">비밀번호 찾기&nbsp;</a></li>
+					<li><b class="bar">|</b><a href="<%=request.getContextPath() %>/member_findId.do">&nbsp;아이디 찾기&nbsp;</a></li>
 					<li><b class="bar">|</b><a href="<%=request.getContextPath() %>/member_join.do">&nbsp;회원가입</a></li>
 				</ul>
 				
 				<ul class="sns_login">
-					<li><a href="javascript:kakaoLogin();" ><img alt="카카오 로그인" src="<%=request.getContextPath() %>/uploadFile/kakao_login_medium_narrow.png"></a></li>
+					<li><a href="https://kauth.kakao.com/oauth/authorize?client_id=617a393522b6cb65ea54d2ed4350878e&redirect_uri=http://localhost:8282/Semi_Challengers/member_kakaoLoginOk.do&response_type=code&scope=account_email,gender,birthday" ><img alt="카카오 로그인" src="<%=request.getContextPath() %>/uploadFile/kakao_login_medium_narrow.png"></a></li>
 					<li><a href="">네이버로 시작</a></li>
 				</ul>
 				
-				<form id="form-kakao-login" method="post" action="<%=request.getContextPath()%>/member_kakao_login_ok.do">
-		    			<input type="hidden" name="name"/>
-		    			<input type="hidden" name="email"/>
-		    			<input type="hidden" name="img"/>					
-				</form>
+				
 		</article>
 	</div>
+	</body>
+	
+</html>
+	

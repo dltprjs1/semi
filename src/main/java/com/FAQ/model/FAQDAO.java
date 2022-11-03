@@ -12,7 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.chall.model.UserDTO;
+import com.user.model.UserDTO;
 
 public class FAQDAO {
 	Connection con = null;
@@ -102,5 +102,89 @@ public class FAQDAO {
 			closeConn(rs, st, con);
 		}
 		return list;
+	}
+	public int InsertFAQ(FAQDTO dto) {
+		int result = 0,count = 0;
+		openConn();
+		try {
+			sql = "select max(faq_num) from faq";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1)+1;
+			}
+			sql = "insert into faq values(?,?,?,sysdate,?)";
+			st = con.prepareStatement(sql);
+			st.setInt(1,count);
+			st.setString(2, dto.getFaq_title());
+			st.setString(3,dto.getFaq_content());
+			st.setInt(4,dto.getFaq_category_num());
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public FAQDTO getFAQContent(int faq_num) {
+		FAQDTO dto = null;
+		openConn();
+		try {
+			sql = "select * from faq where faq_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,faq_num);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				dto = new FAQDTO();
+				dto.setFaq_num(rs.getInt("faq_num"));
+				dto.setFaq_title(rs.getString("faq_title"));
+				dto.setFaq_content(rs.getString("faq_content"));
+				dto.setFaq_regdate(rs.getString("faq_regdate"));
+				dto.setFaq_category_num(rs.getInt("faq_category_num"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return dto;
+	}
+	public int deleteFAQ(int faq_num) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "delete from faq where faq_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,faq_num);
+			result = st.executeUpdate();
+			sql = "update faq set faq_num = faq_num - 1 where faq_num > ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,faq_num);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public int updateFAQ(FAQDTO dto) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "update faq set faq_title = ? , faq_content = ? , faq_category_num = ? where faq_num = ? ";
+			st = con.prepareStatement(sql);
+			st.setString(1,dto.getFaq_title());
+			st.setString(2,dto.getFaq_content());
+			st.setInt(3,dto.getFaq_category_num());
+			st.setInt(4,dto.getFaq_num());
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
 	}
 }
