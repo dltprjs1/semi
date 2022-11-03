@@ -261,7 +261,7 @@
 		<nav class="navi">
 			<ul class="menu">
 			
-				<li class="menu_li_1"><a href="<%=request.getContextPath() %>/main.do">홈</a></li>
+				<li class="menu_li_1"><a href="<%=request.getContextPath() %>/main.jsp">홈</a></li>
 				
 				<li class="menu_li_2"><a href="#">챌린지 조회</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/member_challJoin.do">챌린지 개설</a></li>
