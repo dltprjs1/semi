@@ -10,8 +10,9 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.chall.model.ChallJoinDAO;
 import com.chall.model.ChallJoinDTO;
+import com.user.model.UserDTO;
 
-public class ChallJoinPay implements Action {
+public class ChallContent implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -19,17 +20,17 @@ public class ChallJoinPay implements Action {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		int challNum = (Integer)session.getAttribute("challNum");
-		int memberNum = (Integer)session.getAttribute("memberNum");
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
-		ChallJoinDTO dto = dao.getChallContent(challNum);
-		request.setAttribute("challContent", dto);
+		ChallJoinDTO chall_dto = dao.getChallContent(challNum);
+		request.setAttribute("challContent", chall_dto);
 		
-		int mem_money = dao.getMemMoney(memberNum);
-		request.setAttribute("mem_money", mem_money);
-
+		int createrNum = chall_dto.getChall_creater_num();
+		UserDTO user_dto = dao.getMemInfo(createrNum);
+		request.setAttribute("userInfo", user_dto);
+		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("user/member_challJoin_pay.jsp");
+		forward.setPath("user/member_challContent.jsp");
 		return forward;
 	}
 
