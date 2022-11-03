@@ -8,6 +8,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+    String access_token = (String)session.getAttribute("access_token");
+	System.out.println("chall_top에서 겟한 access_token 세션>>> " + access_token);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -20,8 +24,8 @@
 <link rel="stylesheet" href="../CSS/CScenter.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="../JS/CScenter.js"></script>
-<script type="text/javascript" src="../searchJS/location.js"></script>
-<script type="text/javascript" src="searchJS/location.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/searchJS/location.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/searchJS/location.js"></script>
 <!-- <script type="text/javascript" src="../searchJS/move.js"></script>
 <script type="text/javascript" src="searchJS/move.js"></script> -->
 
@@ -234,19 +238,19 @@
 					<c:if test="${!empty memberName }">
 						<li class="top_li_1"><a href="#">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
-						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
+						<li class="top_li_3"><a href="#" onclick="javascript:document.frm.submit();">로그아웃</a></li>
+						<form name="frm" action="<%=request.getContextPath() %>/member_logout.do" method="POST">
+							<input type="hidden" name="access_token" value="${access_token }">
+						</form>	
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
-
+	
 						<c:if test="${!empty list}">
 							<span class="top_li_5">
 											<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
 											${fn:length(list)}
 							</span>
 						</c:if>
-						
-						
 					</c:if>
-
 				</ul>
 			</div>
 

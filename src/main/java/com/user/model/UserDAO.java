@@ -586,59 +586,33 @@ public class UserDAO {
 		return result;		
 	}	// insertMemberWithKakao() 메소드 end
 	
-	// 카카오 연동 계정을 로그아웃 시키는 메소드
-	public int logoutWithKakao (String access_token, String k_id) {
-		int responseCode = 0;
-		String reqURL = "https://kapi.kakao.com/v1/user/logout";
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			            
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Authorization", "Bearer " + access_token); 
-			            
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("grant_type=authorization_code");
-			sb.append("&target_id_type=user_id");
-			sb.append("&target_id=" + k_id);
-			bw.write(sb.toString());
-			bw.flush();
-	          			            
-			//    결과 코드가 200이라면 성공
-			responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
-			 
-			//요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-			BufferedReader br = new BufferedReader(new java.io.InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-			            
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			
-			System.out.println("response body : " + result);
-			           
-			//Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-			
-			String id = element.getAsJsonObject().get("id").getAsString();
-			
-			System.out.println("카카오에서 응답받은 로그아웃 id >>> " + id);
-			br.close();
-			bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-		} 
-		
-	    return responseCode;	// 200이면 로그아웃 성공.
-	} // logoutWithKakao() 메소드 end	
-
+	// 카카오 로그아웃하는 메소드.
+	public void logoutWithKakao(String access_Token) {
+	    String reqURL = "https://kapi.kakao.com/v1/user/logout";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String result = "";
+	        String line = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println("로그아웃된 카카오 아이디 : "+result);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}	// logoutWithKakao 메소드 end
+	
+	// 
 	public void unlink(String access_Token) {
 	    String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 	    try {
