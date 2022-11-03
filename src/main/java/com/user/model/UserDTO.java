@@ -20,8 +20,29 @@ public class UserDTO {
 	private int mem_birth;
 	private String mem_gender;
 	private String mem_email;
+	private int challenge_made_count;
+	private int challenge_rating;
+	private String mem_img;
 	
 	
+	public String getMem_img() {
+		return mem_img;
+	}
+	public void setMem_img(String mem_img) {
+		this.mem_img = mem_img;
+	}
+	public int getChallenge_made_count() {
+		return challenge_made_count;
+	}
+	public void setChallenge_made_count(int challenge_made_count) {
+		this.challenge_made_count = challenge_made_count;
+	}
+	public int getChallenge_rating() {
+		return challenge_rating;
+	}
+	public void setChallenge_rating(int challenge_rating) {
+		this.challenge_rating = challenge_rating;
+	}
 	public String getMem_email() {
 		return mem_email;
 	}

@@ -11,13 +11,34 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-	
+	onload = function() {
+		let checkBox1 = document.getElementById("open-outlined");
+		let checkBox2 = document.getElementById("private-outlined");
+		
+		checkBox1.onclick = function() {
+				const target = document.getElementById('next');
+				 target.disabled = false;
+		}
+		
+		checkBox2.onclick = function() {
+				const target = document.getElementById('next');
+				 target.disabled = false;
+		}
+	}
 
 </script>
 <style type="text/css">
 	.innerText {
 		text-align: left;
 	}
+
+	.join_hr {
+		border: 0;
+    	height: 3px;
+    	background: #ff4d54;
+    	opacity: 100;
+	}
+	
 </style>
 </head>
 <body>
@@ -26,10 +47,8 @@
 			<form action="member_challJoin_3.do" method="post">
 			<h3><b>어떤 챌린지를 만드시겠어요?</b></h3> <br>
 			<h6>마지막 단계에서 수정하기 어려우니 신중히 골라주세요!</h6>
-			<hr width="50%" color="red">
+			<hr class="join_hr" width="50%" color="red">
 			<br>
-			<%-- <c:set var="test" value="${Test }"/>
-			<a>Oracle Cloud - CHALLENGE_CATEGORY 테이블에 있는 자료 : ${test }</a> --%>
 			
 			<input type="radio" class="btn-check" name="openRadio" id="open-outlined" autocomplete="off" value="open">
 			<label class="btn btn-outline-success" for="open-outlined"><b>&nbsp;&nbsp;공개 챌린지🙌</b>
@@ -44,8 +63,7 @@
 			<br>(초대받은 사람만 참여할 수 있어요)</label>
 			
 			<br><br><br>
-			<button type="submit" class="btn btn-dark">다음</button>
-			<!-- 버튼은 비활성화되어있다가 라디오버튼 하나라도 선택하면 활성화되게 -->
+			<button id="next" type="submit" class="btn btn-dark" disabled>다음</button>
 			</form>
 		</div>
 		<br>
