@@ -9,7 +9,6 @@
 <body>
 	<jsp:include page="../include/admin_top.jsp"/>
 	<div align="center">
-		<h3>공지사항 작성 폼 페이지</h3>
 		<form method="post" action="<%=request.getContextPath() %>/FAQ_insert.do">
 			<table border="1" cellspacing="0">
 				<tr>
