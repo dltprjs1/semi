@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp"/>
+	<jsp:include page="../include/admin_top.jsp"/>
 	<c:set var="list" value="${list }"/>
 	<div align="center">
 		<c:if test="${!empty list }">

@@ -12,6 +12,7 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.user.model.UserDAO;
 import com.user.model.UserDTO;
+
 import com.question.model.QuestionDAO;
 import com.question.model.QuestionDTO;
 
@@ -37,8 +38,11 @@ public class LoginOkAction implements Action {
 		if(check > 0) { // 회원인 경우
 			
 			UserDTO dto = dao.getMember(member_id);
+			
+			// QNA 답변 알림 정보
 			QuestionDAO dao_q = QuestionDAO.getInstance();
 			List<QuestionDTO> list = dao_q.getAnswerCheck(dto.getMem_num());
+			
 			// 세션 객체 생성
 			HttpSession session = request.getSession();	
 

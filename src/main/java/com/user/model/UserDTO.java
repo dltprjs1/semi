@@ -17,21 +17,112 @@ public class UserDTO {
 	private int challenge_count;
 	private int challenge_complete_count;
 	private int mem_report_count;
-	private int mem_birth;
-	private String mem_gender;
 	private String mem_email;
+	private String mem_gender;
+	private String mem_img;
+	private int challenge_made_count;
+	private int challenge_rating;
+	private String mem_birth;
+	private String nationNo;
+	private String phoneNo;
+	private int postcode;
+	private String roadAddress;
+	private String jibunAddress;
+	private String detailAddress;
+	private String extraAddress;
+	private String emailId;
+	private String emailDomain;
+	private String kakaoAccount;
 	
 	
+	public String getKakaoAccount() {
+		return kakaoAccount;
+	}
+	public void setKakaoAccount(String kakaoAccount) {
+		this.kakaoAccount = kakaoAccount;
+	}
+	public String getNationNo() {
+		return nationNo;
+	}
+	public void setNationNo(String nationNo) {
+		this.nationNo = nationNo;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	public int getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(int postcode) {
+		this.postcode = postcode;
+	}
+	public String getRoadAddress() {
+		return roadAddress;
+	}
+	public void setRoadAddress(String roadAddress) {
+		this.roadAddress = roadAddress;
+	}
+	public String getJibunAddress() {
+		return jibunAddress;
+	}
+	public void setJibunAddress(String jibunAddress) {
+		this.jibunAddress = jibunAddress;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	public String getExtraAddress() {
+		return extraAddress;
+	}
+	public void setExtraAddress(String extraAddress) {
+		this.extraAddress = extraAddress;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	public String getEmailDomain() {
+		return emailDomain;
+	}
+	public void setEmailDomain(String emailDomain) {
+		this.emailDomain = emailDomain;
+	}
+	public int getChallenge_made_count() {
+		return challenge_made_count;
+	}
+	public void setChallenge_made_count(int challenge_made_count) {
+		this.challenge_made_count = challenge_made_count;
+	}
+	public int getChallenge_rating() {
+		return challenge_rating;
+	}
+	public void setChallenge_rating(int challenge_rating) {
+		this.challenge_rating = challenge_rating;
+	}
+	public String getMem_img() {
+		return mem_img;
+	}
+	public void setMem_img(String mem_img) {
+		this.mem_img = mem_img;
+	}
 	public String getMem_email() {
 		return mem_email;
 	}
 	public void setMem_email(String mem_email) {
 		this.mem_email = mem_email;
 	}
-	public int getMem_birth() {
+	public String getMem_birth() {
 		return mem_birth;
 	}
-	public void setMem_birth(int mem_birth) {
+	public void setMem_birth(String mem_birth) {
 		this.mem_birth = mem_birth;
 	}
 	public String getMem_gender() {
