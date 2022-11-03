@@ -17,9 +17,10 @@
 
 <!-- CS센터 페이지에서 쓰는 부분 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="../CSS/CScenter.css">
+<link rel="stylesheet" href="CScenter/CScenter-5.css">
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script src="../JS/CScenter.js"></script>
+<script src="CScenter/CS_JS.js"></script>
 <script type="text/javascript" src="../searchJS/location.js"></script>
 <script type="text/javascript" src="searchJS/location.js"></script>
 <!-- <script type="text/javascript" src="../searchJS/move.js"></script>
@@ -226,13 +227,13 @@
 				<ul class="top">
 					
 					<c:if test="${empty memberName }">
-						<li class="top_li_1"><a href="#">고객센터</a></li>
+						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_main.do">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath()%>/member_login.do">마이페이지</a></li>					
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_login.do">로그인</a></li>
 					</c:if>
 					
 					<c:if test="${!empty memberName }">
-						<li class="top_li_1"><a href="#">고객센터</a></li>
+						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_main.do">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>

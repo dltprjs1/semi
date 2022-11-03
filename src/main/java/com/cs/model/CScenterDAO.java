@@ -28,7 +28,7 @@ public class CScenterDAO {
 
 // Connection을 가져오는 메서드
 	public void openConn() {
-
+	
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/downloads/ProjectChallengers/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
@@ -89,6 +89,47 @@ public class CScenterDAO {
 		
 		return list;
 	} // getNoticeList() END
+	
+	
+	
+	public List<NoticeDTO> getNoticeList(int page, int rowsize){
+		
+		int startNo = (page * rowsize) - (rowsize -1 );
+		int endNo = (page * rowsize);
+		
+		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
+		
+		try {
+
+			openConn();
+			sql = "select * from (select row_number() over(order by notice_num desc) rnum, b.* from notice b) where rnum >= ? and rnum <= ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, startNo);
+			pstmt.setInt(2, endNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				NoticeDTO dto = new NoticeDTO();
+				dto.setNotice_num(rs.getInt("notice_num"));
+				dto.setNotice_title(rs.getString("notice_title"));
+				dto.setNotice_content(rs.getString("notice_content"));
+				dto.setNotice_regdate(rs.getString("notice_regdate"));
+				dto.setNotice_category(rs.getString("notice_category"));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return list;
+		
+	}
 	
 	
 	public List<FAQDTO> getFAQList(){
@@ -165,7 +206,7 @@ public class CScenterDAO {
 		}
 		
 		return list;
-	}
+	} // privateQList() END
 	
 	
 	public String getPQList(int user_no) { 
@@ -207,6 +248,89 @@ public class CScenterDAO {
 		
 		return result;
 		
+	} //getPQList() END
+	
+	
+	public NoticeDTO getNoticeContent(int no) {
+		NoticeDTO dto = new NoticeDTO();
+		
+		openConn();
+		
+		sql = "select * from notice where notice_num = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto.setNotice_num(rs.getInt("notice_num"));
+				dto.setNotice_title(rs.getString("notice_title"));
+				dto.setNotice_content(rs.getString("notice_content"));
+				dto.setNotice_regdate(rs.getString("notice_regdate"));
+				dto.setNotice_category(rs.getString("notice_category"));	
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return dto;
+		
+	} // getNoticeContent() END
+	
+	
+	
+	public int getBoardCount() {
+		
+		int result = 0;
+
+		try {
+			openConn();
+			sql = "select count(*) from notice";
+			pstmt = con.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public List<Q_categoryDTO> getQ_categoryList() {
+		
+		List<Q_categoryDTO> list = new ArrayList<Q_categoryDTO>();
+		
+		openConn();
+		sql = "select * from q_category order by q_category_num";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Q_categoryDTO dto = new Q_categoryDTO();
+				dto.setQ_category_num(rs.getInt("q_category_num"));
+				dto.setQ_category_type(rs.getString("q_category_type"));
+				
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	
