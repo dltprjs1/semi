@@ -28,7 +28,7 @@ public class CScenterDAO {
 
 // Connection을 가져오는 메서드
 	public void openConn() {
-	
+
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/downloads/ProjectChallengers/Wallet_ProjectChallengers/";
 		String user = "ADMIN";

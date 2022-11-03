@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../include/chall_top.jsp" />
+	<jsp:include page="../include/admin_top.jsp" />
 	<div align="center">
 		<h3>카테고리 추가하기</h3>
 		<br>
