@@ -11,25 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-	let rowsize = 12;
-	let block = 10;
-	let page = 1;
-	
-	if (page != 1) {
-		page = Integer.parseInt(request.getParameter("page").trim());
-	}
-	
-	let startNo = (page * rowsize) - (rowsize - 1);
-	let lastNo = (page * rowsize);
-	let startBlock = (((page - 1)/block)*block)+1;
-	let lastBlock = (((page - 1)/block)*block)+block;
-	let totalRecord = dao.getTotalRecord();
-	let allPage = Math.ceil(totalRecord / rowsize);
-	console.log(allPage);
-	if(lastBlock > allPage) {
-		lastBlock = allPage;
-	}
-	
 	$(function(){
 		$("#1").css('color','black');
 		$("#2,#3,#4,#5,#6,#7,#8,#9,#10").css('color','lightgray');

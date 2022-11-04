@@ -81,11 +81,11 @@
 				<div class="h_container">
 					<h2>공개/비공개</h2>
 					<c:if test="${content.chall_open == 'open' }">
-					<input class="open_close" value="공개">
+					<input class="open_close" value="공개" readonly>
 					<input type="hidden" name="chall_open" value="open">
 					</c:if>
 					<c:if test="${content.chall_open != 'open' }">
-					<input class="open_close" value="비공개">
+					<input class="open_close" value="비공개" readonly>
 					<input type="hidden" name="chall_open" value="private">
 					</c:if>
 				</div>
@@ -125,7 +125,7 @@
 				<div class="h_container1">
 					<h2>종료시간</h2>
 					<input type="time" class="chall_regitimeend" name="chall_regitimeend" value="${content.chall_regitimeend }">
-				</div>	
+				</div>
 				<br><br>
 				<div class="h_container1">
 					<h2>내 용</h2>
