@@ -108,6 +108,7 @@
 </div>
 
 <script>
+
 	$("#newbox").hide();
 	$("#pq_cate").children('li').click(function(){
 		if ($(this).val() == 4) {
