@@ -72,6 +72,7 @@
 						}
 						
 					}); // ajax 끝
+					
 
 				} // function getPraviteQList(); 끝 
 				
