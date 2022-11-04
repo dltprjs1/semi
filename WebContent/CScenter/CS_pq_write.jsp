@@ -15,14 +15,13 @@
 	
 	CScenterDAO csdao = CScenterDAO.getinstance();
 	List<Q_categoryDTO> qcatelist = csdao.getQ_categoryList();
-
 %>
     
 <div>
 	<c:set value="<%=dto %>" var="userInfo"/>
 	<c:set value="<%=qcatelist %>" var="qcatelist" />
 	
-	<form>
+	
 		<div><span>${userInfo.getMem_name() }님의 문의입니다.</span></div>
 		<input type="hidden" id="pq_user_no" value="${userInfo.getMem_num() }">
 		<br>
@@ -39,35 +38,89 @@
 		</div>
 		
 		<br>
-		
-		<div>
-		<span>제목</span>
-		<input type="text" id="pq_title" required>
+			
+		<div id="newbox">
+			<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/insert_report.do">
+				<input type="hidden" name="report_mem_id" value="${userInfo.getMem_id() }">
+				<div>
+					<span>제목</span> <input id="report_title" name="report_title">
+				</div>
+
+				<br>
+
+				<div>
+					<span>회원 아이디 또는 이름</span> <input id="report_member"
+						name="report_member" placeholder="신고할 회원의 아이디 또는 이름을 입력해 주십시오.">
+				</div>
+
+				<br>
+
+				<div>
+					<span>사유 선택</span> <select id="report_cause" name="report_cause">
+						<option value="부적절한 홍보 게시물">부적절한 홍보 게시물</option>
+						<option value="음란성 또는 부적합한 내용">음란성 또는 부적합한 내용</option>
+						<option value="기타">기타</option>
+					</select>
+				</div>
+				
+				<br>
+				
+				<div>
+					<span>이미지</span>
+					<input type="file" id="report_image" name="report_image">
+				</div>
+
+				<br>
+
+				<div>
+					<span>상세내용</span> <input id="report_content" name="report_content">
+				</div>
+
+				<input id="reportbtn" type="submit" value="신고하기" onclick="report()">
+				<input type="button" value="취소" onclick="if(confirm('정말 취소하시겠습니까? 작성한 내용이 모두 사라집니다.')){ location.href='CS_privateQ.do' } else { return; }">
+				
+			</form>
 		</div>
 		
-		<div id="pq_regdate">
-		<span>등록일</span>
-		<span></span>
+		<div id="oldbox">
+			<div>
+			<span>제목</span>
+			<input type="text" id="pq_title" required>
+			</div>
+			
+			<div id="pq_regdate">
+			<span>등록일</span>
+			<span></span>
+			</div>
+			
+			<div>
+			<textarea id="pq_content" required></textarea>
+			</div>
+			
+			<div>
+			<input id="insertPQ" type="button" value="등록" onclick="insertPQ()">
+			<input type="button" value="취소" onclick="if(confirm('정말 취소하시겠습니까? 작성한 내용이 모두 사라집니다.')){ location.href='CS_privateQ.do' } else { return; }">
+			</div>
+			
+			
 		</div>
-		
-		<div>
-		<textarea id="pq_content" required></textarea>
-		</div>
-		
-		<div>
-		<input type="button" value="등록" onclick="insertPQ()">
-		<input type="button" value="취소" onclick="if(confirm('정말 취소하시겠습니까? 작성한 내용이 모두 사라집니다.')){ location.href='CS_privateQ.do' } else { return; }">
-		</div>
-	</form>
+	
 </div>
 
 <script>
+
+	$("#newbox").hide();
 	$("#pq_cate").children('li').click(function(){
 		if ($(this).val() == 4) {
-			alert('hi');
+			$("#newbox").show();
+			$("#oldbox").hide();
+		}else{
+			$("#newbox").hide();
+			$("#oldbox").show();
 		}
 	});
-
+	
+	
 	let today = new Date();
 	console.log("오늘 날짜 >>> "+today.toISOString().substring(0, 10));
 	document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today.toISOString().substring(0, 10);
@@ -105,7 +158,6 @@
 				if ($(data).find("regdate").text() != null){
 					$("#PQ_Accordian_wrap").empty();
 				}
-
 				$(data).find("PQNA").each(function(){
 					
 					if($(this).find("answerCont").text() == "null") {
@@ -148,9 +200,7 @@
 				alert('데이터 통신 에러');
 			}
 		}); // ajax 끝
-
 	} // function getPraviteQList(); 끝 
-
 	function insertPQ(){
 		
 		$.ajax({

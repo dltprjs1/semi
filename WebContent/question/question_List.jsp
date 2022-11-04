@@ -163,16 +163,16 @@ img {
 		<div class="all">
 		<c:forEach items="${list }" var="dto">
 			<div class="ekqqusx">
-				<c:if test="${dto.p_q_again_num != 0}">
+				<c:if test="${empty dto.p_q_answer_cont}">
 					<b id="xx">${dto.p_q_num }</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<ul class="ekqqus_title">
 						<li><a href="<%=request.getContextPath()%>/question_content.do?p_q_num=${dto.p_q_num}&page=${page}&p_q_user_num=${dto.p_q_user_num }">${dto.p_q_title}</a></li>
 						<li>
-							<c:if test="${dto.p_q_again_num != 0}">
-								X
-							</c:if>
-							<c:if test="${dto.p_q_again_num == 0}">
+							<c:if test="${!empty dto.p_q_answer_cont}">
 								O
+							</c:if>
+							<c:if test="${empty dto.p_q_answer_cont}">
+								X
 							</c:if>
 						</li>
 					</ul>
@@ -182,16 +182,16 @@ img {
 		</c:forEach>
 		<c:forEach items="${list }" var="dto">
 			<div class="ekqquso">
-				<c:if test="${dto.p_q_again_num == 0}">
+				<c:if test="${!empty dto.p_q_answer_cont}">
 					<b id="oo">${dto.p_q_num }</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<ul class="ekqqus_title">
 						<li><a href="<%=request.getContextPath()%>/question_content.do?p_q_num=${dto.p_q_num}&page=${page}&p_q_user_num=${dto.p_q_user_num }">${dto.p_q_title}</a></li>
 						<li>
-							<c:if test="${dto.p_q_again_num != 0}">
-								X
-							</c:if>
-							<c:if test="${dto.p_q_again_num == 0}">
+							<c:if test="${!empty dto.p_q_answer_cont}">
 								O
+							</c:if>
+							<c:if test="${empty dto.p_q_answer_cont}">
+								X
 							</c:if>
 						</li>
 					</ul>
