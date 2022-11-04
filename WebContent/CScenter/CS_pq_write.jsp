@@ -27,13 +27,15 @@
 		<input type="hidden" id="pq_user_no" value="${userInfo.getMem_num() }">
 		<br>
 		
-		<div>
-		<span>문의유형</span>
-			<select id="pq_cate">
-				<c:forEach var="qcate" items="${qcatelist }">
-					<option value="${qcate.getQ_category_num()}">${qcate.getQ_category_type()}</option>
-				</c:forEach>
-			</select>
+		<div id="select_pq_cate" class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			문의유형
+			</button>
+			<ul id="pq_cate" class="dropdown-menu">
+			    <c:forEach var="qcate" items="${qcatelist }">
+			    	<li value="${qcate.getQ_category_num()}"><a class="dropdown-item" href="#">${qcate.getQ_category_type()}</a>
+			    </c:forEach>
+			</ul>
 		</div>
 		
 		<br>
@@ -60,6 +62,12 @@
 </div>
 
 <script>
+	$("#pq_cate").children('li').click(function(){
+		if ($(this).val() == 4) {
+			alert('hi');
+		}
+	});
+
 	let today = new Date();
 	console.log("오늘 날짜 >>> "+today.toISOString().substring(0, 10));
 	document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today.toISOString().substring(0, 10);
@@ -156,7 +164,7 @@
 			datatype : "text",
 			success : function(data){
 				if (data > 0) {
-					alert('일대일문의 등록 성공');
+					alert('일대일문의가 등록되었습니다');
 					getPraviteQList();
 				}else {
 					alert('문의 등록 실패')
@@ -167,6 +175,6 @@
 			}
 			
 		});
-	}
+	} // function insertPQ() 끝
 	
 </script>
