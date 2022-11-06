@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>챌린저스 : 비밀번호 찾기</title>
+<title>챌린저스 : 비밀번호 찾기1</title>
 <style type="text/css">
 
 	body {
@@ -174,20 +174,24 @@
     		}else{
     			// 아이디를 서버로 전송 > 유효성 검사 > 결과 반환 받기
     			$.ajax({
-    				type: 'POST',												// http 요청 방식 (default: ‘GET’)
-    				url: 'member_idCheck.do',		
+    				type: 'POST',  // http 요청 방식 (default: ‘GET’)
+    				url: '<%=request.getContextPath()%>/checkId.do',		
     				// 요청이 전송될 URL 주소
-    				dataType:'json',											// 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
-    				data: {id:$("#idInput").val()},							// 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
+    				dataType:'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
+    				data: {id:$("#idInput").val()},  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
     				success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
-    					alert('아이디 체크 완료!')
-    					consol.log('res');
+    					count = res.doesEmailExist;
+    					if(count===1){
+    					$("#frm").submit();
+    					}else{
+    						alert('존재하지 않는 아이디입니다. 아이디를 확인해 주세요.')
+    					}
     				},
     				error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
-    					
+    					alert('ajax 응답 오류');
     				}
     			});
-    			$("#frm").submit();
+    			
     	    	return false;
     		}
  		
@@ -219,7 +223,6 @@
 			</ul>
 		</div>	
 		<h2 class="find_title">비밀번호 찾기</h2>
-		<hr>
 		<article class="findPwd_content">
 		
 			<form id="frm" action="<%=request.getContextPath() %>/user/member_findPwd_2.jsp" method="post" >
@@ -229,7 +232,7 @@
 			  		<input class="inputBox" id="idInput" name="id" type="text" required />
 <!-- 나중에 지우기 -->			   		<div class="error" id="reqError"></div>
 			 	</div>	
-			 	<input type="button" id="findPwd_btn" class="findPwd_btn" value="다음"> 	
+			 	<input type="button" id="findPwd_btn" class="findPwd_btn" value="다음"> 
 			</form>
 		</article>
 	</div>

@@ -44,7 +44,7 @@ public class UserDAO {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
 
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
 
 
 		String user = "ADMIN";
@@ -637,6 +637,56 @@ public class UserDAO {
 	        e.printStackTrace();
 	    }
 	}	
+	
+	// user_member 테이블에 해당 id가 있는 지 확인하는 메소드.
+	public int doesEmailExist(String id) {
+		
+		int result = 2;
+		
+		try {
+			openConn();
+			
+			sql = "select count(*) from user_member where mem_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+	}	// doesEmailExist() 메소드 end
+	
+	// user_member 테이블에서 해당 id를 가진 해당 사용자의 이메일 주소를 가져오는 메소드
+	public String getMemberEmail(String id) {
+		
+		String mem_email = "";
+		
+		try {
+			openConn();
+			sql = "select mem_email from user_member where mem_id=?";			
+			pstmt= con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mem_email = rs.getString(1);
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return mem_email;
+	}	// getMemberEmail() 메소드 end
 
 	
 	

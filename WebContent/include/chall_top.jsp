@@ -10,7 +10,6 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String access_token = (String)session.getAttribute("access_token");
-	System.out.println("chall_top에서 겟한 access_token 세션>>> " + access_token);
 %>
 
 <!DOCTYPE html>
