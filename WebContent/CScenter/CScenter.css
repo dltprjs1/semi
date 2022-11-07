@@ -1,14 +1,29 @@
 @charset "UTF-8";
 
-	
+
 	#CS_container {
-		margin : auto;
+		margin-left : 10%;
+		margin-right : 10%;
 		width : 80%;
 		display:flex;
 	}
 	
 	#CS_left_aside {
-		flex: 2;
+		flex: 3;
+		padding-left: 10%;
+	}
+	
+	#CS_left_aside > div {
+		font-size:1.5em;
+		font-weight: bold;
+	}
+	
+	#CS_left_aside > div a {
+		color: gray;
+	}
+	#CS_left_aside > div a:hover {
+		color: black;
+		background-color:#ff4d54;
 	}
 	
 	#CS_left_aside li {
@@ -16,16 +31,14 @@
 	}
 
 	#CS_content {
-		flex:5;
+		flex:7;
 		width:100%;
+		padding-right:20%;
 	}
 	
-	#CS_leftSpace {
-		flex: 1.5;
-	}
-	#CS_rightSpace {
-		flex: 1.5;
-	}
+a {
+	text-decoration: none;
+}
  
 .full_table {
 	width: 100%;
@@ -36,6 +49,8 @@
 .full_table .contentTitle hr {
 	height: 3px;
 	background-color:#ff4d54;
+	border-top: 0px;
+	opacity: 100%;
 }
  
 .q_title::before {
@@ -58,6 +73,12 @@
 	display: none;
 	background-color: rgb(240, 240, 240);
 	padding: 20px;
+}
+
+.answer > div {
+	padding : 20px;
+	border-radius: 10px;
+	background-color: rgb(225, 225, 225);
 }
 
 .q_arrow-wrap {
@@ -126,11 +147,20 @@
 .FAQ_cate {
 	display: inline-block;
 	cursor : pointer;
+	text-align: center;
+	padding: 10px;
+}
+.FAQ_cate:hover {
+	background-color:#ff4d54;
 }
 
 .FAQ_menu {
 	border-bottom: 1px solid lightgray; 
-	height : 30px;
+	height: 100%;
+}
+
+.FAQ_menu .selected {
+	background-color:#ff4d54;
 }
 
 
@@ -185,3 +215,51 @@
 	text-align : right;
 	padding: 15px;
 }
+
+.btn-primary {
+    color: #fff !important;
+    background-color: #ff8589 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-primary:hover {
+	background-color: #ff4d54 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-primary:active{
+    color: #fff;
+    background-color: #ff4d54;
+    border-color: #ff4d54;
+}
+
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #d1565b;
+    border-color: #d1565b;
+}
+
+.btn-outline-primary {
+    color: #e74349 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #ff4d54 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-outline-primary:active {
+	color: #fff;
+    background-color: #ff4d54;
+    border-color: #ff4d54;
+}
+
+.btn-outline-primary:disabled {
+	color: #d1565b;
+    background-color: transparent;
+    border-color: #d1565b;
+}
+
+

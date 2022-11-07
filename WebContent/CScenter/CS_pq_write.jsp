@@ -17,27 +17,39 @@
 	List<Q_categoryDTO> qcatelist = csdao.getQ_categoryList();
 %>
     
+<!-- <div id="alert">
+	<div class="wrap">
+		<div><i class="bi bi-exclamation-triangle"></i></div>
+		<div>내용</div>
+	</div>
+</div> -->
+    
 <div>
 	<c:set value="<%=dto %>" var="userInfo"/>
 	<c:set value="<%=qcatelist %>" var="qcatelist" />
-	
-	
-		<div><span>${userInfo.getMem_name() }님의 문의입니다.</span></div>
-		<input type="hidden" id="pq_user_no" value="${userInfo.getMem_num() }">
-		<br>
-		
-		<div id="select_pq_cate" class="dropdown">
-			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-			문의유형
-			</button>
-			<ul id="pq_cate" class="dropdown-menu">
-			    <c:forEach var="qcate" items="${qcatelist }">
-			    	<li value="${qcate.getQ_category_num()}"><a class="dropdown-item" href="#">${qcate.getQ_category_type()}</a>
-			    </c:forEach>
-			</ul>
+
+	<div>
+		<div><span style="font-weight: bold;">${userInfo.getMem_name() }</span>님의 문의입니다.
+		<input type="hidden" id="pq_user_no" value="${userInfo.getMem_num() }"></div>
+
+		<div id="pq_regdate">
+		<span>등록일</span>
+		<span></span>
 		</div>
-		
 		<br>
+
+	
+		<div>
+		<span>문의유형</span>&nbsp;<span style="color:red;">*</span><br>
+		<select id="pq_cate" class="form-select" aria-label="Default select example">
+			<option selected>문의 유형을 선택해주세요.</option>
+			<c:forEach var="qcate" items="${qcatelist }">
+				<option value="${qcate.getQ_category_num()}">${qcate.getQ_category_type()}</option>
+			</c:forEach>
+		</select>
+		</div>
+		<br>
+
 			
 		<div id="newbox">
 			<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/insert_report.do">
@@ -81,50 +93,72 @@
 				
 			</form>
 		</div>
+    
+		<br>
 		
+
 		<div id="oldbox">
-			<div>
-			<span>제목</span>
-			<input type="text" id="pq_title" required>
+      <div>
+      <span>제목</span>&nbsp;<span style="color:red;">*</span><br>
+      <input class="form-control" type="text" id="pq_title"  style="width:100%;">
+      </div>
+      <br>
+		
+      <div>
+      <span>내용</span>&nbsp;<span style="color:red;">*</span><br>
+      <textarea class="form-control" id="pq_content" rows="10" cols="100"></textarea>
+      </div>
+      
+      <div align="center" class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary" onclick="insertPQ()">등록</button>
+        <button id="pq_write_cancel" class="btn btn-outline-primary" onclick="cancelPQ()">취소</button>
+      </div>
+		<!-- 컨펌창 모달 -->
+			<div id="confirm_modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="staticBackdropLabel">작성한 내용이 모두 사라집니다.</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        정말 취소하시겠습니까?
+			      </div>
+			      <div class="modal-footer">
+			        <button id="cancel_confirm_yes" type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+			        <button id="cancel_confirm_no" type="button" class="btn btn-outline-primary">취소</button>
+			      </div>
+			    </div>
+			  </div>
 			</div>
-			
-			<div id="pq_regdate">
-			<span>등록일</span>
-			<span></span>
-			</div>
-			
-			<div>
-			<textarea id="pq_content" required></textarea>
-			</div>
-			
-			<div>
-			<input id="insertPQ" type="button" value="등록" onclick="insertPQ()">
-			<input type="button" value="취소" onclick="if(confirm('정말 취소하시겠습니까? 작성한 내용이 모두 사라집니다.')){ location.href='CS_privateQ.do' } else { return; }">
-			</div>
-			
-			
+		<!-- 모달 끝 -->
+	</div>
+      
 		</div>
-	
 </div>
 
 <script>
 
-	$("#newbox").hide();
-	$("#pq_cate").children('li').click(function(){
-		if ($(this).val() == 4) {
+let today = new Date().toISOString().substring(0, 10);
+console.log("오늘 날짜 >>> "+today);
+document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
+
+	let selected_pq_cate = "";
+	
+  $("#newbox").hide();
+	$("#pq_cate").change(function(){
+		selected_pq_cate = $(this).val();
+		
+		if ( selected_pq_cate == 4) {
 			$("#newbox").show();
 			$("#oldbox").hide();
 		}else{
-			$("#newbox").hide();
+      $("#newbox").hide();
 			$("#oldbox").show();
 		}
+    
 	});
-	
-	
-	let today = new Date();
-	console.log("오늘 날짜 >>> "+today.toISOString().substring(0, 10));
-	document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today.toISOString().substring(0, 10);
-	
+
 	function getPraviteQList() {
 		$.ajax({
 			url : "<%= request.getContextPath()%>/CS_privateQ_list.do",
@@ -150,7 +184,7 @@
 					+"<p><span>오른쪽 하단의 문의하기 버튼을 이용해주세요.</span></p>"
 					+"</div></div></div>"
 					+"<div id='PQ_write_button'>"
-					+"<button onclick='pqWrite()'>문의하기</button></div>"
+					+"<button onclick='pqWrite()' class='btn btn-primary'>문의하기</button></div>"
 				
 				$("#PQ_content").empty();
 				$("#PQ_content").append(table);
@@ -178,7 +212,7 @@
 					result +=  "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>"
 					result +=  "<span>"+answerStatus + "</span></div>"
 					result += "<div class='answer'>"+"<span>"+$(this).find("content").text()+"</span>"+"<br><br>"+
-								"<div style='background-color : lightgray;'><span>"+answer+"</span></div>"+"</div>";
+								"<div><span>"+answer+"</span></div>"+"</div>";
 					
 				});
 				
@@ -197,7 +231,7 @@
 				
 			},
 			error : function(){
-				alert('데이터 통신 에러');
+				toastr.warning('데이터 통신 에러');
 			}
 		}); // ajax 끝
 	} // function getPraviteQList(); 끝 
@@ -209,22 +243,40 @@
 				pq_user_num : $("#pq_user_no").val(),
 				pq_title : $("#pq_title").val(),
 				pq_content : $("#pq_content").val(),
-				pq_cate_no : $("#pq_cate").val()
+				pq_cate_no : selected_pq_cate
 			},
 			datatype : "text",
 			success : function(data){
 				if (data > 0) {
-					alert('일대일문의가 등록되었습니다');
+					toastr.success('일대일문의가 등록되었습니다');
 					getPraviteQList();
 				}else {
-					alert('문의 등록 실패')
+					toastr.error('필수 사항을 모두 입력해주세요.');
 				}
 			},
 			error : function(){
-				alert('데이터통신에러');
+				toastr.warning('데이터 통신 에러');
 			}
 			
 		});
 	} // function insertPQ() 끝
 	
+
+	function cancelPQ(){
+		$("#pq_write_cancel").click(function(){
+			$("#confirm_modal").modal("show");
+			
+			$("#cancel_confirm_yes").click(function(){
+				$("#confirm_modal").modal("hide");
+				location.href="CS_privateQ.do";
+			});
+			$("#cancel_confirm_no").click(function(){
+				$("#confirm_modal").modal("hide");
+				return;
+			});
+		});
+		
+	} // function cacelPQ() 끝
+	
 </script>
+

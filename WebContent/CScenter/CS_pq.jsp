@@ -50,7 +50,7 @@
 								result += "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>"
 								result += "<span>"+answerStatus + "</span></div>"
 								result += "<div class='answer'>"+"<span>"+$(this).find("content").text()+"</span>"+"<br><br>"+
-											"<div style='background-color : lightgray;'><span>"+answer+"</span></div>"+"</div>";
+											"<div><span>"+answer+"</span></div>"+"</div>";
 								
 							});
 
@@ -68,7 +68,7 @@
 							
 						},
 						error : function(){
-							alert('데이터 통신 에러');
+							toastr.warning('데이터 통신 에러');
 						}
 						
 					}); // ajax 끝
@@ -122,10 +122,9 @@
 						success : function(data) {
 							$("#PQ_content").html(data);
 							$("#PQ_write_button").remove();
-							
 						},
 						error : function() {
-							alert('데이터 통신 에러');
+							toastr.warning('데이터 통신 에러');
 						}
 					});
 				
