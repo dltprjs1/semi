@@ -163,13 +163,14 @@
 		/* 인증번호 확인 시 */
 		/* background-color: #ff4d54; */
 		/* cursor: pointer; */
-	}	
+	}
+	
 
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 $(function(){
-	// 선택자 바꾸기~~~
+	
 	$(".error").hide();
 	
 	/* 공통 함수 start*/    	
@@ -184,32 +185,14 @@ $(function(){
 	function hideMsg(msgDiv){
        	msgDiv.hide();     			
 	} 	
-	
-   	// 필수값 검사하는 함수
-   	function reqVal(inputId,msgDiv,msg){
-		if (inputId.val() == ""){	
-			showMsg(msgDiv,msg);
-		}else{
-			hideMsg(msgDiv);
-		}
-   	}	// reqVal() 함수 end
    	
    	// 유효성 에러 메세지 띄우는 함수.
     function showErrorMsg(obj, msg) {
-        obj.attr("class", "error_next_box");	// 클래스 속성값 변경
+        obj.attr('class', 'error_next_box');	// 클래스 속성값 변경
+        obj.css('color','green');
         obj.html(msg);
         obj.show();
     }
-   	
-/*   	
-   	// 입력창에 포커스 주는 함수
-    function setFocusToInputObject(obj) {
-        if(submitFlag) {
-            submitFlag = false;
-            obj.focus();
-        }
-    }	// setFocusToInputObject() 함수 end 
-*/    
 
     // 입력창 아래에 성공 메세지 띄우는 함수.
     function showSuccessMsg(obj, msg) {
@@ -237,18 +220,20 @@ $(function(){
     	let msgDiv = $("#rePwdMsg");
     	let msg = "필수입력입니다.";
     	//let oMsg = $("#rePwdMsg");
-    	
-    	// 필수값 검사
-		reqVal(inputId,msgDiv,msg);
-   	
-    	// 비밀번호 유효성 검사
-    	let pwdReg = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/;
-    	if( !pwdReg.test(inputId.val()) ){
-    		showMsg(msgDiv,msg)
-    		showErrorMsg(oMsg,"8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
-    	}
-    	
-	}		
+    	let pwdReg = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/; 
+       	
+   		if (inputId.val() == ""){	
+   			showMsg(msgDiv,msg);
+   		}else{
+   			// 비밀번호 유효성 검사
+   			if(!pwdReg.test(inputId.val())){
+   				showMsg(msgDiv,"8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+   			}else {
+   				hideMsg(msgDiv);
+   				showErrorMsg(msgDiv, "멋진 비밀번호네요!");
+   			}
+   		}   	
+	}	// checkRePwd() 함수 end		
 	
 	// '비밀번호 재설정 확인' 입력창 검사
 	function checkRePwdCheck(){
@@ -256,10 +241,21 @@ $(function(){
     	let msgDiv = $("#rePwdCheckMsg");
     	let msg = "필수입력입니다.";
     	
-    	// 필수값 검사
-		reqVal(inputId,msgDiv,msg);
-	}			
-	
+   		if (inputId.val() == ""){	
+   			showMsg(msgDiv,msg);
+   		}else{
+   			// 비밀번호 확인 유효성 검사
+   			if(inputId.val() !== $("#rePwdInput").val() ){
+   				showMsg(msgDiv,"비밀번호가 일치하지 않습니다.")
+   			}else {
+   				hideMsg(msgDiv);
+   				showErrorMsg(msgDiv, "비밀번호가 일치합니다!");
+				$("#rePwdOk_btn").css('background-color','#ff4d54');
+				$("#rePwdOk_btn").css('cursor','pointer');
+				$("#rePwdOk_btn").attr({disabled:false});  				
+   			}    	
+		}			
+	}
 });
 
 </script>
@@ -289,19 +285,21 @@ $(function(){
 		<hr>
 		<article class="findPwd_content">
 			<div class="form_area">
-				<form>
+				<form method="post" action="<%=request.getContextPath()%>/member_updatePwd.do">
+				<%--컨트롤러에서 필요한 이메일 정보 히든 방식으로 넘겨주기 --%>
+				<input type="hidden" name="mem_email" value="<%=mem_email %>">
 			  		<label class="input_label" for="text">재설정 비밀번호</label><span class="title_des">재설정 할 비밀번호를 입력해 주세요.</span>
 			  		<br>
-			  		<input class="inputBox" id="rePwdInput" name="id" type="text" required />
+			  		<input class="inputBox" id="rePwdInput" name="rePwd" type="password" required />
 			  		<div class="error" id="rePwdMsg"></div>
 			  		<br>
 			  		<br>
 			  		<label class="input_label" for="text">재설정 비밀번호 확인</label><span class="title_des">한번 더 입력해 주세요.</span>
 			  		<br>
-			  		<input class="inputBox" id="rePwdCheckInput" name="id" type="text" required />
+			  		<input class="inputBox" id="rePwdCheckInput" name="rePwdCheck" type="password" required />
 			  		<div class="error" id="rePwdCheckMsg"></div>
 				 	<div class="findPwdNext_btn_div">
-				 		<input type="submit" id="rePwdOk_btn" class="rePwdOk_btn" value="비밀번호 재설정" disabled="disabled">			
+				 		<input type="submit" id="rePwdOk_btn" class="rePwdOk_btn" value="비밀번호 재설정" disabled="disabled" onclick="alert('비밀번호를 재설정합니다.\n다시 로그인 해주세요.')">			
 				 	</div>
 		 		</form>
 		 	</div>	

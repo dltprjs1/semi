@@ -688,7 +688,33 @@ public class UserDAO {
 		return mem_email;
 	}	// getMemberEmail() 메소드 end
 
-	
+	// 해당 이메일 정보를 가진 회원의 비밀번호를 수정하는 메소드.
+	public int updatePwd(String mem_email, String rePwd){
+		
+		int result = 0;
+
+		try {
+			openConn();
+			
+			sql = "update user_member set mem_pwd = ? where mem_email = ?";
+						
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, rePwd);
+			pstmt.setString(2, mem_email);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+		
+	}	// dao.updatePwd() 메소드 end 
 	
 	
 }

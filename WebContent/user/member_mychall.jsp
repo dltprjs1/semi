@@ -126,10 +126,7 @@
 	
 </style>
 <%
-	int member_no = Integer.parseInt(request.getParameter("no"));
-
-	System.out.println("mychall no >>> " + member_no);
-
+	int member_num =  Integer.parseInt(String.valueOf(session.getAttribute("memberNum")));
 %>
 </head>
 <body>
@@ -144,10 +141,10 @@
 			
 			<nav class="my_navi">
 					<ul>
-						<li><a href="<%=request.getContextPath() %>/member_mypage.do?no=<%=member_no %>">회원 정보 조회/수정</a></li>
-						<li><a href="<%=request.getContextPath() %>/member_mychall.do?no=<%=member_no %>">나의 챌린지 현황</a></li>
-						<li><a href="<%=request.getContextPath() %>/member_mymoney.do?no=<%=member_no %>">나의 예치금.상금</a></li>
-						<li><a href="<%=request.getContextPath() %>/member_mylevel.do?no=<%=member_no %>">나의 레벨.배지</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mypage.do?no=<%=member_num %>">회원 정보 조회/수정</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mychall.do?no=<%=member_num %>">나의 챌린지 현황</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mymoney.do?no=<%=member_num %>">나의 예치금.상금</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_mylevel.do?no=<%=member_num %>">나의 레벨.배지</a></li>
 					</ul>
 			</nav>
 			
@@ -157,9 +154,9 @@
 				
 			<section class="mychall_atricle">
 					<ul class="mychall_ul">
-						<li><a href="<%=request.getContextPath()%>/member_myOngoingChall.do?no=<%=member_no %>">참가중</a></li>
-						<li><a href="<%=request.getContextPath()%>/member_myCompleteChall.do?no=<%=member_no %>">완료</a></li>
-						<li><a href="<%=request.getContextPath()%>/member_myCreateChall.do?no=<%=member_no %>">개설</a></li>
+						<li><a href="<%=request.getContextPath()%>/member_myOngoingChall.do?no=<%=member_num %>">참가중</a></li>
+						<li><a href="<%=request.getContextPath()%>/member_myCompleteChall.do?no=<%=member_num %>">완료</a></li>
+						<li><a href="<%=request.getContextPath()%>/member_myCreateChall.do?no=<%=member_num %>">개설</a></li>
 					</ul>
 			</section>	
 		</article>		
