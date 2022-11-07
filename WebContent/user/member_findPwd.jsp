@@ -159,7 +159,6 @@
 	}	
 	
 
-
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
@@ -196,6 +195,8 @@
     		}
  		
     	});
+    	
+
     
     });
 
@@ -230,7 +231,6 @@
 			  		<label for="text">아이디</label><span class="title_des">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</span>
 			  		<br>
 			  		<input class="inputBox" id="idInput" name="id" type="text" required />
-<!-- 나중에 지우기 -->			   		<div class="error" id="reqError"></div>
 			 	</div>	
 			 	<input type="button" id="findPwd_btn" class="findPwd_btn" value="다음"> 
 			</form>

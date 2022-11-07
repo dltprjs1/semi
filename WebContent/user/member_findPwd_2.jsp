@@ -121,14 +121,7 @@
 		border-top: 3px solid lightgray;
 		
 	}	/* 비밀번호 찾기 페이지 공통 CSS end */
-	.findPwd_content{
-		grid-column: 2/3;
-		grid-row: 4/5;
-		padding-top: 20px;
-		border-top: 3px solid lightgray;
-		
-	}
-	
+
 	.input_label{
 		font-size: 18px;
 		font-weight: bold;
@@ -147,21 +140,27 @@
 	.form_area{
 		grid-column: 2/3;
 		grid-row: 2/3;	
-		margin-bottom: 20px;	
 	}
-
-	.findPwd_btn{
+	
+	.findPwdNext_btn_div{
 		grid-column: 2/3;
-		grid-row: 4/5;	
+		grid-row: 4/5;		
+	}
+	
+	.findPwdNext_btn{
+		margin-top: 20px;
 		width: 417.22px;
 		height: 50px;	
 		border: 0;
 		color: white;
 		font-size: 20px;
 		font-weight: bold;
-		background-color: #ff4d54;
 		border-radius: 5px;
-		cursor: pointer;
+	    background-color: lightgray;
+		
+		/* 인증번호 확인 시 */
+		/* background-color: #ff4d54; */
+		/* cursor: pointer; */
 	}	
 	
 	.authNo_btn{
@@ -182,7 +181,6 @@
 <script type="text/javascript">
 $(function(){
 	
-	console.log($("#emailInput").val());
 	// '인증번호 전송' 버튼 클릭 시 함수
 	$("#authNoSend_btn").click(function(){
 		if ($("#emailInput").val() === ''){
@@ -191,14 +189,15 @@ $(function(){
 			// 이메일을 서버로 전송 > 유효성 검사 > 결과 반환 받기
 			$.ajax({
 				type: 'POST',  // http 요청 방식 (default: ‘GET’)
+				async : false ,
 				url: '<%=request.getContextPath()%>/getMemberEmail.do',		
 				// 요청이 전송될 URL 주소
 				dataType:'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
 				data: {mem_id: $("#mem_id").val()} ,  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
 				success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
 					if($("#emailInput").val() === res.mem_email){
-					console.log(res.mem_email);	//  꼭 지우기!!!콘솔창에 나오면 안됨.
-					alert('아이디 체크 완료. 일치합니다!');
+					let mem_email = res.mem_email;
+					sendAuthNo(mem_email);
 					}
 					else{
 						alert('회원가입 시 입력한 이메일 주소와 일치하지 않습니다.');
@@ -207,13 +206,50 @@ $(function(){
 				error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
 					alert('ajax 응답 오류');
 				}
-			});
+			});	// $.ajax() end
 			
 	    	return false;
 		}
 		
-	});
-
+	});	// '인증번호 전송' 버튼 클릭 시 함수 end
+	
+	// ajax로 컨트롤러에 회원의 이메일 주소를 전송하는 함수
+	function sendAuthNo(mem_email){
+		var emailData = { "mem_email": mem_email };
+		$.ajax({
+			type: 'POST',  // http 요청 방식 (default: ‘GET’)
+			async : false ,
+			url: '<%=request.getContextPath()%>/findPwdEmailAuth.do',	// 요청이 전송될 URL 주소
+			dataType: 'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
+			data: emailData ,  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
+			success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
+				// 메일로 인증번호를 보내고 보낸 인증번호를 응답받음.
+				alert('이메일이 일치합니다!\n입력하신 이메일 주소로 인증번호를 전송했습니다.\n인증번호를 확인해주세요.');
+				let authNum = res.authNum;
+				//alert('응답받은 인증번호'+authNum);
+				
+					// '인증번호 확인' 버튼 클릭 시 함수
+					$("#authNoCheck_btn").click(function(){
+						
+						if(authNum == $("#authNoCheckInput").val() ){	//이메일로 전송한 인증번호와 입력한 인증번호가 일치하는 경우.
+							alert('인증번호가 일치합니다.\n다음 페이지에서 비밀번호를 재설정 해주세요.');
+							$("#findPwdNext_btn").css('background-color','#ff4d54');
+							$("#findPwdNext_btn").css('cursor','pointer');
+							$("#findPwdNext_btn").attr({disabled:false});
+							
+						}else{
+							alert('인증번호가 일치하지 않습니다.');
+						}
+						
+					});	// '인증번호 확인' 버튼 클릭 시 함수 end				
+				
+			},
+			error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
+				alert('ajax 응답 오류');
+			}
+		});	// $.ajax() end
+	}	// sendAuthNo() 함수 end
+	
 });
 
 </script>
@@ -222,7 +258,7 @@ $(function(){
 <body>
 	<jsp:include page="../include/chall_top.jsp" />
 	<%--자바스크립트에서 필요한 값 히든--%>
-	<input type="hidden" class="class" name="mem_id" id="mem_id" value="${param.get('id')}">
+	<input type="hidden" name="mem_id" id="mem_id" value="${param.get('id')}">
 	<div class="findPwd_container">
 	<!-- 아이디 찾기/ 비밀번호 찾기 공통 영역 start-->
 		<nav class="findPwd_top">
@@ -241,21 +277,24 @@ $(function(){
 			</ul>
 		</div>	
 		<h2 class="find_title">비밀번호 찾기</h2>
-		<hr>
 		<article class="findPwd_content">
 			<div class="form_area">
-		  		<label class="input_label" for="text">이메일</label><span class="title_des">회원가입 시 입력한 이메일을 입력해 주세요.</span>
-		  		<br>
-		  		<input class="inputBox" id="emailInput" name="id" type="text" required />
-		  		<input type="button" id="authNoSend_btn" class="authNo_btn" value="인증번호 전송">
-		  		<br>
-		  		<br>
-		  		<label class="input_label" for="text">인증번호</label><span class="title_des">이메일로 전송된 인증번호를 입력해 주세요.</span>
-		  		<br>
-		  		<input class="inputBox" id="authNoCheckInput" name="id" type="text" required />
-		  		<input type="button" id="authNoCheck_btn" class="authNo_btn" value="인증번호 확인">	
+				<form class="form" action="<%=request.getContextPath()%>/user/member_findPwd3.jsp" method="post">
+			  		<label class="input_label" for="text">이메일</label><span class="title_des">회원가입 시 입력한 이메일을 입력해 주세요.</span>
+			  		<br>
+			  		<input class="inputBox" id="emailInput" name="email" type="text" required />
+			  		<input type="button" id="authNoSend_btn" class="authNo_btn" value="인증번호 전송">
+			  		<br>
+			  		<br>
+			  		<label class="input_label" for="text">인증번호 확인</label><span class="title_des">이메일로 전송된 인증번호를 입력해 주세요.</span>
+			  		<br>
+			  		<input class="inputBox" id="authNoCheckInput" name="id" type="text" required />
+			  		<input type="button" id="authNoCheck_btn" class="authNo_btn" value="인증번호 확인">	
+		 			<div class="findPwdNext_btn_div">
+		 				<input type="submit" id="findPwdNext_btn" class="findPwdNext_btn" value="다음" disabled="disabled">			
+		 			</div>
+		 		</form>
 		 	</div>	
-		 	<input type="button" id="findPwd_btn" class="findPwd_btn" value="다음" disabled="disabled" onclick="location.href='<%=request.getContextPath()%>/user/member_findPwd3.jsp'">			
 		</article>
 	</div>
 	
