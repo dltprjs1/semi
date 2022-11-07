@@ -30,7 +30,7 @@ public class ChallengeDAO {
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -100,7 +100,7 @@ public class ChallengeDAO {
 				dto.setChall_regitimestart(rs.getString("chall_regitimestart"));
 				dto.setChall_regitimeend(rs.getString("chall_regitimeend"));
 				dto.setChall_cont(rs.getString("chall_cont"));
-				dto.setChall_depositdefault(rs.getInt("chall_depositdefault"));
+				dto.setChall_depositdefault(rs.getString("chall_depositdefault"));
 				dto.setChall_depositmax(rs.getString("chall_depositmax"));
 				dto.setChall_privatecode(rs.getString("chall_privatecode"));
 				dto.setChall_maxpeople(rs.getString("chall_maxpeople"));
@@ -147,7 +147,7 @@ public class ChallengeDAO {
 				dto.setChall_regitimestart(rs.getString("chall_regitimestart"));
 				dto.setChall_regitimeend(rs.getString("chall_regitimeend"));
 				dto.setChall_cont(rs.getString("chall_cont"));
-				dto.setChall_depositdefault(rs.getInt("chall_depositdefault"));
+				dto.setChall_depositdefault(rs.getString("chall_depositdefault"));
 				dto.setChall_depositmax(rs.getString("chall_depositmax"));
 				dto.setChall_privatecode(rs.getString("chall_privatecode"));
 				dto.setChall_maxpeople(rs.getString("chall_maxpeople"));
@@ -168,5 +168,49 @@ public class ChallengeDAO {
 			closeConn(rs, st, con);
 		}
 		return dto;
+	}
+
+	public int Updatechallenge(ChallengeDTO dto) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "update challenge_list set chall_title=? , chall_category_code_fk=? , chall_cycle=? , chall_guide=? , chall_regitimestart=? , chall_regitimeend=? , chall_cont=? , chall_depositdefault=? , chall_depositmax=? , chall_maxpeople=? where chall_num=?";
+			st = con.prepareStatement(sql);
+			st.setString(1,dto.getChall_title());
+			st.setString(2,dto.getChall_category_code_fk());
+			st.setString(3,dto.getChall_cycle());
+			st.setString(4,dto.getChall_guide());
+			st.setString(5,dto.getChall_regitimestart());
+			st.setString(6,dto.getChall_regitimeend());
+			st.setString(7,dto.getChall_cont());
+			st.setString(8,dto.getChall_depositdefault());
+			st.setString(9,dto.getChall_depositmax());
+			st.setString(10,dto.getChall_maxpeople());
+			st.setInt(11,dto.getChall_num());
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+
+	public void Deletechallenge(int chall_num) {
+		openConn();
+		sql = "delete from challenge_list where chall_num = ?";
+		try {
+			st = con.prepareStatement(sql);
+			st.setInt(1,chall_num);
+			st.executeUpdate();
+			sql = "update challenge_list set chall_num = chall_num - 1 where chall_num > ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,chall_num);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
 	}
 }

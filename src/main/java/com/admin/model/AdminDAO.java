@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.report.model.ReportDTO;
 import com.user.model.UserDTO;
 
 public class AdminDAO {
@@ -288,5 +289,34 @@ public class AdminDAO {
 			closeConn(rs, st, con);
 		}
 		return result;
+	}
+	public List<ReportDTO> getReportList(int startNo, int lastNo) {
+		List<ReportDTO> list = new ArrayList<ReportDTO>();
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from member_report order by report_num desc) a where rownum <= ?) where rnum >= ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,lastNo);
+			st.setInt(2,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				ReportDTO dto = new ReportDTO();
+				dto.setReport_num(rs.getInt("report_num"));
+				dto.setReport_count(rs.getInt("report_count"));
+				dto.setReport_content(rs.getString("report_content"));
+				dto.setMem_id_reported(rs.getString("mem_id_reported"));
+				dto.setMem_id_report(rs.getString("mem_id_report"));
+				dto.setReport_title(rs.getString("report_title"));
+				dto.setReport_cause(rs.getString("report_cause"));
+				dto.setReport_image(rs.getString("report_image"));
+				dto.setMem_name_reported(rs.getString("mem_name_reported"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
 	}
 }

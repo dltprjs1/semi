@@ -10,11 +10,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-	function question_answer() {
-		location.href="category_question.do";
-	}
+	$(function(){
+		$("#btn").click(function(){
+			history.back()
+		});
+	});
 	
 </script>
 <style type="text/css">

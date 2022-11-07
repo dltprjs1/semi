@@ -15,7 +15,6 @@
 	
 	CScenterDAO csdao = CScenterDAO.getinstance();
 	List<Q_categoryDTO> qcatelist = csdao.getQ_categoryList();
-
 %>
     
 <!-- <div id="alert">
@@ -28,15 +27,17 @@
 <div>
 	<c:set value="<%=dto %>" var="userInfo"/>
 	<c:set value="<%=qcatelist %>" var="qcatelist" />
+
 	<div>
 		<div><span style="font-weight: bold;">${userInfo.getMem_name() }</span>님의 문의입니다.
 		<input type="hidden" id="pq_user_no" value="${userInfo.getMem_num() }"></div>
-		
+
 		<div id="pq_regdate">
 		<span>등록일</span>
 		<span></span>
 		</div>
 		<br>
+
 	
 		<div>
 		<span>문의유형</span>&nbsp;<span style="color:red;">*</span><br>
@@ -48,24 +49,71 @@
 		</select>
 		</div>
 		<br>
-		
-		<div>
-		<span>제목</span>&nbsp;<span style="color:red;">*</span><br>
-		<input class="form-control" type="text" id="pq_title"  style="width:100%;">
-		</div>
-		<br>
-		
-		<div>
-		<span>내용</span>&nbsp;<span style="color:red;">*</span><br>
-		<textarea class="form-control" id="pq_content" rows="10" cols="100"></textarea>
-		</div>
-		<br>
-		
-		<div align="center" class="d-grid gap-2 d-md-flex justify-content-md-end">
-		<button class="btn btn-primary" onclick="insertPQ()">등록</button>
-		<button id="pq_write_cancel" class="btn btn-outline-primary" onclick="cancelPQ()">취소</button>
-		<!-- 컨펌창 모달 -->
+
 			
+		<div id="newbox">
+			<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/insert_report.do">
+				<input type="hidden" name="report_mem_id" value="${userInfo.getMem_id() }">
+				<div>
+					<span>제목</span> <input id="report_title" name="report_title">
+				</div>
+
+				<br>
+
+				<div>
+					<span>회원 아이디 또는 이름</span> <input id="report_member"
+						name="report_member" placeholder="신고할 회원의 아이디 또는 이름을 입력해 주십시오.">
+				</div>
+
+				<br>
+
+				<div>
+					<span>사유 선택</span> <select id="report_cause" name="report_cause">
+						<option value="부적절한 홍보 게시물">부적절한 홍보 게시물</option>
+						<option value="음란성 또는 부적합한 내용">음란성 또는 부적합한 내용</option>
+						<option value="기타">기타</option>
+					</select>
+				</div>
+				
+				<br>
+				
+				<div>
+					<span>이미지</span>
+					<input type="file" id="report_image" name="report_image">
+				</div>
+
+				<br>
+
+				<div>
+					<span>상세내용</span> <input id="report_content" name="report_content">
+				</div>
+
+				<input id="reportbtn" type="submit" value="신고하기" onclick="report()">
+				<input type="button" value="취소" onclick="if(confirm('정말 취소하시겠습니까? 작성한 내용이 모두 사라집니다.')){ location.href='CS_privateQ.do' } else { return; }">
+				
+			</form>
+		</div>
+    
+		<br>
+		
+
+		<div id="oldbox">
+      <div>
+      <span>제목</span>&nbsp;<span style="color:red;">*</span><br>
+      <input class="form-control" type="text" id="pq_title"  style="width:100%;">
+      </div>
+      <br>
+		
+      <div>
+      <span>내용</span>&nbsp;<span style="color:red;">*</span><br>
+      <textarea class="form-control" id="pq_content" rows="10" cols="100"></textarea>
+      </div>
+      
+      <div align="center" class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary" onclick="insertPQ()">등록</button>
+        <button id="pq_write_cancel" class="btn btn-outline-primary" onclick="cancelPQ()">취소</button>
+      </div>
+		<!-- 컨펌창 모달 -->
 			<div id="confirm_modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -84,9 +132,9 @@
 			  </div>
 			</div>
 		<!-- 모달 끝 -->
-		</div>
-		
 	</div>
+      
+		</div>
 </div>
 
 <script>
@@ -97,12 +145,18 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 
 	let selected_pq_cate = "";
 	
+  $("#newbox").hide();
 	$("#pq_cate").change(function(){
 		selected_pq_cate = $(this).val();
 		
 		if ( selected_pq_cate == 4) {
-			alert('hi');
+			$("#newbox").show();
+			$("#oldbox").hide();
+		}else{
+      $("#newbox").hide();
+			$("#oldbox").show();
 		}
+    
 	});
 
 	function getPraviteQList() {
@@ -138,7 +192,6 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 				if ($(data).find("regdate").text() != null){
 					$("#PQ_Accordian_wrap").empty();
 				}
-
 				$(data).find("PQNA").each(function(){
 					
 					if($(this).find("answerCont").text() == "null") {
@@ -181,9 +234,7 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 				toastr.warning('데이터 통신 에러');
 			}
 		}); // ajax 끝
-
 	} // function getPraviteQList(); 끝 
-
 	function insertPQ(){
 		
 		$.ajax({
@@ -210,6 +261,7 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 		});
 	} // function insertPQ() 끝
 	
+
 	function cancelPQ(){
 		$("#pq_write_cancel").click(function(){
 			$("#confirm_modal").modal("show");
@@ -227,3 +279,4 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 	} // function cacelPQ() 끝
 	
 </script>
+
