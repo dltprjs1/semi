@@ -123,7 +123,7 @@
 				</div>
 				<div class="h_container1">
 					<h2>이 름</h2>
-					<input class="name" name="category_name" value="<%=content.getCategory_code()%>">
+					<input class="name" name="category_name" value="<%=content.getCategory_name()%>">
 				</div>
 				<div class="h_container1">
 					<h2>이미지</h2>
@@ -150,21 +150,6 @@
 				<br>
 				<br>
 				<br>
-							<%-- <th>카테고리 코드</th>
-							<td><input name="category_code" value="<%=content.getCategory_code()%>"></td>
-							<th>카테고리 이름</th>
-							<td><input name="category_name" value="<%=content.getCategory_name()%>"></td>
-							<th>카테고리 이미지</th>
-							<td><input type="file" name="category_image"></td>
-							<th>서브 카테고리</th>
-							<c:set var="list" value="${list }"/>
-										<select name="sub_category_name">
-											<option>:::서브 카테고리:::</option>
-										<c:forEach items="${list }" var="dto">
-											<option value="${dto.sub_category_name }">${dto.sub_category_name }</option>
-										</c:forEach>
-										</select>
-											<input name="category_name_input"> --%>
 			<div class="btn">
 				<input type="submit" value="수정하기">
 				<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath()%>/category_delete.do?category_num=<%=content.getCategory_num()%>'">

@@ -30,7 +30,7 @@ public class CScenterDAO {
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/downloads/ProjectChallengers/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -228,10 +228,21 @@ public class CScenterDAO {
 				result += "<num>" + rs.getInt("p_q_num") + "</num>";
 				result += "<challNum>" + rs.getInt("p_q_chall_num") + "</challNum>";
 				result += "<title>" + rs.getString("p_q_title") + "</title>";
-				result += "<content>" + rs.getString("p_q_content") + "</content>";
+				
+				String p_q_cont = rs.getString("p_q_content").replace("\n", "<br>");
+				
+				result += "<content>" + p_q_cont  + "</content>";
 				result += "<cateNum>" + rs.getInt("p_q_category_num") + "</cateNum>";
 				result += "<regdate>" + rs.getString("p_q_regdate") + "</regdate>";
-				result += "<answerCont>" + rs.getString("p_q_answer_cont") + "</answerCont>";
+				
+				
+				if (rs.getString("p_q_answer_cont") != null) {
+					String p_q_answercont = rs.getString("p_q_answer_cont").replace("\n", "<br>");
+					result += "<answerCont>" + p_q_answercont + "</answerCont>";
+				}else {
+					result += "<answerCont>" + rs.getString("p_q_answer_cont") + "</answerCont>";
+				}
+				
 				result += "<answerRegdate>" + rs.getString("p_q_answer_regdate") + "</answerRegdate>";
 				result += "<againNum>" + rs.getInt("p_q_again_num") + "</agianNum>";
 				result += "<aswerNum>" + rs.getInt("p_q_answer_num") + "</answerNum>";
@@ -333,5 +344,47 @@ public class CScenterDAO {
 		return list;
 	}
 	
+	
+	
+	public int insertPQ(PrivateQDTO dto) {
+		int result = 0, count = 0;
+		
+		try {
+
+			openConn();
+			
+			sql = "select max(p_q_num) from private_q";
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1)+1;
+				System.out.println(count);
+			}
+			
+			sql = "insert into private_q values(?, 1, ?, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, 'NO')";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, count);
+			pstmt.setString(2, dto.getP_q_title());
+			pstmt.setString(3, dto.getP_q_content());
+			pstmt.setInt(4, dto.getP_q_category_num());
+			pstmt.setString(5, dto.getP_q_answer_cont());
+			pstmt.setString(6, dto.getP_q_answer_regdate());
+			pstmt.setInt(7, dto.getP_q_again_num());
+			pstmt.setInt(8, dto.getP_q_answer_num());
+			pstmt.setInt(9, dto.getP_q_user_num());
+			pstmt.setInt(10, dto.getP_q_check());
+			
+			result = pstmt.executeUpdate();
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+	}
 	
 }

@@ -8,6 +8,79 @@
 
 	<jsp:include page="../include/chall_top.jsp" />
 	<jsp:include page="../include/CS_top.jsp" />
+	
+	<script type="text/javascript">
+						
+			$(function(){
+			
+				function getPraviteQList() {
+					$.ajax({
+						url : "<%= request.getContextPath()%>/CS_privateQ_list.do",
+						data : {
+							pq_user_no : <%= mem_num%>,
+						},
+						datatype: "xml",
+						success : function(data){
+							
+							let result = "";
+							let answerStatus = "";
+							let answer = "";
+							
+							if ($(data).find("regdate").text() != null){
+									$("#PQ_Accordian_wrap").empty();
+								}
+							
+							$(data).find("PQNA").each(function(){
+								
+								if($(this).find("answerCont").text() == "null") {
+										answerStatus = "<font color='#bd3232'>접수중</font>";
+										answer = "<p>안녕하세요, 챌린저스입니다.</p>"
+										+ "<p>고객님의 일대일 문의가 접수되었습니다.</p>"
+										+ "<p>담당자가 확인하여 답변을 작성 중에 있습니다.</p>"
+										+ "<p>빠르게 답변드릴 수 있도록 노력하겠습니다.</p>"
+										+ "<p>감사합니다.</p>";
+										
+									}else if($(this).find("answerCont").text() != "null") {
+										answerStatus = "<font color='#324bbd'>답변완료</font>";
+										answer = "답변 등록일 : "+$(this).find("answerRegdate").text().substring(0, 10)+"<br><br>"+$(this).find("answerCont").text();
+									}
+								
+								result += "<div class='question'><span>"+$(this).find("num").text()+"</span>"				
+								result += "<span>"+$(this).find("title").text()+"</span>"
+								result += "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>"
+								result += "<span>"+answerStatus + "</span></div>"
+								result += "<div class='answer'>"+"<span>"+$(this).find("content").text()+"</span>"+"<br><br>"+
+											"<div style='background-color : lightgray;'><span>"+answer+"</span></div>"+"</div>";
+								
+							});
+
+							$("#PQ_Accordian_wrap").append(result);
+							
+							$(".question").click(function(){
+								if ($(this).hasClass('show')){
+									$(this).next(".answer").slideUp(200);
+									$(this).removeClass('show');
+								}else {
+									$(this).next(".answer").stop().slideDown(200);
+									$(this).addClass('show');
+								}
+							});
+							
+						},
+						error : function(){
+							alert('데이터 통신 에러');
+						}
+						
+					}); // ajax 끝
+					
+
+				} // function getPraviteQList(); 끝 
+				
+				getPraviteQList();
+				
+			}); // $(document).ready(function(){}) 끝
+			
+			</script>
 			
 			<table class="full_table">
 				<tr class="contentTitle">
@@ -33,77 +106,7 @@
 				</div>
 			</div>
 			
-			<script type="text/javascript">
-						
-			$(function(){
 			
-				function getPraviteQList() {
-					$.ajax({
-						url : "<%= request.getContextPath()%>/CS_privateQ_list.do",
-						data : {
-							pq_user_no : <%= mem_num%>,
-						},
-						datatype: "xml",
-						success : function(data){
-							
-							let result = "";
-							let answerStatus = "";
-							let answer = "";
-							
-							$(data).find("PQNA").each(function(){
-								if ($(this).find("regdate").text() != null){
-									$("#PQ_Accordian_wrap").empty();
-								}
-								result += "<div class='question'><span>"+$(this).find("num").text()+"</span>";				
-								result += "<span>"+$(this).find("title").text()+"</span>";
-								result += "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>";				
-							
-									if($(this).find("answerCont").text() == "null") {
-										answerStatus = "<font color='#bd3232'>접수중</font>";
-										answer += "<p>안녕하세요, 챌린저스입니다.</p>";
-										answer += "<p>고객님의 일대일 문의가 접수되었습니다.</p>";
-										answer += "<p>담당자가 확인하여 답변을 작성 중에 있습니다.</p>";
-										answer += "<p>빠르게 답변드릴 수 있도록 노력하겠습니다.</p>";
-										answer += "<p>감사합니다.</p>";
-										
-									}else if ($(this).find("answerCont").text() != "null"){
-										answerStatus = "<font color='#324bbd'>답변완료</font>";
-										answer = "답변 등록일 : "+$(this).find("answerRegdate").text().substring(0, 10)+"<br><br>"+$(this).find("answerCont").text();
-									}
-									
-								result += "<span>"+answerStatus + "</span></div>";
-								result += "<div class='answer'><span>"+answer+"</span></div>";
-								
-							});
-
-							$("#PQ_Accordian_wrap").append(result);
-							
-							$(".question").click(function(){
-								if ($(this).hasClass('show')){
-									$(this).next(".answer").slideUp(200);
-									$(this).removeClass('show');
-								}else {
-									$(this).next(".answer").stop().slideDown(200);
-									$(this).addClass('show');
-								}
-							});
-							
-						},
-						error : function(){
-							alert('데이터 통신 에러');
-						}
-						
-					}); // ajax 끝
-
-				} // function getPraviteQList(); 끝 
-				
-				getPraviteQList();
-				
-			}); // $(document).ready(function(){}) 끝
-			
-			</script>
-			
-			<div id="test"></div>
 			
 			<script>
 				function pqWrite(){
@@ -119,6 +122,7 @@
 						success : function(data) {
 							$("#PQ_content").html(data);
 							$("#PQ_write_button").remove();
+							
 						},
 						error : function() {
 							alert('데이터 통신 에러');
@@ -126,11 +130,15 @@
 					});
 				
 				}
+				
 			</script>
 			
 			<div id="PQ_write_button">
 				<button onclick="pqWrite()">문의하기</button>
 			</div>
+			
+			
+			
 			
 	<jsp:include page="../include/CS_bottom.jsp" />
 	<jsp:include page="../include/chall_bottom.jsp" />

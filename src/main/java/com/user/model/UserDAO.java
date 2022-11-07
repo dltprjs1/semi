@@ -12,7 +12,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,7 +46,7 @@ public class UserDAO {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
 
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 
 
 		String user = "ADMIN";
@@ -662,8 +664,32 @@ public class UserDAO {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	}	
+	}
 
-	
-	
+	public int getmemberid(String mem_id_reported) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select mem_id from user_member where mem_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_id_reported);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = 1;
+			}
+			
+			sql = "select mem_name from user_member where mem_name = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,mem_id_reported);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = 2;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}	
 }
