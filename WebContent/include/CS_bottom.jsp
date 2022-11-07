@@ -3,8 +3,4 @@
 
 	</div>
 	
-	<div id="CS_rightSpace">
-	&nbsp;
-	</div>
-	
 </div>

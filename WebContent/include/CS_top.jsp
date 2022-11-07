@@ -11,10 +11,6 @@
 <body>
 <div id="CS_container"> 
 
-	<div id="CS_leftSpace">
-	&nbsp;
-	</div>
-
 	<div id="CS_left_aside">
 			<div>
 				<ul>

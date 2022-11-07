@@ -142,8 +142,6 @@ public class CScenterDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
-			rs = pstmt.executeQuery();
-			
 			while(rs.next()) {
 				
 				FAQDTO dto = new FAQDTO();
@@ -169,14 +167,14 @@ public class CScenterDAO {
 	
 	
 	
-	public List<PrivateQDTO> privateQList(int no){
+	public List<PrivateQDTO> getPagedPQList(int no){
 		List<PrivateQDTO> list = new ArrayList<PrivateQDTO>();
 		
 		try {
 
 			openConn();
 			
-			sql = "select * from private_q where p_q_user_num = ? order by p_q_num desc, p_q_answer_num asc";
+			sql = "select * from (select row_number() over(order by p_q_num) rnum, b.* from private_q b) where rnum >= ? and rnum <= ?";
 			                                                                                                                                                                                                                                                                                                                                   
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, no);
