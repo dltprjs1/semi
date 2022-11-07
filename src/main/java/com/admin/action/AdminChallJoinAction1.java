@@ -1,4 +1,4 @@
-package com.user.action;
+package com.admin.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.chall.model.ChallJoinDAO;
 
-public class ChallJoin3 implements Action {
+public class AdminChallJoinAction1 implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -20,11 +20,12 @@ public class ChallJoin3 implements Action {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		
-		String open = request.getParameter("openRadio").trim();
+		String open = "admin";
+		String ad_id = (String)session.getAttribute("admin_id");
 		
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
-		int chall_num = (Integer)session.getAttribute("chall_num");
-		int res = dao.updateChall_1(open,chall_num);
+		dao.deleteExistingChall(ad_id); // 기존 '임시'상태 챌린지 삭제
+		int res = dao.insertChall_1(open,ad_id); // 새로운 '임시'상태 챌린지 개설
 		
 		session.setAttribute("open", open);
 		

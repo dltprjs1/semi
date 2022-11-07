@@ -14,16 +14,17 @@
 <script type="text/javascript">
 onload = function() {
 	var payFinal = 0;
+	var depositOG = 0;
+	var depositMinus = 0;
 	
 	function pay() {
-		var depositOG = document.getElementById('depositOG_input').value;
+		depositOG = document.getElementById("depositOG_input").value;
 	    document.getElementById("perfect").innerText = depositOG;
 	    document.getElementById("85%").innerText = depositOG;
 	    document.getElementById("depositOriginalArea").innerText = depositOG;
 	    
 	    //보유 예치금(${mem_money}) > 참가 예치금(depositOG) => 사용예치금(depositMinus) : 참가예치금(depositOG)
 	    //보유 예치금(${mem_money}) < 참가 예치금(depositOG) => 사용예치금(depositMinus) : 보유예치금 전액(${mem_money})
-	    var depositMinus;
 	    if(${mem_money} > depositOG) {
 			document.getElementById("depositMinusArea").innerText = "-"+depositOG;
 			depositMinus = depositOG;
@@ -41,7 +42,7 @@ onload = function() {
 	}
 	pay();
 	
-	$('#depositOG_input').on('change', function() {
+	$("#depositOG_input").on("change", function() {
 		 var n = $(this).val();
 	     n = Math.floor(n/10000) * 10000;
 	     $(this).val(n);
@@ -53,11 +54,12 @@ onload = function() {
 	     }
 	     pay();
 	});
+	
+	
 	$("#check_module").click(function () {	// 결제 시스템
 		
 		if(payFinal == 0) {
-			window.location.href = "main.jsp"
-			<%-- <%=request.getContextPath()%>/ --%>
+			location.href = "member_challJoin_pay_ok.do?dpOG="+depositOG+"&dpMi="+depositMinus+"&payF="+payFinal;
 	    }else {
 			var IMP = window.IMP; // 생략가능
 		    IMP.init('imp51311811'); 
@@ -120,7 +122,7 @@ onload = function() {
 		            msg += '에러내용 : ' + rsp.error_msg;
 		        }
 		        alert(msg);
-		        //window.location.href = 결제 승인 후 랜딩 페이지
+		        location.href = "member_challJoin_pay_ok.do?dpOG="+depositOG+"&dpMi="+depositMinus+"&payF="+payFinal;
 		    });
 	    }
 	});	// 결제 시스템 end
@@ -139,6 +141,9 @@ onload = function() {
 <body>
 	<jsp:include page="/include/chall_top.jsp" />
 		<div align="center">
+			${challContent.getChall_title()}
+			<hr class="join_hr" width="20%" color="red">
+			<br>
 			<h5><b>예치금</b></h5>
 			<p>챌린지 시작 전에 돈을 걸고 종료 후 돌려드려요!</p>
 			

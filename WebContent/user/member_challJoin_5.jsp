@@ -11,33 +11,34 @@
 <script type="text/javascript">
 	
 	function display(){
+		
 	    var categoryCode = document.getElementsByName("categoryCode");
 	    for(i=0; i<categoryCode.length; i++){
 	        if(categoryCode[i].checked == true){
 	        	switch(categoryCode[i].value) {
 	    		case "C001" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/run.png"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/run.jpg"; 
 	    			break;
 	    		case "C002" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/food.png"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/food.jpg"; 
 	    			break;
 	    		case "C003" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/life.png"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/life.jpg"; 
 	    			break;
 	    		case "C004" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/mind.png"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/mind.jpg"; 
 	    			break;
 	    		case "C005" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/hobby.png"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/hobby.jpg"; 
 	    			break;
 	    		case "C006" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/eco.png"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/eco.jpg"; 
 	    			break;
 	    		case "C008" :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/코딩-이모지.jpg"; 
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/공부_코딩-이모지1.jpg"; 
 	    			break;
 	    		default :
-	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/etc.png";
+	    			document.getElementById("image_main").src = "<%=request.getContextPath()%>/uploadFile/etc.jpg";
 	    		}
 	        }
 	    }
@@ -58,6 +59,9 @@
     }
     
     onload = function() {
+    	if('${open}' == 'admin') {
+			$("#tempSave_btn").hide();
+		}
     	var keyword1 = document.getElementById("kw1"); keyword1.style.display = 'none';
     	var keyword2 = document.getElementById("kw2"); keyword2.style.display = 'none';
     	var keyword3 = document.getElementById("kw3"); keyword3.style.display = 'none';
@@ -91,7 +95,14 @@
 			<h3><b>이제 다 왔어요! 사람들이 쉽게 찾을 수 있게 완성해주세요!</b></h3>
 			<hr class="join_hr" width="50%" color="red">
 			<br>
-			<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_final.do">
+			<c:choose>
+				<c:when test="${open=='admin'}">
+					<form id="form" method="post" enctype="multipart/form-data" action="admin_challJoin_final.do">
+				</c:when>
+				<c:otherwise>
+					<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_final.do">
+				</c:otherwise>
+			</c:choose>
 			
 			
 			<h5>카테고리 선택</h5><!-- 필수항목 -->
@@ -114,7 +125,7 @@
 			<a>챌린지를 잘 설명할 수 있는 사진으로 선택해주세요. 멋진 썸네일은 인기의 비결!</a><br>
 			
 			<input type='text' name="main_img" id='main_img' style='display: none;'> 
-			<img id="image_main" src='<%=request.getContextPath()%>/uploadFile/run.png' height="200" width="200" border="2" onclick='document.all.mainImgFile.click(); document.all.main_img.value=document.all.mainImgFile.value' class="rounded mx-auto d-block">
+			<img id="image_main" src='<%=request.getContextPath()%>/uploadFile/run.jpg' height="200" width="200" border="2" onclick='document.all.mainImgFile.click(); document.all.main_img.value=document.all.mainImgFile.value' class="rounded mx-auto d-block">
 			<input type="file" name="mainImgFile" id="image_main_input" accept="image/jpg, image/jpeg, image/png, image/gif"
 			  	onchange="previewFile1()" style='display: none;'>
 			<!-- 미리보기 사진 위에 '사진선택'글자 반투명하게 오버랩시켜줘야 함 -->
@@ -133,6 +144,7 @@
 			
 			<br><br>
 			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
+			<button type="button" id="tempSave_btn" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
 			<button type="submit" class="btn btn-dark">챌린지 개설하기</button>
 			</form>
 		</div>

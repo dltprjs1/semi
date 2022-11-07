@@ -5,7 +5,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	// day1
+	//day1
 	String pattern1_DB = "YYYYMMdd"; SimpleDateFormat simpleDateFormat1_DB = new SimpleDateFormat(pattern1_DB);
 	Calendar cal1 = Calendar.getInstance();	String day1_DB = simpleDateFormat1_DB.format(cal1.getTime());
 	String pattern1_out = "MM.dd (E)"; SimpleDateFormat simpleDateFormat1_out = new SimpleDateFormat(pattern1_out);
@@ -50,28 +50,44 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-onload = function() { 
-	$("#title_check").hide();
+onload = function() {
+	if('${open}' == 'admin') {
+		$("#tempSave_btn").hide();
+	}
+	const target = document.getElementById('ok');
+	$("#title_text_check").hide();
 	$('#title').keyup(function(){
+		if($.trim($("#title").val()).length >= 3 && $.trim($("#guide").val()).length >= 15) {
+			target.disabled = false;
+		} else {
+			target.disabled = true;
+		}
+		
 	    let content = $(this).val();
 	    $('#title_text_count').text("( "+content.length+" / 30 )");
 	    
-	    $("#title_check").hide();
+	    $("#title_text_check").hide();
 		let userId = $("#title").val();
 		if($.trim($("#title").val()).length > 0 && $.trim($("#title").val()).length < 3) {
-			$("#title_check").show();
+			$("#title_text_check").show();
 			return false;
 		}
 	});
-	$("#guide_check").hide();
+	$("#guide_text_check").hide();
 	$('#guide').keyup(function(){
+		if($.trim($("#title").val()).length >= 3 && $.trim($("#guide").val()).length >= 15) {
+			target.disabled = false;
+		} else {
+			target.disabled = true;
+		}
+		
 	    let content = $(this).val();
 	    $('#guide_text_count').text("( "+content.length+" / 100 )");
 	    
-	    $("#guide_check").hide();
+	    $("#guide_text_check").hide();
 		let userId = $("#guide").val();
 		if($.trim($("#guide").val()).length > 0 && $.trim($("#guide").val()).length < 15) {
-			$("#guide_check").show();
+			$("#guide_text_check").show();
 			return false;
 		}
 	});
@@ -79,6 +95,7 @@ onload = function() {
 	    let content = $(this).val();
 	    $('#cont_text_count').text("( "+content.length+" / 100 )");
 	});
+	
 }
 // 이미지 미리보기 메서드
 function previewFile1() { 
@@ -97,6 +114,19 @@ function previewFile1() {
 function previewFile2() { 
     var preview = document.querySelector('#image_fail'); 
     var file = document.querySelector('#image_fail_input').files[0]; 
+    var reader  = new FileReader(); 
+    reader.onloadend = function () { 
+          preview.src = reader.result; 
+   } 
+   if (file) { 
+         reader.readAsDataURL(file); 
+     } else { 
+         preview.src = ""; 
+  } 
+}
+function previewFile3() { 
+    var preview = document.querySelector('#image_cont'); 
+    var file = document.querySelector('#image_cont_input').files[0]; 
     var reader  = new FileReader(); 
     reader.onloadend = function () { 
           preview.src = reader.result; 
@@ -137,14 +167,21 @@ function previewFile2() {
 
 </script>
 <style type="text/css">
-
 	.join_hr {
 		border: 0;
     	height: 3px;
     	background: #ff4d54;
     	opacity: 100;
 	}
-	
+	.required {
+		color: red;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.category {
+		font-size: 20px;
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -156,14 +193,22 @@ function previewFile2() {
 			<hr class="join_hr" width="50%" color="red">
 			<br>
 			
-			<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_4.do">
-			<h5><b>챌린지 제목</b></h5><!-- 필수항목 -->
+    
+			<c:choose>
+				<c:when test="${open=='admin'}">
+					<form id="form" method="post" enctype="multipart/form-data" action="admin_challJoin_2.do">
+				</c:when>
+				<c:otherwise>
+					<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_4.do">
+				</c:otherwise>
+			</c:choose>
+			<!-- 필수항목 --><span class="category">챌린지 제목</span><span class="required">*</span><br>
   			<input name="title" maxlength="30" id="title" placeholder="예) 1만보 걷기"><span id="title_text_count">( 0 / 30 )</span><br>
-			<span id="title_check" style="color: red">최소 3글자 이상 입력해주세요.</span>
+			<span id="title_text_check" style="color: red">최소 3글자 이상 입력해주세요.</span>
 			
 			
 			<br><br>
-			<h5><b>인증 빈도</b></h5><!-- 필수항목 -->
+			<!-- 필수항목 --><span class="category">인증 빈도</span><span class="required">*</span><br>
 			<!-- (후순위) 인증 빈도에 따라 시작일과 설명 문구 변경해줘야 함 -->
 			<input type="radio" class="btn-check" name="cycle" id="option1" value="매일" autocomplete="off" checked>
 			<label class="btn btn-secondary" for="option1">매일</label>
@@ -186,16 +231,18 @@ function previewFile2() {
 			
 			
 			<br><br>
-			<h5><b>챌린지 기간</b></h5><!-- 필수항목 -->
-			<c:forEach begin="1" end="8" var="i">
+			<!-- 필수항목 --><span class="category">챌린지 기간</span><span class="required">*</span><br>
+				<input type="radio" class="btn-check" name="duration" id="duRadio1" autocomplete="off" value="1" checked>
+				<label class="btn btn-secondary" for="duRadio1">1주 동안</label>
+			<c:forEach begin="2" end="8" var="i">
 				<input type="radio" class="btn-check" name="duration" id="duRadio${i }" autocomplete="off" value="${i }">
 				<label class="btn btn-secondary" for="duRadio${i }">${i }주 동안</label>
 			</c:forEach>
 			
 			
 			<br><br>
-			<h5><b>시작일</b></h5><!-- 필수항목 -->
-			<input type="radio" class="btn-check" name="startDate" id="staDateRadio1" value="<%=day1_DB %>" autocomplete="off">
+			<!-- 필수항목 --><span class="category">시작일</span><span class="required">*</span><br>
+			<input type="radio" class="btn-check" name="startDate" id="staDateRadio1" value="<%=day1_DB %>" autocomplete="off" checked>
 			<label class="btn btn-secondary" for="staDateRadio1"><%=day1_out %></label>
 			<input type="radio" class="btn-check" name="startDate" id="staDateRadio2" value="<%=day2_DB %>" autocomplete="off">
 			<label class="btn btn-secondary" for="staDateRadio2"><%=day2_out %></label>
@@ -213,21 +260,18 @@ function previewFile2() {
 			<!-- 선택한 시작일과 챌린지 기간을 실시간으로 텍스트로 보여주기 -->
 			
 			<br><br>
-			<h5><b>인증 방법</b></h5><!-- 필수항목 -->
+			<!-- 필수항목 --><span class="category">인증 방법</span><span class="required">*</span><br>
   			<textarea name="guide" cols="55" rows="3" id="guide" maxlength="100" placeholder="예) 오늘 날짜와 걸음 수가 적힌 만보기 캡쳐 화면 업로드"></textarea><span id="guide_text_count">( 0 / 100 )</span>
   			<br>
-  			<span id="guide_check" style="color: red">최소 15글자 이상 입력해주세요.</span>
+  			<span id="guide_text_check" style="color: red">최소 15글자 이상 입력해주세요.</span>
   			<br>
   			<a>* 챌린지가 시작되면 인증 방법을 수정할 수 없습니다. 신중히 작성해주세요. <br>
   			* 참가자들이 혼란을 겪지 않도록 정확한 기준과 구체적인 인증방법을 적어주세요. <br>
   			* 유저 챌린지에서 발생한 분쟁에는 챌린저스가 관여하지 않습니다.</a>
   			
   			
-  			<!-- <input type=file name='file1' style='display: none;'> 
-			<input type='text' name='file2' id='file2'> 
-			<img src='이미지경로' border='0' onclick='document.all.file1.click(); document.all.file2.value=document.all.file1.value'>  -->
   			<br><br>
-			<h5><b>인증샷 예시</b></h5>
+			<span class="category">인증샷 예시</span><br>
 			<table>
 			  <tr>
 			    <td>
@@ -253,7 +297,7 @@ function previewFile2() {
 			
 			
 			<br><br>
-			<h5><b>인증 가능 시간</b></h5><!-- 필수항목 -->
+			<!-- 필수항목 --><span class="category">인증 가능 시간</span><span class="required">*</span><br>
 			<table>
 				<tr align="center">
 					<td>시작 시간</td>
@@ -267,7 +311,7 @@ function previewFile2() {
 			
 			
 			<br><br>
-			<h5><b>챌린지 소개</b></h5>
+			<span class="category">챌린지 소개</span><br>
 			<a>사진과 글을 추가해 챌린지를 소개해보세요. <br>
   			혹시 알아요 리더님의 글에 반해서 의지가 불타오를지!</a><br>
   			<textarea name="cont" cols="55" rows="3" id="cont" maxlength="100" placeholder="예) 매일 1만보 걷고 건강해지기! 오늘부터 같이 해봐요 :)"></textarea>
@@ -275,16 +319,17 @@ function previewFile2() {
   			<span id="cont_text_count">( 0 / 100 )</span>
 			
 			<br><br>
-			<a><b>소개 사진 올리기</b></a><br>
-			<input type="file" id="file3" name="cont_imgs[]" multiple="multiple" onselect="onSelect(event)">
-			<!-- 최대 5장 업로드 가능하게 하고 모두 미리보기 해줘야 함 -->
+			<span class="category">소개 사진 올리기</span><br>
+			<input type='text' name="cont_img" id='cont_img' style='display: none;'> 
+			<img id="image_cont" src='<%=request.getContextPath()%>/uploadFile/regi_shot_fail.jpg' height="100" width="100" border="2" onclick='document.all.contImgFile.click(); document.all.cont_img.value=document.all.contImgFile.value' class="rounded mx-auto d-block">
+			<input type="file" name="contImgFile" id="image_cont_input" accept="image/jpg, image/jpeg, image/png, image/gif"
+			  	onchange="previewFile3()" style='display: none;'>
 			
 			
 			<br><br>
 			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
-			<button type="button" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
-			<button type="submit" class="btn btn-dark">다음</button>
-			<!-- 버튼은 비활성화되어있다가 필수항목 모두 선택하면 활성화되게 -->
+			<button type="button" id="tempSave_btn" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
+			<button type="submit" class="btn btn-dark" id="ok" disabled>다음</button>
 		</form>
 		</div>
 		

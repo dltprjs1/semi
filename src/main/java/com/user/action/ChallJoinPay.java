@@ -18,10 +18,10 @@ public class ChallJoinPay implements Action {
 			throws IOException, Exception {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
-		int challNum = (Integer)session.getAttribute("challNum");
+		int chall_num = (Integer)session.getAttribute("chall_num");
 		int memberNum = (Integer)session.getAttribute("memberNum");
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
-		ChallJoinDTO dto = dao.getChallContent(challNum);
+		ChallJoinDTO dto = dao.getChallContent(chall_num);
 		request.setAttribute("challContent", dto);
 		
 		int mem_money = dao.getMemMoney(memberNum);

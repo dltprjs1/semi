@@ -1,4 +1,4 @@
-package com.user.action;
+package com.admin.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import com.chall.model.ChallCategoryDTO;
 import com.chall.model.ChallJoinDAO;
 import com.chall.model.ChallJoinDTO;
 
-public class ChallJoin5 implements Action {
+public class AdminChallJoinAction3 implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -37,8 +37,9 @@ public class ChallJoin5 implements Action {
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
 		
 		HttpSession session = request.getSession();
-		int chall_num = (Integer)session.getAttribute("chall_num");
-		dto.setChall_num(chall_num);
+		String ad_id = (String)session.getAttribute("admin_id");
+		int challNum = dao.continueChallNum(ad_id);
+		dto.setChall_num(challNum);
 		
 		int res = dao.updateChall_3(dto);
 		

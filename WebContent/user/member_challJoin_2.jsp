@@ -14,14 +14,13 @@
 	onload = function() {
 		let checkBox1 = document.getElementById("open-outlined");
 		let checkBox2 = document.getElementById("private-outlined");
+		const target = document.getElementById('next');
 		
 		checkBox1.onclick = function() {
-				const target = document.getElementById('next');
 				 target.disabled = false;
 		}
 		
 		checkBox2.onclick = function() {
-				const target = document.getElementById('next');
 				 target.disabled = false;
 		}
 	}
@@ -44,7 +43,8 @@
 <body>
 	<jsp:include page="../include/chall_top.jsp" />
 		<div align="center">
-			<form action="member_challJoin_3.do" method="post">
+			<!-- <form action="member_challJoin_3.do" method="post"> -->
+			<form method="post">
 			<h3><b>어떤 챌린지를 만드시겠어요?</b></h3> <br>
 			<h6>마지막 단계에서 수정하기 어려우니 신중히 골라주세요!</h6>
 			<hr class="join_hr" width="50%" color="red">
@@ -63,7 +63,8 @@
 			<br>(초대받은 사람만 참여할 수 있어요)</label>
 			
 			<br><br><br>
-			<button id="next" type="submit" class="btn btn-dark" disabled>다음</button>
+			<button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_temp_save.do">임시저장</button>
+			<button id="next" type="submit" class="btn btn-dark" formaction="member_challJoin_3.do" disabled>다음</button>
 			</form>
 		</div>
 		<br>
