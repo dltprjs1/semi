@@ -28,7 +28,7 @@
 			<a id="3" href="<%=request.getContextPath() %>/category_question.do"><img src="<%=request.getContextPath()%>/uploadFile/admin/1대1문의_image.png" width="200" height="200"></a>
 			<a id="4" href="<%=request.getContextPath() %>/FAQ_control.do"><img src="<%=request.getContextPath()%>/uploadFile/admin/공지사항관리_image.png" width="200" height="200"></a>
 			<a id="5" href="<%=request.getContextPath() %>/challenge_control.do"><img src="<%=request.getContextPath()%>/uploadFile/admin/챌린지관리_image.png" width="200" height="200"></a>
-			<a id="6" href="<%=request.getContextPath() %>/challenge_control.do"><img src="<%=request.getContextPath()%>/uploadFile/admin/챌린지만들기_image.png" width="200" height="200"></a>
+			<a id="6" href="<%=request.getContextPath() %>/admin_challJoin_1.do"><img src="<%=request.getContextPath()%>/uploadFile/admin/챌린지만들기_image.png" width="200" height="200"></a>
 	</div>
 	<jsp:include page="../include/chall_bottom.jsp"/>
 </body>

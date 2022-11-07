@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	session.removeAttribute("chall_num");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,17 +13,15 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src = "moment-with-locales.js"></script>
 <script type="text/javascript">
-
 	function check() {
 		 location.href="member_challJoin_2.do";
 	}
 		
 	onload = function() {
-		
 		let checkBox1 = document.getElementById("promise1");
 		let checkBox2 = document.getElementById("promise2");
 		let checkBox3 = document.getElementById("promise3");
-		
+		const target = document.getElementById('ok');
 		// for문 왜 안먹지...
 		/* for(let i=1; i<=3; i++) {
 			checkBox+i.onclick = function() {
@@ -36,35 +37,26 @@
 		
 		checkBox1.onclick = function() {
 			if (checkBox1.checked == true && checkBox2.checked == true && checkBox3.checked == true){
-				const target = document.getElementById('ok');
 				 target.disabled = false;
 			} else {
-				const target = document.getElementById('ok');
 				 target.disabled = true;
 			}
 		}
-		
 		checkBox2.onclick = function() {
 			if (checkBox1.checked == true && checkBox2.checked == true && checkBox3.checked == true){
-				const target = document.getElementById('ok');
 				 target.disabled = false;
 			} else {
-				const target = document.getElementById('ok');
 				 target.disabled = true;
 			}
 		}
-		
- 		checkBox3.onclick = function() {
+		checkBox3.onclick = function() {
 			if (checkBox1.checked == true && checkBox2.checked == true && checkBox3.checked == true){
-				const target = document.getElementById('ok');
 				 target.disabled = false;
 			} else {
-				const target = document.getElementById('ok');
 				 target.disabled = true;
 			}
 		}
 	}
-
 </script>
 <style type="text/css">
 

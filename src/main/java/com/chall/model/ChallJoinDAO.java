@@ -59,7 +59,7 @@ public class ChallJoinDAO {
 	} // closeConn() END
 	
 	
-	// 기존 '임시' 상태 챌린지 삭제
+	// (Member)기존 '임시' 상태 챌린지 삭제
 	public void deleteExistingChall(int mem_num) {
 		try {
 			openConn();
@@ -76,11 +76,28 @@ public class ChallJoinDAO {
 	}	// deleteExistingChall() end
 	
 	
-	// 첫번째 정보 입력(1-공개여부/2-챌린지 고유 번호/3-챌린지 상태/4-개설자 회원 번호)
-	public int insertChall_1(String open, int mem_num) {
-
-		int result = 0, count = 0;
-
+	// (Admin)기존 '임시' 상태 챌린지 삭제
+	public void deleteExistingChall(String ad_id) {
+		try {
+			openConn();
+			sql="delete from challenge_list where admin_id_fk = ? and chall_status = '임시'";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ad_id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// deleteExistingChall_admin() end
+		
+		
+	// ('임시저장'이 아닐 때)맨처음 list테이블에 등록(1-챌린지 고유 번호/2-개설자 회원 번호/3-챌린지 상태)
+	public int insertChall_0(int mem_num) {
+		
+		int count = 0;
+		
 		try {
 			openConn();
 			sql = "select max(chall_num) from challenge_list";
@@ -89,12 +106,31 @@ public class ChallJoinDAO {
 			if (rs.next()) {
 				count = rs.getInt(1) + 1;
 			}
-			sql = "insert into challenge_list values(?,?,'','','','','','','','','','','','','','','','','','',?,?,default,'','','','')";
+			sql = "insert into challenge_list values('',?,'','','','','','','','','','','','','','','','','','',?,?,default,'','','','')";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, count);
+			pstmt.setString(2, "임시");
+			pstmt.setInt(3, mem_num);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return count;
+	} // insertChall_0() end
+	
+	
+	// (Member)첫번째 정보 업데이트(1-공개여부)
+	public int updateChall_1(String open, int chall_num) {
+		int result = 0;
+		try {
+			openConn();
+			sql = "update challenge_list set chall_open = ? where chall_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, open);
-			pstmt.setInt(2, count);
-			pstmt.setString(3, "임시");
-			pstmt.setInt(4, mem_num);
+			pstmt.setInt(2, chall_num);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,10 +139,40 @@ public class ChallJoinDAO {
 			closeConn(rs, pstmt, con);
 		}
 		return result;
-	} // insertChall_1() end
+	} // updateChall_1() end
+		
+	
+	// (Admin)첫번째 정보 입력(1-공개여부/2-챌린지 고유 번호/3-챌린지 상태/4-개설자 관리자 번호)
+	public int insertChall_1(String open, String ad_id) {
+		
+		int result = 0, count = 0;
+		
+		try {
+			openConn();
+			sql = "select max(chall_num) from challenge_list";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1) + 1;
+			}
+			sql = "insert into challenge_list values(?,?,'','','','','','','','','','','','','','','','','',?,?,'',default,'','','','')";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, open);
+			pstmt.setInt(2, count);
+			pstmt.setString(3, ad_id);
+			pstmt.setString(4, "임시");
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // insertChall_1_admin() end
 	
 	
-	// 앞 페이지에서 개설하던 챌린지의 고유 번호 가져오기
+	// (Member)앞 페이지에서 개설하던 챌린지의 고유 번호 가져오기
 	public int continueChallNum(int mem_num) {
 		int count = 0;
 		try {
@@ -128,6 +194,28 @@ public class ChallJoinDAO {
 	}	// continueChallNum() end
 	
 	
+	// (Admin)앞 페이지에서 개설하던 챌린지의 고유 번호 가져오기
+	public int continueChallNum(String ad_id) {
+		int count = 0;
+		try {
+			openConn();
+			sql = "select max(chall_num) from challenge_list where admin_id_fk = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ad_id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return count;
+	}	// continueChallNum() end
+	
+	
 	// 두번째 정보 입력(1-제목/2-인증빈도/3-기간/4-시작일/5-인증방법/6-인증시작시간/7-인증종료시간/8-소개/9-인증성공이미지/10-인증실패이미지/11-소개이미지)
 	public int updateChall_2(ChallJoinDTO dto) {
 		
@@ -135,11 +223,11 @@ public class ChallJoinDAO {
 		
 		try {
 			openConn();
-			sql = "update challenge_list set chall_title=?, chall_cycle=?,"
-					+ "chall_duration=?, chall_startdate=?, chall_guide=?,"
-					+ "chall_regitimestart=?, chall_regitimeend=?,"
-					+ "chall_cont=?, chall_successimage=?, chall_failimage=?,"
-					+ "chall_contimage=? where chall_num = ?";
+			sql = "update challenge_list set chall_title = ?, chall_cycle = ?,"
+					+ "chall_duration = ?, chall_startdate = ?, chall_guide = ?,"
+					+ "chall_regitimestart = ?, chall_regitimeend = ?,"
+					+ "chall_cont = ?, chall_successimage = ?, chall_failimage = ?,"
+					+ "chall_contimage = ? where chall_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getChall_title());
 			pstmt.setString(2, dto.getChall_cycle());
@@ -170,8 +258,8 @@ public class ChallJoinDAO {
 		
 		try {
 			openConn();
-			sql = "update challenge_list set chall_depositDefault=?, chall_depositMax=?,"
-					+ "chall_privateCode=?, chall_maxPeople=? where chall_num = ?";
+			sql = "update challenge_list set chall_depositDefault = ?, chall_depositMax = ?,"
+					+ "chall_privateCode = ?, chall_maxPeople = ? where chall_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getChall_depositDefault());
 			pstmt.setString(2, dto.getChall_depositMax());
@@ -211,32 +299,59 @@ public class ChallJoinDAO {
 	}	// getCateDefaultImg() end
 	
 	
-	// 네번째 정보 입력(1-카테고리 코드/2-대표사진/3-키워드1/4-키워드2/5-키워드3)
-		public int updateChall_4(ChallJoinDTO dto) {
-			int result = 0;
-			
-			try {
-				openConn();
-				sql = "update challenge_list set chall_category_code_fk=?, chall_keyword1=?,"
-						+ "chall_keyword2=?, chall_keyword3=?, chall_mainImage=?, chall_status='임시저장' where chall_num = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, dto.getChall_category_code_fk());
-				pstmt.setString(2, dto.getChall_keyword1());
-				pstmt.setString(3, dto.getChall_keyword2());
-				pstmt.setString(4, dto.getChall_keyword3());
-				pstmt.setString(5, dto.getChall_mainImage());
-				pstmt.setInt(6, dto.getChall_num());
-				result = pstmt.executeUpdate();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				closeConn(rs, pstmt, con);
-			}
-			return result;
-		}	// updateChall_4() end
+	// (Member)네번째 정보 입력(1-카테고리 코드/2-대표사진/3-키워드1/4-키워드2/5-키워드3)
+	public int updateChall_4(ChallJoinDTO dto) {
+		int result = 0;
 		
+		try {
+			openConn();
+			sql = "update challenge_list set chall_category_code_fk = ?, chall_keyword1 = ?,"
+					+ "chall_keyword2 = ?, chall_keyword3 = ?, chall_mainImage = ?, chall_status = '임시저장' where chall_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getChall_category_code_fk());
+			pstmt.setString(2, dto.getChall_keyword1());
+			pstmt.setString(3, dto.getChall_keyword2());
+			pstmt.setString(4, dto.getChall_keyword3());
+			pstmt.setString(5, dto.getChall_mainImage());
+			pstmt.setInt(6, dto.getChall_num());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}	// updateChall_4() end
+	
+	
+	// (Admin)네번째 정보 입력(1-카테고리 코드/2-대표사진/3-키워드1/4-키워드2/5-키워드3)
+	public int updateChall_4(ChallJoinDTO dto, String ad_id) {
+		int result = 0;
 		
+		try {
+			openConn();
+			sql = "update challenge_list set chall_category_code_fk = ?, chall_keyword1 = ?,"
+					+ "chall_keyword2 = ?, chall_keyword3 = ?, chall_mainImage = ? where chall_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getChall_category_code_fk());
+			pstmt.setString(2, dto.getChall_keyword1());
+			pstmt.setString(3, dto.getChall_keyword2());
+			pstmt.setString(4, dto.getChall_keyword3());
+			pstmt.setString(5, dto.getChall_mainImage());
+			pstmt.setInt(6, dto.getChall_num());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}	// updateChall_4() end
+		
+	
+	// 해당 챌린지 정보 가져오기
 	public ChallJoinDTO getChallContent(int challNum) {
 		ChallJoinDTO dto = new ChallJoinDTO();
 		try {
@@ -266,6 +381,7 @@ public class ChallJoinDAO {
 				dto.setChall_category_code_fk(rs.getString("chall_category_code_fk"));
 				dto.setChall_ongoingPeople(rs.getInt("chall_ongoingPeople"));
 				dto.setChall_creater_num(rs.getInt("chall_creater_num"));
+				dto.setChall_status(rs.getString("chall_status"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -277,6 +393,7 @@ public class ChallJoinDAO {
 	}	// getChallContent() end
 	
 	
+	// 챌린지 정보 보기 페이지에서 필요한 회원 정보 가져오기(개설수, 평점, 프로필 사진)
 	public UserDTO getMemInfo(int createrNum) {
 		UserDTO dto = new UserDTO();
 		try {
@@ -300,6 +417,7 @@ public class ChallJoinDAO {
 	}	// getMemInfo() end
 	
 	
+	// 해당 회원의 예치금 정보 가져오기
 	public int getMemMoney(int mem_num) {
 		int mem_money = 0;
 		try {
@@ -319,4 +437,84 @@ public class ChallJoinDAO {
 		}
 		return mem_money;
 	}	// getMemMoney() end
+	
+	
+	// (Member)결제완료 시 해당 챌린지 정보 업데이트(현재 참여 인원 : +1 / 상태 : ‘임시저장’ → ‘진행중’)
+	public void challJoinOk(int challNum) {
+		try {
+			openConn();
+			sql = "update challenge_list set chall_ongoingPeople = 1, chall_status = '진행중' where chall_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, challNum);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// challJoinOk() end
+	
+	
+	// (Admin)결제완료 시 해당 챌린지 정보 업데이트(현재 참여 인원 : +1 / 상태 : ‘임시저장’ → ‘진행중’)
+	public void challJoinOk(int challNum, String ad_id) {
+		try {
+			openConn();
+			sql = "update challenge_list set chall_status = '진행중' where chall_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, challNum);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// challJoinOk() end
+	
+	
+	// 결제완료 시 해당 회원 정보 업데이트(챌린지 개설 횟수 : +1 / 예치금 : 사용한 만큼 차감) challenge_made_count +1, 예치금(mem_money) 차감
+	public void memChallJoinUpdate(int mem_num, int dpM) {
+		try {
+			openConn();
+			sql = "update user_member set challenge_made_count = challenge_made_count+1, mem_money = mem_money-? where mem_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dpM);
+			pstmt.setInt(2, mem_num);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// memChallJoinUpdate() end
+	
+	
+	// 인증 테이블에 챌린지 개설 정보 넣기
+	public void proofInsert(int challNum, int memberNum, int deposit) {
+		int count = 0;
+
+		try {
+			openConn();
+			sql = "select max(proof_num) from proof_shot";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1) + 1;
+			}
+			sql = "insert into proof_shot values(?,?,?,'','','',?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, count);
+			pstmt.setInt(2, challNum);
+			pstmt.setInt(3, memberNum);
+			pstmt.setInt(4, deposit);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// proofInsert() end
 }

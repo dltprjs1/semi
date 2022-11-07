@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-<title>챌린지 미리보기</title>
+<title>챌린지 상세페이지</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
@@ -26,16 +26,29 @@
 		session.setAttribute("memberId", dto.getMem_id());
 		session.setAttribute("memberName", dto.getMem_name());
 		session.setAttribute("memberNum", dto.getMem_num()); -->
+		<c:set var="dto" value="${challContent }"/>	<!-- 챌린지 정보 가져옴 -->
 		
 		<div align="center">
 			<br>
-			<h3><b>챌린지 개설 미리보기 페이지</b></h3>
+			<c:choose>
+				<c:when test="${dto.getChall_status() eq '진행중'}">
+					<h3><b>챌린지 개설 상세 페이지</b></h3>
+				</c:when>
+				<c:otherwise>
+					<h3><b>챌린지 개설 미리보기 페이지</b></h3>
+				</c:otherwise>
+			</c:choose>
 			<hr class="join_hr" width="50%" color="red">
 			<br>
 			
 			
-			<c:set var="dto" value="${challContent }"/>	<!-- 챌린지 정보 가져옴 -->
-			<c:set var="user_dto" value="${userInfo }"/> <!-- 개설자 프사, 개설 챌린지 수, 평점 데이터 가져옴 -->
+			<c:choose>
+				<c:when test="${dto.getChall_open() eq 'admin'}">
+				</c:when>
+				<c:otherwise>
+					<c:set var="user_dto" value="${userInfo }"/> <!-- 개설자 프사, 개설 챌린지 수, 평점 데이터 가져옴 -->
+				</c:otherwise>
+			</c:choose>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 			<script type="text/javascript">
 				onload = function() {
@@ -51,17 +64,24 @@
 					$("#endDate").text(endDate);
 				}
 			</script>
-			<img id="image" height="300" width="300" border="2" src="<%=request.getContextPath()%>/memUpload/${dto.getChall_mainImage() }" class="rounded mx-auto d-block">
+					<img id="image" height="300" width="300" border="2" src="<%=request.getContextPath()%>/memUpload/${dto.getChall_mainImage() }" class="rounded mx-auto d-block">
+					<br>
+			<c:choose>
+				<c:when test="${dto.getChall_open() eq 'admin'}">
+					공식챌린지
+				</c:when>
+				<c:otherwise>
+					<!-- 프로필사진도 불러오기 -->
+					${memberName} 님
+				</c:otherwise>
+			</c:choose>
 			<br>
-			<!-- 프로필사진도 불러오기 -->
-			${memberName} 님<br>
 			
 			<br>
 			<h2>${dto.getChall_title() }</h2>
 			
 			<br>
 			<br>
-			현재 ${dto.getChall_ongoingPeople() }명
 			
 			<br>
 			인증빈도 : ${dto.getChall_cycle() } / 챌린지 기간 : ${dto.getChall_duration() }주<br>
@@ -75,20 +95,27 @@
 			모집현황 : ${dto.getChall_ongoingPeople() }명 신청중 / ${dto.getChall_maxPeople() }명 모집<br>
 			</c:if>
 			
-			<hr class="join_hr" width="50%" color="red">
+			<c:choose>
+				<c:when test="${dto.getChall_open() eq 'admin'}">
+				</c:when>
+				<c:otherwise>
+					<hr class="join_hr" width="50%" color="red">
+					<h4>챌린지 리더</h4>
+					<img id="image" height="300" width="300" border="2" 
+					src="<%=request.getContextPath()%>/memUpload/${user_dto.getMem_img()}" 
+					class="rounded mx-auto d-block">
+					${memberName} 님 <br>
+					챌린지개설 : ${user_dto.getChallenge_made_count()}개 / 평점 : ${user_dto.getChallenge_rating()}<br><!-- 챌린지개설 수와 평점 불러오기 -->
+				</c:otherwise>
+			</c:choose>
 			
-			<h4>챌린지 리더</h4>
-			<img id="image" height="300" width="300" border="2" 
-			src="<%=request.getContextPath()%>/memUpload/${user_dto.getMem_img()}" 
-			class="rounded mx-auto d-block">
-			${memberName} 님 <br>
-			챌린지개설 : ${user_dto.getChallenge_made_count()}개 / 평점 : ${user_dto.getChallenge_rating()}<br><!-- 챌린지개설 수와 평점 불러오기 -->
 			<hr class="join_hr" width="50%" color="red">
 			<h4>저의 챌린지를 소개해요!</h4>
 			<br>
 			${dto.getChall_cont() }<br>
 			<img src="<%=request.getContextPath()%>/memUpload/${dto.getChall_contImg() }" width="300" height="300"><br>
 			<br>
+			
 			<hr class="join_hr" width="50%" color="red">
 			<h4>이렇게 인증 해주세요</h4>
 			<br>
@@ -110,19 +137,47 @@
 			<h4>챌린지 진행 시 꼭 알아주세요!</h4>
 			${dto.getChall_regiTimeStart() } ~ ${dto.getChall_regiTimeEnd() } 사이에 인증 하셔야 합니다.<br>
 			${dto.getChall_duration() }주 동안 ${dto.getChall_cycle() } 인증샷을 촬영하셔야 합니다.<br>
+			
 			<hr class="join_hr" width="50%" color="red">
 			<br>
 			<h4>왜 돈을 걸어야 하나요?</h4>
 			확실한 동기 부여를 위해 돈을 걸어요<!-- 버튼 만들어 소개 페이지 따로 연결 -->
 			
 			<br><br>
-			<button type="button" class="btn btn-dark" onclick="history.back()">다시 설정하기</button>
-			<button class="btn btn-danger" onclick="location.href='member_challJoin_pay.do'">참가하기</button>
+			<c:choose>
+				<c:when test="${dto.getChall_status() eq '진행중'}">
+					<c:choose>
+						<c:when test="${dto.getChall_open() eq 'admin'}">
+							<button type="button" class="btn btn-dark" disabled>개설 완료</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-dark" disabled>참가 완료</button>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+							<button type="button" class="btn btn-dark" onclick="history.back()">다시 설정하기</button>
+					<c:choose>
+						<c:when test="${dto.getChall_open() eq 'admin'}">
+							<button class="btn btn-danger" onclick="location.href='admin_challJoin_complete.do'">개설하기</button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn btn-danger" onclick="location.href='member_challJoin_pay.do'">참가하기</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<br>
-   		<div class="progress">
-  			<div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 97%;" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100">99 %</div>
-		</div>
+		<c:choose>
+			<c:when test="${dto.getChall_status() eq '진행중'}">
+			</c:when>
+			<c:otherwise>
+		   		<div class="progress">
+		  			<div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 97%;" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100">99 %</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<br>
    <jsp:include page="/include/chall_bottom.jsp" />
 </body>
