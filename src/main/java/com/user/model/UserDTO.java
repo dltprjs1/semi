@@ -33,8 +33,77 @@ public class UserDTO {
 	private String emailId;
 	private String emailDomain;
 	private String kakaoAccount;
+	private Integer my_challenge1;
+	private Integer my_challenge2;
+	private Integer my_challenge3;
+	private Integer my_challenge4;
+	private Integer my_challenge5;
+	private Integer my_challenge6;
+	private Integer my_challenge7;
+	private Integer my_challenge8;
+	private Integer my_challenge9;
+	private Integer my_challenge10;
 	
-	
+	public int getMy_challenge1() {
+		return my_challenge1;
+	}
+	public void setMy_challenge1(int my_challenge1) {
+		this.my_challenge1 = my_challenge1;
+	}
+	public int getMy_challenge2() {
+		return my_challenge2;
+	}
+	public void setMy_challenge2(int my_challenge2) {
+		this.my_challenge2 = my_challenge2;
+	}
+	public int getMy_challenge3() {
+		return my_challenge3;
+	}
+	public void setMy_challenge3(int my_challenge3) {
+		this.my_challenge3 = my_challenge3;
+	}
+	public int getMy_challenge4() {
+		return my_challenge4;
+	}
+	public void setMy_challenge4(int my_challenge4) {
+		this.my_challenge4 = my_challenge4;
+	}
+	public int getMy_challenge5() {
+		return my_challenge5;
+	}
+	public void setMy_challenge5(int my_challenge5) {
+		this.my_challenge5 = my_challenge5;
+	}
+	public int getMy_challenge6() {
+		return my_challenge6;
+	}
+	public void setMy_challenge6(int my_challenge6) {
+		this.my_challenge6 = my_challenge6;
+	}
+	public int getMy_challenge7() {
+		return my_challenge7;
+	}
+	public void setMy_challenge7(int my_challenge7) {
+		this.my_challenge7 = my_challenge7;
+	}
+	public int getMy_challenge8() {
+		return my_challenge8;
+	}
+	public void setMy_challenge8(int my_challenge8) {
+		this.my_challenge8 = my_challenge8;
+	}
+	public int getMy_challenge9() {
+		return my_challenge9;
+	}
+	public void setMy_challenge9(int my_challenge9) {
+		this.my_challenge9 = my_challenge9;
+	}
+	public int getMy_challenge10() {
+		return my_challenge10;
+	}
+	public void setMy_challenge10(int my_challenge10) {
+		this.my_challenge10 = my_challenge10;
+	}
 	public String getKakaoAccount() {
 		return kakaoAccount;
 	}

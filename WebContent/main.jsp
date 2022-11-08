@@ -39,6 +39,7 @@
 		<p>TARGET</p>
 		</div>
 	</article>
+	
 	<jsp:include page="include/chall_bottom.jsp" />
 
 </body>

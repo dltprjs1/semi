@@ -1,0 +1,214 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+		
+		body {
+		 width: 100vw;
+		 height: 100vh;
+		 margin : 0;
+		}
+		
+		/* 참가중인 챌린지 페이지 전체 CSS */
+		.ongoingChall_container{
+			display: grid;
+			place-items: center;
+			width: 100%;
+			grid-template-columns: 1fr 3fr 1fr;
+			grid-template-rows: 100px 100px 100px 1000px 100px;	
+		}
+		
+		.ongoingChall_title {
+			grid-column: 2/3;
+			grid-row: 1/2;		
+		}
+		
+		.ongoingChall_navi{
+			grid-column: 2/3;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChal_status{
+			grid-column: 2/3;
+			grid-row: 3/4;		
+		}
+		
+		.ongoingChal_content{
+			grid-column: 2/3;
+			grid-row: 4/5;		
+		}
+		
+		.paging{
+			grid-column: 2/3;
+			grid-row: 5/6;		
+		}
+		
+		/* 챌린지 카테고리 CSS */
+		.ongoingChall_navi_ul{
+	
+			list-style: none;
+			display: grid;
+			place-items: center;
+			width: 100%;
+			height: 60px;
+			text-align: center;
+			grid-template-columns: repeat(10,1fr);
+			grid-template-rows: 10px 50px 10px;
+		}
+		
+		.ongoingChall_navi_ul li:hover {
+			background-color: black;
+			color: white;
+			border-radius: 10px;
+		}
+		
+		
+
+		.ongoingChall_navi_ul li:nth-child(1){
+			grid-column: 1/2;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(2){
+			grid-column: 2/3;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(3){
+			grid-column: 3/4;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(4){
+			grid-column: 4/5;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(5){
+			grid-column: 5/6;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(6){
+			grid-column: 6/7;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(7){
+			grid-column: 7/8;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(8){
+			grid-column: 8/9;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(9){
+			grid-column: 9/10;
+			grid-row: 2/3;	
+		}
+		
+		.ongoingChall_navi_ul li:nth-child(10){
+			grid-column: 10/11;
+			grid-row: 2/3;	
+		} /* 챌린지 카테고리 CSS end*/
+		
+		
+		/* 챌린지 상태 CSS */
+		.status_ul{
+			padding: 0px;
+			list-style: none;
+			display: grid;
+			place-items: center;
+			width: 360px;
+			height: 60px;
+			text-align: center;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 10px 50px 10px;
+			border-radius: 10px;	
+			box-shadow: 0px 20px 60px 1px lightgray;	
+		}
+		
+		.status_ul li {
+			margin: 10px 0px 10px 0px;
+			width: 120px;
+		}
+		
+		.status_ul li:nth-child(1){
+			grid-column: 1/2;
+			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
+		}
+		
+		.status_ul li:nth-child(2){
+			grid-column: 2/3;
+			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
+		}
+		
+		.status_ul li:nth-child(3){
+			grid-column: 3/4;
+			grid-row: 2/3;	
+		}
+		
+		.statusTitle{
+			color: gray;
+			font-weight: bold;
+		}
+		/* 챌린지 상태 CSS end*/
+
+</style>
+</head>
+<body>
+	<jsp:include page="../include/chall_top.jsp" />
+	
+		<div class="ongoingChall_container" >
+		
+			<h2 class="ongoingChall_title" >진행 중인 챌린지</h2>
+			
+			<nav class="ongoingChall_navi">
+				<ul class="ongoingChall_navi_ul">
+					<li>전체</li>			
+					<li>운동</li>			
+					<li>식습관</li>			
+					<li>생활</li>			
+					<li>정서</li>			
+					<li>취미</li>			
+					<li>환경.펫</li>			
+					<li>공부</li>			
+					<li>셀프케어</li>			
+					<li>기타</li>			
+				</ul>
+			</nav>
+				<div class="ongoingChal_status">
+					<ul class="status_ul">
+						<li>
+						<div class="statusTitle" >챌린지</div>
+						<span class="statusContent">0개</span>
+						</li>
+						<li>
+						<div class="statusTitle">평균 달성률</div>
+						<span class="statusContent">0.0%</span>
+						</li>
+						<li>
+						<div class="statusTitle">누적 경험치</div>
+						<span class="statusContent">0개</span>
+						</li>
+					</ul>
+				</div>
+				
+				<article class="ongoingChal_content">
+
+				</article>
+				
+		
+		</div>
+	
+	<jsp:include page="../include/chall_bottom.jsp" />
+</body>
+</html>
