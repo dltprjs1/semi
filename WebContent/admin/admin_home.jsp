@@ -91,7 +91,7 @@
 					<a class="block" href="<%=request.getContextPath() %>/admin_control.do">
 						<br><br><br>
 						<img src="<%=request.getContextPath()%>/uploadFile/admin/회원관리_image.png" width="64" height="54">
-						<h2>회원 관리</h2>
+						<h2>회원 신고 관리</h2>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 				</div>

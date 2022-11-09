@@ -8,7 +8,6 @@
 <title>Challengers</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="searchJS/main_list.js"></script>
-
 <script type="text/javascript" src="searchJS/refresh.js"></script>
 
 </head>
@@ -16,8 +15,6 @@
 	<jsp:include page="include/chall_top.jsp" />
 	<article align="center" id="art">
 		<hr width="65%" color="gray">
-
-
 			<h3>챌린저스 메인 페이지</h3>
 		<hr width="65%" color="gray">
 		<br>
@@ -33,9 +30,6 @@
 				</tr>
 			</table>
 		</div>
-		
-		
-		
 	</article>
 	<jsp:include page="include/chall_bottom.jsp" />
 
