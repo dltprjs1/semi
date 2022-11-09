@@ -6,17 +6,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="<%=request.getContextPath() %>/admin/challenge.js"></script>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/admin/challenge.css">
 <script type="text/javascript">
+	$(function(){
+		$("#2").css('color','black');
+		$("#1,#3,#4,#5,#6,#7,#8,#9,#10").css('color','lightgray');
+	});
 </script>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath() %>/admin/challenge.css">
 </head>
 <body>
-	<jsp:include page="../include/admin_top.jsp" />
-	<jsp:include page="include_chall_search.jsp" />
+	<jsp:include page="../../include/admin_top.jsp" />
+	<jsp:include page="../include_chall_search.jsp" />
 		<div class="header2">
 			<div class="h_bottom">
 				<ul class="list">
@@ -43,63 +55,56 @@
 				</ul>
 			</div>
 		</div>
-	<div class="asd"></div>
+		<div class="asd"></div>
 	<div id="body">
-	<div class = "con">
-	<c:set var="list" value="${list }" />
-		<div class="all">
-		<c:forEach items="${list }" var="dto">
-					<div class="alll">
+		<div class="con">
+			<c:set var="list" value="${list }" />
+			<div class="all">
+				<c:forEach items="${list }" var="dto">
+					<div class="training">
 						<a class="block"
 							href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=운동&page=${page}"><img
 							src="<%=request.getContextPath() %>/uploadFile/${dto.chall_mainimage }"
-							width="64" height="54"> <br>
-						<br>
+							width="64" height="54"> <br> <br>
 							<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
 								상세보기 + </span> </a>
 					</div>
 				</c:forEach>
-	</div>
-	</div>
-	<br><br><br><br>
-	<nav>
-		  <ul class="pagination">
-		    <li class="page-item">
-		      <a class="page-link" 
-		      		href="challenge_control.do?page=1">First</a>
-		    </li>
-		    <li>
-		      <a class="page-link" 
-		      		href="challenge_control.do?page=${page - 1 }">Previous</a>
-		    </li>
-		    <c:forEach begin="${startBlock }"
-	       				end="${lastBlock }" var="i">
-		      
-		      <c:if test="${i == page }">
-		         <li class="page-item active" aria-current="page">
-		           <a class="page-link" href="challenge_control.do?page=${i }">${i }</a>
-		         </li>
-		      </c:if>
-	      
-		      <c:if test="${i != page }">
-		         <li class="page-item">
-		           <a class="page-link" href="challenge_control.do?page=${i }">${i }</a>
-		         </li>
-		      </c:if>
-	   		</c:forEach>
-		    
-		    <c:if test="${lastBlock < allPage }">
-		      <li class="page-item">
-		      	<a class="page-link" href="challenge_control.do?page=${page + 1 }">Next</a>
-		      </li>
-		      <li class="page-item">
-		      	<a class="page-link" href="challenge_control.do?page=${allPage }">End</a>
-		      </li>
-		    </c:if>
-		  </ul>
+				</ul>
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<nav>
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link"
+					href="training_list.do?page=1">First</a></li>
+				<li><a class="page-link"
+					href="training_list.do?page=${page - 1 }">Previous</a></li>
+				<c:forEach begin="${startBlock }" end="${lastBlock }" var="i">
+
+					<c:if test="${i == page }">
+						<li class="page-item active" aria-current="page"><a
+							class="page-link" href="training_list.do?page=${i }">${i }</a></li>
+					</c:if>
+
+					<c:if test="${i != page }">
+						<li class="page-item"><a class="page-link"
+							href="training_list.do?page=${i }">${i }</a></li>
+					</c:if>
+				</c:forEach>
+
+				<c:if test="${lastBlock < allPage }">
+					<li class="page-item"><a class="page-link"
+						href="training_list.do?page=${page + 1 }">Next</a></li>
+					<li class="page-item"><a class="page-link"
+						href="training_list.do?page=${allPage }">End</a></li>
+				</c:if>
+			</ul>
 		</nav>
 	</div>
 	<div class="pagination_search"></div>
-	<jsp:include page="../include/chall_bottom.jsp" />
+	<jsp:include page="../../include/chall_bottom.jsp" />
 </body>
-</html>
