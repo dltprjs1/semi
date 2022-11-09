@@ -146,7 +146,7 @@
 						<li><a href="<%=request.getContextPath() %>/member_mypage.do?no=<%=member_num %>">회원 정보 조회/수정</a></li>
 						<li><a href="<%=request.getContextPath() %>/member_mychall.do?no=<%=member_num %>">나의 챌린지 현황</a></li>
 						<li><a href="<%=request.getContextPath() %>/member_myMoney.do">나의 예치금.상금</a></li>
-						<li><a href="<%=request.getContextPath() %>/member_mylevel.do?no=<%=member_num %>">나의 레벨.배지</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_myLevel.do">나의 레벨</a></li>
 					</ul>
 			</nav>
 			

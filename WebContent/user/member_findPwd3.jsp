@@ -205,11 +205,11 @@ $(function(){
 	
 	
 	// 입력창 포커스가 사라질 때 유효성 검사 함수 호출	
-	$("#rePwdInput").blur(function() {
+	$("#rePwdInput").keyup(function() {
 		checkRePwd();
 	});
 	
-	$("#rePwdCheckInput").blur(function() {
+	$("#rePwdCheckInput").keyup(function() {
 		checkRePwdCheck();
 	});
 	

@@ -7,7 +7,7 @@
 <title>챌린저스 : 회원가입</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
+<script type="text/javascript">
 
 // 주소 폼
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -74,38 +74,156 @@ function execDaumPostcode() {
 	    
 	} // chageDomainSelect() 함수 end
 	
-	
-	// id 속성값이 reqInfo인 span 영역에 "필수 정보입니다." 라는 문자열을 출력하는 메소드
-	// 각  인풋 창들 넘ㄴ어갈 때 값이 없으면 필수정보입니다 출력. 인풋창 아이디를 인자로 받기...
-	// 인풋창 아이디 변수 선언
-	
+	// 프로필 이미지 등록하는 함수
+	function previewFile1() { 
+        var preview = document.querySelector('#mem_img'); 
+        var file = document.querySelector('#mem_img_input').files[0]; 
+        var reader  = new FileReader(); 
+        reader.onloadend = function () { 
+              preview.src = reader.result; 
+       } 
+       if (file) { 
+             reader.readAsDataURL(file); 
+         } else { 
+             preview.src = ""; 
+      } 
+    }
 	
 	
 	// 문서의 body 부분 읽고 제이쿼리 실행.
 	$(function(){
 		
-		function reqInfoMsg(inputID){
-			let msg = '<font color="red">필수 정보입니다.</font>';
-		$('#id').append(msg);
-		}	
+		/* 필수 입력값 */
+		let idFlag = false;
+		let pwdFlag = false;
+		let nameFlag = false;
+		let birthFlag = false;
+		let emailFlag = false;
+		let phoneFlag = false;
+		let addrFlag = false;
 		
-		// 마우스가 입력창을 벗어났을 때 입력값이 없으면 필수 입력 문자열 출력
-		$(#id).blur(function(){
-			if($(#id).val() ==''){
-				let msg = '<font color="red">필수 정보입니다.</font>';
-					$('#id').append(msg);
-			}
+		
+		$(".error").hide();
+		
+		/* 공통 함수 start*/    	
+		// 에러메세지를 띄우는 함수
+		function showMsg(msgDiv,msg){
+	       	msgDiv.text(msg);
+	       	msgDiv.css('color','red');
+	       	msgDiv.show();
+		} 	
+		
+		// 에러메세지를 숨기는 함수
+		function hideMsg(msgDiv){
+	       	msgDiv.hide();     			
+		} 	
+	   	
+	   	// 유효성 에러 메세지 띄우는 함수.
+	    function showSuccessMsg(obj, msg) {
+	        obj.attr('class', 'error_next_box');	// 클래스 속성값 변경
+	        obj.css('color','green');
+	        obj.html(msg);
+	        obj.show();
+	    }
+	
+	    // 입력창 아래에 성공 메세지 띄우는 함수.
+	    function showSuccessMsg2(obj, msg) {
+	        obj.attr("class", "error_next_box green");
+	        obj.html(msg);
+	        obj.show();
+	    }	// showSuccessMsg() 함수 end
+		
+		/* 공통함수 end */
+		
+		
+		// 입력창 포커스가 사라질 때 필수값, 유효성 검사.
+		$("#id").blur(function() {
+			checkId();
 		});
-	
+	    
+		// '아이디' 입력창 검사
+		function checkId(){
+	    	let inputId = $("#id");
+	    	let msgDiv = $("#idDiv");
+	    	let msg = "필수입력입니다.";
+	       	
+	   		if (inputId.val() == ""){	
+	   			showMsg(msgDiv,msg);
+	   		}else{
+	   			// 아이디 유효성 검사
+			// 아이디를 서버로 전송 > 유효성 검사 > 결과 반환 받기
+			$.ajax({
+				type: 'POST',  // http 요청 방식 (default: ‘GET’)
+				async : false ,
+				url: '<%=request.getContextPath()%>/joinCheckId.do',	
+				// 요청이 전송될 URL 주소, 서블릿으로 보내기
+				dataType:'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
+				data: {id: $("#id").val()} ,  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
+				success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
+					
+					// 입력받은 아이디가 DB 회원 테이블에 존재하면 1, 존재하지 않으면 0
+					if(res.count===1){
+						showMsg(msgDiv,"이미 존재하는 아이디입니다.");	
+					}else{
+						showSuccessMsg(msgDiv, "멋진 아이디네요!");
+					}
+				},
+				error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
+					alert('ajax 응답 오류');
+				}
+			});	// $.ajax() end
+			
+	    	return false;	   			
+	   		
+	   		}   	
+		}	// checkRePwd() 함수 end	
+		
+/*		
+		// '비밀번호1' 입력창 검사
+		function checkId(){
+	    	let inputId = $("#id");
+	    	let msgDiv = $("#idDiv");
+	    	let msg = "필수입력입니다.";
+	    	//let oMsg = $("#rePwdMsg");
+	    	let pwdReg = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/; 
+	       	
+	   		if (inputId.val() == ""){	
+	   			showMsg(msgDiv,msg);
+	   		}else{
+	   			// 비밀번호 유효성 검사
+	   			if(!pwdReg.test(inputId.val())){
+	   				showMsg(msgDiv,"8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+	   			}else {
+	   				hideMsg(msgDiv);
+	   				showErrorMsg(msgDiv, "멋진 비밀번호네요!");
+	   			}
+	   		}   	
+		}	// checkRePwd() 함수 end		
+		
+		// '비밀번호 재설정 확인' 입력창 검사
+		function checkRePwdCheck(){
+	    	let inputId = $("#rePwdCheckInput");
+	    	let msgDiv = $("#rePwdCheckMsg");
+	    	let msg = "필수입력입니다.";
+	    	
+	   		if (inputId.val() == ""){	
+	   			showMsg(msgDiv,msg);
+	   		}else{
+	   			// 비밀번호 확인 유효성 검사
+	   			if(inputId.val() !== $("#rePwdInput").val() ){
+	   				showMsg(msgDiv,"비밀번호가 일치하지 않습니다.")
+	   			}else {
+	   				hideMsg(msgDiv);
+	   				showErrorMsg(msgDiv, "비밀번호가 일치합니다!");
+					$("#rePwdOk_btn").css('background-color','#ff4d54');
+					$("#rePwdOk_btn").css('cursor','pointer');
+					$("#rePwdOk_btn").attr({disabled:false});  				
+	   			}    	
+			}			
+		}
+*/		
 	});
-	
-	// 회원정보 유효성 검사
-	$. ajax({
-		url : ,	// 요청이 전송될 URL 주소
-		type: "get",	// http 요청 방식	
-	
-	});
-	
+
 	
 </script>
 <style type="text/css">
@@ -121,7 +239,7 @@ function execDaumPostcode() {
 		display: grid;
 		place-items: center;
 		grid-template-columns: 20% 60% 20%;
-		grid-template-rows: 50px 50px 1400px 100px;
+		grid-template-rows: 50px 50px 1600px 100px;
 	}
 
 	h2 {
@@ -161,6 +279,7 @@ function execDaumPostcode() {
 		border: 1px solid lightgray;
 		padding: 0px 0px 0px 15px;
 		border-radius: 5px;	
+		margin-bottom: 10px;
 	}
 	
 	.input_box_email1 {
@@ -208,9 +327,12 @@ function execDaumPostcode() {
 		color: white;
 		font-size: 20px;
 		font-weight: bold;
-		background-color: #ff4d54;
 		border-radius: 5px;
-		cursor: pointer;
+		background-color: lightgray;
+		
+		/* 인증번호 확인 시 */
+		/* background-color: #ff4d54; */
+		/* cursor: pointer; */
 	}
 		
 </style>
@@ -227,29 +349,46 @@ function execDaumPostcode() {
 						<div class="join_id">		
 							<h3 class="join_title">아이디</h3>
 							<input class="input_box" type="text" name="id" id="id">
-							<span id="idReqMsg"></span>
+							<div class="error" id="idDiv"></div>
 						</div>
 						
 						<!-- 비밀번호 입력 -->
 						<div class="join_pwd">						
 							<h3 class="join_title">비밀번호</h3>
+							
 							<input class="input_box" type="password" name="pwd" id="pwd">
-							<span id="idCheck"></span>
+							<div class="error" id="pwdDiv1"></div>
+							
 							<h3 class="join_title">비밀번호 확인</h3>
 							<input class="input_box" type="password" id="pwd2">
-							<span id="idCheck"></span>
+							<div class="error" id="pwdDiv2"></div>
 						</div>	
 						
 						<!-- 이름 입력 -->
 						<div class="join_name">
 							<h3 class="join_title">이름</h3>
 							<input class="input_box" type="text" name="name" id="name">
+							<div class="error" id="nameDiv"></div>
+						</div>
+						
+						<!-- 프로필 이미지 등록 -->
+						<div class="join_img">
+							<h3 class="join_title">프로필 이미지</h3>
+							
+						<input type='text' name="main_img" id='main_img' style='display: none;'> 
+						
+         				<img id="image_main" src='<%=request.getContextPath()%>/uploadFile/run.jpg' height="200" width="200" border="2" onclick='document.all.mainImgFile.click(); document.all.main_img.value=document.all.mainImgFile.value' class="rounded mx-auto d-block">
+         				<input type="file" name="mainImgFile" id="image_main_input" accept="image/jpg, image/jpeg, image/png, image/gif"
+              				onchange="previewFile1()" style='display: none;'>
+              			<br>
+              			<span>업로드 가능한 확장자 : .jpg / .jpeg / .png / .gif</span>
 						</div>
 						
 						<!-- 생년월일 입력 -->
 						<div class="join_birth">
 							<h3 class="join_title">생년월일</h3>
 							<input class="input_box" type="text" name="birth" id="birth" placeholder="  8자리로 입력해주세요.  ex)19960319">
+							<div class="error" id="birthDiv"></div>
 						</div>
 						
 						<!-- 성별 입력 -->
@@ -277,6 +416,7 @@ function execDaumPostcode() {
 									<option value="nate.com">nate.com</option>
 									<option value="">직접입력</option>
 							</select>
+							<div class="error" id="emailDiv"></div>
 						</div>
 						
 		                <!-- 휴대전화 번호, 인증번호 입력 -->
@@ -927,9 +1067,8 @@ function execDaumPostcode() {
 		                                        </option>
 		                        </select>
 
-							<input class="input_box_1" type="tel" id="phoneNo" name="phoneNo" placeholder="전화번호 입력" maxlength="16">
-	                        <button class="btn_mini">인증번호 받기</button>
-	                        <input class="input_box" type="text" id="authNo" name="authNo" placeholder="인증번호 입력하세요" disabled maxlength="4">												
+							<input class="input_box" type="tel" id="phoneNo" name="phoneNo" placeholder="-없이 입력해주세요." maxlength="16">
+		                	<div class="error" id="phoneDiv"></div>
 		                </div>
 	                    
 	                    <!-- 주소 입력 -->
@@ -941,11 +1080,11 @@ function execDaumPostcode() {
 								<input class="input_box_addr" type="text" id="jibunAddress" name="jibunAddress" placeholder="지번주소">
 								<input class="input_box_addr" type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
 								<input class="input_box_addr" type="text" id="extraAddress"name="extraAddress" placeholder="참고항목">	                    
+	                   			<div class="error" id="addrDiv"></div>
 	                    </div>
 	                    <br>
 	                    <br>
-	                    	<input type="submit" class="btn_join" value="가입하기">
-				<!--아이디 중복 확인 해야함. 비밀번호 일치 확인 해야함. -->
+	                    	<input type="submit" class="btn_join" value="가입하기" disabled="disabled">
 				</form>
 		
 			</article>

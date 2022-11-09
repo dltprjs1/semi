@@ -74,6 +74,38 @@ public class UserDAO {
 		}
 	} // closeConn() END
 	
+	
+	// 회원 가입 시 입력받은 아이디가 DB 회원 테이블에 존재하면 1, 존재하지 않으면 0을 응답하는 메소드.
+	public int joinCheckId(String id) {
+		
+		int count = 2;
+		
+		try {
+			openConn();
+			
+			sql = "select count(*) from user_member where mem_id = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);	// 아이디 not null값임. 존재하면 1, 존재하지 않으면 0 
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return count;
+		
+	}	// joinCheckId() 메소드 end
+	
 	// 회원인 지 체크하는 메소드.
 	public int userCheck(String id, String pwd) {
 		
