@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>챌린저스 : 비밀번호 찾기</title>
+<title>챌린저스 : 비밀번호 찾기1</title>
 <style type="text/css">
 
 	body {
@@ -18,7 +18,7 @@
 		display: grid;
 		place-items: center;
 		grid-template-columns: 1fr 2fr 1fr;
-		grid-template-rows: 100px 100px 50px 200px 50px;
+		grid-template-rows: 100px 50px 80px 200px 50px;
 	}
 	
 	.findPwd_top{
@@ -49,7 +49,6 @@
 		width: 200px;
 		height: 50px;
 		text-align: center;
-		border-left: 1px solid lightgray;
 		background-color:#ff4d54;
 		
 	}
@@ -66,9 +65,10 @@
 	/* 아이디/비밀번호 찾기 페이지 공통 위치  end */
 
 	.index{
-		justify-self: right;
+		justify-self: center;
 		grid-column: 2/3;
-		grid-row: 3/4;	
+		grid-row: 2/3;	
+		border-top: 3px solid lightgray;
 	}
 		
 	.index_ul{
@@ -76,36 +76,58 @@
 		padding: 0px;
 		list-style: none;
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 140px 120px 145px;
 		grid-template-rows: 50px;
 		margin: 0px;		
 	}
 	
 	.index_ul li{
 		padding: 0px;
-	
 	}
 	
-	.findPwd_container h2{
-		justify-self: center;
-		grid-column: 2/3;;
-		grid-row: 2/3;
+	/* 단계 별로 색상 주기 */
+	.index_ul li:nth-child(1){
+		color:#ff4d54;
+	}
+	
+	.bar {
+		font-size:30px;
+		color: lightgray; 
+	}	
+	
+	.arrow{
+		color: lightgray;
+		font-weight: bold;
+	}
+	
+	.find_title {
+		grid-column: 2/3;
+		grid-row: 3/4;
+	}
+	
+	.title_des{
+		font-size: 14px;
+		font-weight: normal;
+		float: right;
 	}
 	
 	.findPwd_content{
-		grid-column: 2/3;;
+		grid-column: 2/3;
 		grid-row: 4/5;
+		padding-top: 20px;
+		border-top: 3px solid lightgray;
 		
 	}
 	
 	.findPwd_content label{
+		font-size: 18px;
 		font-weight: bold;
-		text-align: left;
+		float: left;
 	}
 	
 	.inputBox{
-		margin: 0px;
-		width: 300px;
+		margin: 10px 0px 0px 0px;
+		width: 400px;
 		height: 50px;
 		border: 1px solid lightgray;
 		padding: 0px 0px 0px 15px;
@@ -121,7 +143,7 @@
 	.findPwd_btn{
 		grid-column: 2/3;
 		grid-row: 4/5;	
-		width: 317.22px;
+		width: 417.22px;
 		height: 50px;	
 		border: 0;
 		color: white;
@@ -135,83 +157,82 @@
 	.error {
 		color: red;
 	}	
-
+	
 
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 	
     $(function(){
-    	$("#reqError1").hide();
-    	
-    	/* 공통 함수 start*/    	
-    	// 에러메세지를 띄우는 함수
-   		function showMsg(msgDiv,msg){
-	        	msgDiv.text(msg);
-	        	msgDiv.show();
-   		} 	
-    	
-    	// 에러메세지를 숨기는 함수
-   		function hideMsg(msgDiv){
-	        	msgDiv.hide();     			
-   		} 	
-    	/* 공통함수 end */
-    	
-    	
-    	// 입력창 포커스가 사라질 때 유효성 검사 함수 호출	
-    	$("#idInput").blur(function() {
-    		checkId();
-    	});
-	
-  	
-    	// 아이디 유효성 검사 함수
-    	function checkId(){
-        	let inputId = $("#idInput");
-        	let msgDiv = $("#reqError");
-        	let msg = "아이디를 입력하세요.";
-        	
-        	// 필수값 검사
-    		if (inputId.val() == ""){	
-    			showMsg(msgDiv,msg);
+
+    	// 아이디 
+    	$("#findPwd_btn").click(function(){
+    	    
+    		if ($("#idInput").val() == ""){
+    			alert('아이디를 입력해 주세요.');
     		}else{
-    			hideMsg(msgDiv);
+    			// 아이디를 서버로 전송 > 유효성 검사 > 결과 반환 받기
+    			$.ajax({
+    				type: 'POST',  // http 요청 방식 (default: ‘GET’)
+    				url: '<%=request.getContextPath()%>/checkId.do',		
+    				// 요청이 전송될 URL 주소
+    				dataType:'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
+    				data: {id:$("#idInput").val()},  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
+    				success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
+    					count = res.doesEmailExist;
+    					if(count===1){
+    					$("#frm").submit();
+    					}else{
+    						alert('존재하지 않는 아이디입니다. 아이디를 확인해 주세요.')
+    					}
+    				},
+    				error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
+    					alert('ajax 응답 오류');
+    				}
+    			});
+    			
+    	    	return false;
     		}
-    	}
+ 		
+    	});
+    	
+
+    
+    });
+
 
 </script>
 </head>
 <body>
 	<jsp:include page="../include/chall_top.jsp" />
-	<div class="findPwd_container">
 	
-		<!-- 아이디 찾기/ 비밀번호 찾기 공통 영역 start-->
+	<div class="findPwd_container">
+	<!-- 아이디 찾기/ 비밀번호 찾기 공통 영역 start-->
 		<nav class="findPwd_top">
 			<ul>
 				<li class="findId"><a href="<%=request.getContextPath() %>/user/member_findId.jsp">아이디 찾기</a></li> 
+				<span class="bar">|</span>
 				<li class="findPwd"><a href="#">비밀번호 찾기</a></li>
 			</ul>
 		</nav>
 		<!-- 아이디 찾기/ 비밀번호 찾기 공통 영역 end-->
-		
-		<h2>비밀번호 찾기</h2>
 		<div class="index">
 			<ul class="index_ul">
-				<li>01. 아이디 입력<span class="arrow">></span></li>
-				<li>02. 본인 확인<span class="arrow">></span></li>
+				<li>01. 아이디 입력<span class="arrow"> ></span></li>
+				<li>02. 본인 확인<span class="arrow"> ></span></li>
 				<li>03. 비밀번호 재설정</li>
 			</ul>
 		</div>	
-		<hr>
+		<h2 class="find_title">비밀번호 찾기</h2>
 		<article class="findPwd_content">
 		
-			<form action="<%=request.getContextPath() %>/member_findPwdAuth.do" method="post">
+			<form id="frm" action="<%=request.getContextPath() %>/user/member_findPwd_2.jsp" method="post" >
 				<div class="form_area">
-			  		<label for="text">아이디</label>
+			  		<label for="text">아이디</label><span class="title_des">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</span>
 			  		<br>
 			  		<input class="inputBox" id="idInput" name="id" type="text" required />
-			   		<div class="error" id="reqError"></div>
 			 	</div>	
-			 	<input type="submit" class="findPwd_btn" value="다음"> 	
+			 	<input type="button" id="findPwd_btn" class="findPwd_btn" value="다음"> 
 			</form>
 		</article>
 	</div>

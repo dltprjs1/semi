@@ -21,6 +21,7 @@ public class MemberJoinOkAction implements Action {
 		String member_id = request.getParameter("id").trim();
 		String member_pwd = request.getParameter("pwd").trim();
 		String member_name = request.getParameter("name").trim();
+		String member_img = request.getParameter("main_img").trim();
 		String member_birth = request.getParameter("birth").trim();
 		String member_gender = request.getParameter("gender").trim();
 		String emailId = request.getParameter("email_id").trim();
@@ -60,6 +61,7 @@ public class MemberJoinOkAction implements Action {
 		dto.setMem_id(member_id);
 		dto.setMem_pwd(member_pwd);
 		dto.setMem_name(member_name);
+		dto.setMem_img(member_img);
 		dto.setMem_birth(member_birth);
 		dto.setMem_gender(member_gender);
 		dto.setMem_age(member_age);
