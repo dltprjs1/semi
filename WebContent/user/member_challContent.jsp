@@ -118,10 +118,14 @@
 			</c:if>
 			<c:if test="${!empty dto.getChall_maxPeople()}"> <!-- 최대 인원 설정 O -->
 			모집현황 : ${dto.getChall_ongoingPeople() }명 신청중 / ${dto.getChall_maxPeople() }명 모집<br>
-			</c:if>
+			</c:if> 
 			
 			<c:choose>
-				<c:when test="${dto.getChall_open() eq 'admin'}">
+				<c:when test="${dto.getChall_open() eq 'admin'}"> <!-- for 제이 / '참가자 후기' 공간 -->
+					<br>
+					<hr class="join_hr" width="50%" color="red">
+					<h4>참가자 후기</h4>
+					<button type="button" class="btn btn-dark" onclick="후기 전체보기 경로">후기 모두 보기</button>
 				</c:when>
 				<c:otherwise>
 					<hr class="join_hr" width="50%" color="red">
