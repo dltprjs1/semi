@@ -12,9 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,7 +44,7 @@ public class UserDAO {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
 
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
 
 
 		String user = "ADMIN";
@@ -75,6 +73,38 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	} // closeConn() END
+	
+	
+	// 회원 가입 시 입력받은 아이디가 DB 회원 테이블에 존재하면 1, 존재하지 않으면 0을 응답하는 메소드.
+	public int joinCheckId(String id) {
+		
+		int count = 2;
+		
+		try {
+			openConn();
+			
+			sql = "select count(*) from user_member where mem_id = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);	// 아이디 not null값임. 존재하면 1, 존재하지 않으면 0 
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return count;
+		
+	}	// joinCheckId() 메소드 end
 	
 	// 회원인 지 체크하는 메소드.
 	public int userCheck(String id, String pwd) {
@@ -588,59 +618,33 @@ public class UserDAO {
 		return result;		
 	}	// insertMemberWithKakao() 메소드 end
 	
-	// 카카오 연동 계정을 로그아웃 시키는 메소드
-	public int logoutWithKakao (String access_token, String k_id) {
-		int responseCode = 0;
-		String reqURL = "https://kapi.kakao.com/v1/user/logout";
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			            
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Authorization", "Bearer " + access_token); 
-			            
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("grant_type=authorization_code");
-			sb.append("&target_id_type=user_id");
-			sb.append("&target_id=" + k_id);
-			bw.write(sb.toString());
-			bw.flush();
-	          			            
-			//    결과 코드가 200이라면 성공
-			responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
-			 
-			//요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-			BufferedReader br = new BufferedReader(new java.io.InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-			            
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			
-			System.out.println("response body : " + result);
-			           
-			//Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-			
-			String id = element.getAsJsonObject().get("id").getAsString();
-			
-			System.out.println("카카오에서 응답받은 로그아웃 id >>> " + id);
-			br.close();
-			bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-		} 
-		
-	    return responseCode;	// 200이면 로그아웃 성공.
-	} // logoutWithKakao() 메소드 end	
-
+	// 카카오 로그아웃하는 메소드.
+	public void logoutWithKakao(String access_Token) {
+	    String reqURL = "https://kapi.kakao.com/v1/user/logout";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String result = "";
+	        String line = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println("로그아웃된 카카오 아이디 : "+result);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}	// logoutWithKakao 메소드 end
+	
+	// 
 	public void unlink(String access_Token) {
 	    String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 	    try {
@@ -664,49 +668,85 @@ public class UserDAO {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	}
-
-	public int getmemberid(String mem_id_reported) {
-		int result = 0;
-		openConn();
-		try {
-			sql = "select mem_id from user_member where mem_id = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, mem_id_reported);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				result = 1;
-			}
-			
-			sql = "select mem_name from user_member where mem_name = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,mem_id_reported);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				result = 2;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			closeConn(rs, pstmt, con);
-		}
-		return result;
 	}	
 	
-	
-	// 인증 완료 시 경험치(mem_xp) +25
-	public void updateXp(int memberNum) {
+	// user_member 테이블에 해당 id가 있는 지 확인하는 메소드.
+	public int doesEmailExist(String id) {
+		
+		int result = 2;
+		
 		try {
 			openConn();
-			sql = "update user_member set mem_xp = mem_xp+25 where mem_num = ?";
+			
+			sql = "select count(*) from user_member where mem_id=?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, memberNum);
-			pstmt.executeUpdate();
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			closeConn(rs, pstmt, con);
 		}
-	}	// updateXp() end
+		
+		return result;
+	}	// doesEmailExist() 메소드 end
+	
+	// user_member 테이블에서 해당 id를 가진 해당 사용자의 이메일 주소를 가져오는 메소드
+	public String getMemberEmail(String id) {
+		
+		String mem_email = "";
+		
+		try {
+			openConn();
+			sql = "select mem_email from user_member where mem_id=?";			
+			pstmt= con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mem_email = rs.getString(1);
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return mem_email;
+	}	// getMemberEmail() 메소드 end
+
+	// 해당 이메일 정보를 가진 회원의 비밀번호를 수정하는 메소드.
+	public int updatePwd(String mem_email, String rePwd){
+		
+		int result = 0;
+
+		try {
+			openConn();
+			
+			sql = "update user_member set mem_pwd = ? where mem_email = ?";
+						
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, rePwd);
+			pstmt.setString(2, mem_email);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+		
+	}	// dao.updatePwd() 메소드 end 
+	
+	
 }
