@@ -1,4 +1,4 @@
-package com.admin.action;
+package com.user.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,8 +14,10 @@ import com.chall.model.ChallCategoryDAO;
 import com.chall.model.ChallCategoryDTO;
 import com.chall.model.ChallJoinDAO;
 import com.chall.model.ChallJoinDTO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class AdminChallJoinAction3 implements Action {
+public class ChallJoin4_Save implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -37,10 +39,8 @@ public class AdminChallJoinAction3 implements Action {
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
 		
 		HttpSession session = request.getSession();
-		String ad_id = (String)session.getAttribute("admin_id");
-		int challNum = dao.continueChallNum(ad_id);
-		dto.setChall_num(challNum);
-		session.setAttribute("chall_num", challNum);
+		int chall_num = (Integer)session.getAttribute("chall_num");
+		dto.setChall_num(chall_num);
 		
 		int res = dao.updateChall_3(dto);
 		
@@ -52,7 +52,7 @@ public class AdminChallJoinAction3 implements Action {
 		PrintWriter out = response.getWriter();
 		if(res>0) {
 			forward.setRedirect(false);
-			forward.setPath("user/member_challJoin_5.jsp");
+			forward.setPath("member_challJoin_4.do");
 		}else {
 			out.println("<script>");
 			out.println("alert('챌린지 개설 3차 저장 실패...')");

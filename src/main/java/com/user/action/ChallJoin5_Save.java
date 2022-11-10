@@ -14,7 +14,7 @@ import com.chall.model.ChallJoinDTO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class ChallJoin4 implements Action {
+public class ChallJoin5_Save implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -24,7 +24,6 @@ public class ChallJoin4 implements Action {
 		ChallJoinDTO dto = new ChallJoinDTO();
 		String saveFolder = "C:\\Users\\VVIP\\git\\team2_semi_challengers\\WebContent\\memUpload";
 		int fileSize = 10 * 1024 * 1024; // 10MB
-		
 		MultipartRequest multi = new MultipartRequest(
 				request,						// 일반적인 request 객체
 				saveFolder,						// 첨부파일이 저장될 경로
@@ -33,59 +32,42 @@ public class ChallJoin4 implements Action {
 				new DefaultFileRenamePolicy()	// 파일의 이름이 같은 경우 중복이 안되게 설정
 				);
 		
-		String title = multi.getParameter("title").trim();
-		String cycle = multi.getParameter("cycle").trim();
-		String duration = multi.getParameter("duration").trim();
-		String startDate = multi.getParameter("startDate").trim();
-		String guide = multi.getParameter("guide").trim();
-		String startTime = multi.getParameter("startTime").trim();
-		String endTime = multi.getParameter("endTime").trim();
-		String cont = multi.getParameter("cont").trim();
-		
-		String success_img = multi.getFilesystemName("successImgFile");
-		String fail_img = multi.getFilesystemName("failImgFile");
-		String cont_imgs = multi.getFilesystemName("contImgFile");
-		
-		/* 로그인하면 넘어오는 세션 값
-		 * session.setAttribute("memberId", dto.getMem_id());
-		 * session.setAttribute("memberName", dto.getMem_name());
-		 * session.setAttribute("memberNum", dto.getMem_num());
-		 */
-		
-		dto.setChall_successImage(success_img);
-		dto.setChall_failImage(fail_img);
-		dto.setChall_contImg(cont_imgs);
-		
-		dto.setChall_title(title);
-		dto.setChall_cycle(cycle);
-		dto.setChall_duration(duration);
-		dto.setChall_startDate(startDate);
-		dto.setChall_guide(guide);
-		dto.setChall_regiTimeStart(startTime);
-		dto.setChall_regiTimeEnd(endTime);
-		dto.setChall_cont(cont);
-		
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
+		String categoryCode = multi.getParameter("categoryCode").trim();
+		String keyword1 = multi.getParameter("keyword1").trim();
+		String keyword2 = multi.getParameter("keyword2").trim();
+		String keyword3 = multi.getParameter("keyword3").trim();
+		String mainImgFile = "";
+		
+		if(multi.getFilesystemName("mainImgFile") == null) {// 메인 이미지 파일 업로드 X -> 기본 이미지로 등록
+			mainImgFile = dao.getCateDefaultImg(categoryCode);
+		}else {												// 메인 이미지 파일 업로드 O -> 업로드 이미지로 등록
+			mainImgFile = multi.getFilesystemName("mainImgFile");
+		}
+		
+		dto.setChall_mainImage(mainImgFile);
+		
+		dto.setChall_category_code_fk(categoryCode);
+		dto.setChall_keyword1(keyword1);
+		dto.setChall_keyword2(keyword2);
+		dto.setChall_keyword3(keyword3);
 		
 		HttpSession session = request.getSession();
 		int chall_num = (Integer)session.getAttribute("chall_num");
 		dto.setChall_num(chall_num);
+		int res = dao.updateChall_4(dto);
 		
-		int res = dao.updateChall_2(dto);
 		ActionForward forward = new ActionForward();
-		
 		PrintWriter out = response.getWriter();
-		
 		if(res>0) {
-			forward.setRedirect(false);
-			forward.setPath("user/member_challJoin_4.jsp");
+			forward.setRedirect(true);
+			forward.setPath("member_challJoin_5.do");
 		}else {
 			out.println("<script>");
-			out.println("alert('챌린지 개설 2차 저장 실패...')");
+			out.println("alert('챌린지 개설 4차 저장 실패...')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
-		
 		return forward;
 	}
 

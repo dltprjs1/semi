@@ -18,7 +18,7 @@ public class AdminChallJoinCompleteAction implements Action {
 			throws IOException, Exception {
 
 		HttpSession session = request.getSession();
-		int challNum = (Integer)session.getAttribute("challNum");
+		int challNum = (Integer)session.getAttribute("chall_num");
 		String ad_id = (String)session.getAttribute("admin_id");
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
 		// (list 테이블) status ‘임시저장’ → ‘진행중’

@@ -14,7 +14,7 @@ import com.chall.model.ChallJoinDTO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class ChallJoin4 implements Action {
+public class ChallJoin3_Save implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +44,7 @@ public class ChallJoin4 implements Action {
 		
 		String success_img = multi.getFilesystemName("successImgFile");
 		String fail_img = multi.getFilesystemName("failImgFile");
-		String cont_imgs = multi.getFilesystemName("contImgFile");
+		String cont_imgs = multi.getFilesystemName("cont_imgs[]");
 		
 		/* 로그인하면 넘어오는 세션 값
 		 * session.setAttribute("memberId", dto.getMem_id());
@@ -78,7 +78,7 @@ public class ChallJoin4 implements Action {
 		
 		if(res>0) {
 			forward.setRedirect(false);
-			forward.setPath("user/member_challJoin_4.jsp");
+			forward.setPath("member_challJoin_3.do");
 		}else {
 			out.println("<script>");
 			out.println("alert('챌린지 개설 2차 저장 실패...')");

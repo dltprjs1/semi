@@ -10,6 +10,7 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.chall.model.ChallJoinDAO;
 import com.chall.model.ChallJoinDTO;
+import com.chall.model.ChallProofDAO;
 
 public class ChallJoinPayOk implements Action {
 
@@ -27,16 +28,17 @@ public class ChallJoinPayOk implements Action {
 		HttpSession session = request.getSession();
 		int chall_num = (Integer)session.getAttribute("chall_num");
 		int memberNum = (Integer)session.getAttribute("memberNum");
-		ChallJoinDAO dao = ChallJoinDAO.getInstance();
+		ChallJoinDAO join_dao = ChallJoinDAO.getInstance();
+		ChallProofDAO proof_dao = ChallProofDAO.getInstance();
 		// (list 테이블) 결제 완료 시 ongoingPeople +1 / status ‘임시저장’ → ‘진행중’
-		dao.challJoinOk(chall_num);
+		join_dao.challJoinOk(chall_num);
 		// (회원 테이블) 결제 완료 시 해당 회원의 challenge_made_count +1, 예치금(mem_money) 차감
-		dao.memChallJoinUpdate(memberNum, depositMinus);
+		join_dao.memChallJoinUpdate(memberNum, depositMinus);
 		// (인증 테이블) 결제 완료 시 ‘참가예치금’을 해당 회원의 ‘나의 예치금’으로 설정
-		dao.proofInsert(chall_num, memberNum, depositOriginal);
+		proof_dao.proofInsert(chall_num, memberNum, depositOriginal);
 		
 		// (list 테이블) 챌린지 정보 가져오기
-		ChallJoinDTO dto = dao.getChallContent(chall_num);
+		ChallJoinDTO dto = join_dao.getChallContent(chall_num);
 		request.setAttribute("challContent", dto);
 
 		ActionForward forward = new ActionForward();
