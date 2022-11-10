@@ -20,12 +20,12 @@ $(document).ready(function(){
 		document.getElementById("form_search_category").value = name;
 		
 		console.log('변환>>>' +document.getElementById("form_search_category").value);
-		document.getElementById("form_search").submit();
+		document.getElementById("form_search2").submit();
 	}
 	
 	function formSubmit_keyword(name){
 		document.getElementById("form_search_keyword").value = name;
-		document.getElementById("form_search").submit();
+		document.getElementById("form_search2").submit();
 	}
 	
 	function getSearchKeyup(keyword){
@@ -157,11 +157,8 @@ $(document).ready(function(){
 
 	
 	$("#close").on("click", function(){
-		
 		$("#search_layer").css("display", "none");
 		$("#search_text2").val("");
-		
-		
 	});
 	
 	/*인기 검색어 클릭*/
@@ -174,6 +171,10 @@ $(document).ready(function(){
 	$(document).on("click", ".form_category", function(){
 		let name = $(this).attr('data-value');
 		formSubmit_category(name);
+	});
+	
+	$(document).on("click", "#move_search", function(){
+		$("#form_search").submit();
 	});
 	
 	

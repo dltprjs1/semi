@@ -234,33 +234,33 @@
 	}
 	
 	
-	#search_box{
-		position: relative;
-		top:50%;
-		left:50%;
+	.search_box{
+		position: unset;
 		height: 100%; 
-		width: 60%;
-		transform:translate(-50%, -50%);
-		z-index:1002;
+		width: unset;
 		box-sizing:border-box;
 		background:#fff;
-		margin-top: 70px;
-		margin-left: 130px;
 	}
 	
-	#search_box_position{
+	#search_wrap{
+		margin: 0 auto;
+		width: 1000px;
+	}
+	
+	.search_box_position{
 		position: absolute;
 		width: 100%;
 		height: 100%;
 	}
 	
 	#search_bar{
-		margin-bottom: 50px;
-		position: relative;
+		width: 1000px;
+		margin: 30px auto;
 	}
 	
+	
 	.search_text2{
-		width:60%; 
+		width:80%; 
 		height:40px;
 		padding: 0;
 		border-spacing: 1px;
@@ -285,9 +285,9 @@
 	}
 	
 	#close{
-		float: right;
-		margin-right: 30px;
-		margin-top: 30px;
+		position: absolute;
+		top: 18px;
+		right: 20px;
 	}
 	
 	.search_title{
@@ -325,7 +325,7 @@
 		justify-content: center;
 		align-items: center;
 		justify-content: space-between;
-		margin: 25px 250px 25px 25px;
+		margin: 25px 25px 25px 25px;
 			
 	
 	}	
@@ -335,7 +335,7 @@
 		justify-content: center;
 		align-items: center;
 		justify-content: space-between;
-		margin: 50px;
+		margin: 25px;
 		flex-wrap:wrap;
 		align-content: space-around;
 		font-weight: bold;
@@ -352,10 +352,9 @@
 	/* 최근 조회한 챌린지 */
 	#card_qurency{
 		display: flex;
-		justify-content: center;
 		align-items: center;
-		justify-content: space-around;
-		margin: 25px 250px 25px 25px;
+		justify-content: space-between;
+		margin: 25px 25px 25px 25px;
 	}	
 	
 	
@@ -406,6 +405,11 @@
 		cursor: pointer;
 	}
 	
+	.blank{
+		width: 100px;
+		height: 100px;
+	}
+	
 	
 	
  input::-webkit-search-decoration,
@@ -419,6 +423,7 @@ input::-webkit-search-results-decoration{
 	background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
 	cursor: pointer;
 }
+
 </style>
 </head>
 <body>
@@ -474,7 +479,7 @@ input::-webkit-search-results-decoration{
 			
 				<li class="menu_li_1"><a href="<%=request.getContextPath() %>/main.jsp">홈</a></li>
 				
-				<li class="menu_li_2"><a href="#">챌린지 조회</a></li>
+				<li class="menu_li_2"><a href="#" id="move_search" onclick="return false;">챌린지 조회</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/member_challJoin.do">챌린지 개설</a></li>
 				<li class="menu_li_4"><a href="#">내 챌린지</a></li>
 			</ul>
@@ -484,11 +489,11 @@ input::-webkit-search-results-decoration{
 	<hr width=100% align="center">
 	
 		<div id="search_layer">
-		<input id="close" type="button"  value="닫기">
-		<div id="search_box">
-			<div id="search_box_position">
+		<div class="search_box">
+			<div class="search_box_position">
+				<input id="close" type="button"  value="닫기">
 				<div id="search_bar" class="search" align="center">
-					<form method="post" action="<%=request.getContextPath()%>/search.do">
+					<form id="form_search" method="post" action="<%=request.getContextPath()%>/search.do">
 						<input type="search" id="search_text2" class="search_text2" name="keyword" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
 						<input type="hidden" id="category" class="category" name="category" value="">&nbsp;&nbsp;
 						<input id="search_btn2" class="search_btn2" type="submit" value="검색">
@@ -531,7 +536,7 @@ input::-webkit-search-results-decoration{
 						</div>
 					</div>
 					
-					<form id="form_search" method='post' action="<%=request.getContextPath()%>/search.do">
+					<form id="form_search2" method='post' action="<%=request.getContextPath()%>/search.do">
 						<input type="hidden" id="form_search_keyword" name="keyword" value="">			
 						<input type="hidden" id="form_search_category" name="category" value="">			
 					</form>

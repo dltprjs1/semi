@@ -63,7 +63,7 @@ $(document).ready(function(){
 			datatype : "xml",
 			async : false,
 			success : function(data){
-				let table = "";
+/*				let table = "";
 				$("#search_item").empty();
 			
 				if(data == 1){
@@ -89,7 +89,39 @@ $(document).ready(function(){
 					});
 				}
 				table += "</tr>";
-				$(".search_item").append(table);
+				$(".search_item").append(table);*/
+				
+				$("#card_chall").empty();
+					
+				let card = "<div class='card_chall'>";
+				let count= 0;
+				
+				$(data).find("chall_list").each(function() {
+					count += 1
+					card += "<div class='chall_items'>";
+					card += "<a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'><img class='category_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_category_image").text()+ "'>";
+					card += "<p>" +$(this).find("chall_title").text()+ "</p></a>";
+					card += "<span>" +$(this).find("chall_cycle").text()+ "</span><br>";
+					card += "<span>" +$(this).find("chall_duration").text()+ "</span><br>";
+					card += "</div>";
+					
+					if(count % 4 == 0){
+						card += "</div>";
+						card += "<div class='card_chall'>";
+						count = 0;
+					}
+					
+				});
+				
+				if(count %4 != 0){
+					card += "<div class='chall_items'>";
+					card += "<div class='chall_none'></div>";
+					card += "</div>";
+				}
+				card += "</div>";
+				$("#card_chall").append(card);
+				
+				
 			},
 			error : function(){
 				alert('검색 목록 불러오기 실패');

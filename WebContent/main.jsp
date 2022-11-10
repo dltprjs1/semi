@@ -11,6 +11,7 @@
 <script type="text/javascript" src="searchJS/main_menu.js"></script>
 <link rel="stylesheet" href="searchCS/mainCS.css">
 <script type="text/javascript" src="searchJS/refresh.js"></script>
+
 </head>
 <body>
 	<jsp:include page="include/chall_top.jsp" />
@@ -25,7 +26,12 @@
 		<a href="<%=request.getContextPath()%>/member_login.do">[회원 로그인]</a>
 		&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
 		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a> --%>
-			<div class="main_container event">
+
+
+
+
+		<div class="main_container">
+ 			<div class="main_container event">
 				<div class="slide_container">
 					<div class="slide fade active">
 						<img class="fade_img" src="<%=request.getContextPath() %>/event/event1.jpg">
@@ -40,8 +46,6 @@
 				<a class="prev" onclick="prevSlide()">&#10094;</a>
 				<a class="next" onclick="nextSlide()">&#10095;</a>	
 			</div>
-			
-			<div class="main_container">
 				<div class="category_container">
 					<div class="container_title">
 						<span class="title">카테고리 목록</span>
@@ -49,9 +53,7 @@
 					<div id="input_items">
 					</div>
 				</div>
-			</div>
 			
-			<div class="main_container">
 				<div class="most_container">
 					<div class="container_title">
 						<span class="title">인기 챌린지</span>
@@ -59,9 +61,7 @@
 					<div id="input_items2">
 					</div>
 				</div>
-			</div>
 			
-			<div class="main_container">
 				<div class="admin_container">
 					<div class="container_title">
 						<span class="title">전문 멘토와 함께하는 챌린지</span>

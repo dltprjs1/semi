@@ -139,16 +139,26 @@
 	</aside>
 	
 	<article id="art" align="center">
-		<div id="search_list" align="center">
-			<table id="search_item" class="search_item">
-
-			</table>
+		<div id="card_container" align="center">
+			<div id="card_chall">
+			
+			</div>
 		</div>		
 	</article>
 	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 <style>
 
+
+.a:link{
+	color: #000;
+	font-weight: bold;
+}
+
+a:visited{
+	color: #000;
+	font-weight: bold;
+}
 .search_menu{
 	text-align: left;
 }
@@ -245,24 +255,42 @@ input[type="checkbox"]:checked +label a{
 
 }
 
-table{
-	text-align:center;
-	width: 60%;
-	border-spacing: 0 100px;
-	float: left;
-	margin-left: 100px;
-}
-
-table td{
-	height: 100px;
-}
-
-table th{
-	height: 70px;
-}
-
 .art{
 	float: left;
 }
-</style>
+
+/* 챌린지 아이템 */
+
+#card_container{
+	position:relative;
+ 	margin-top: 20px;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
+}
+
+#card_chall{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px;
+	flex-wrap:wrap;
+	align-content: space-between;
+	font-weight: bold;
+}
+
+.chall_items{
+	overflow: auto;
+	position: absolute;
+	width: 80%;
+	height: 480px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+
+
+
+
 </html>
