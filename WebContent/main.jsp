@@ -83,8 +83,5 @@
 
 	</article>
 	<jsp:include page="include/chall_bottom.jsp" />
-	
-
-
 </body>
 </html>

@@ -15,7 +15,126 @@
 		$("#1,#3").css('color','lightgray');
 	});
 </script>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/question/question.css">
+<style type="text/css">
+	.container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+    .h_container {
+	margin-left: 19%;
+}
+.all_1 {
+	font-size: 18px;
+}
+.ekqquso , .ekqqusx {
+	margin-top: 2%;
+}
+.list li b {
+	margin-left: 1%;
+}
+.list{
+	margin-left: 14%;
+}
+.ekqqus_title{
+	display: inline-block;
+}
+.pagination {
+		justify-content: center;
+	}
+	
+	
+.header {
+	background-color: #F6F7F9;
+	height: 247px;
+	padding: 60px 0px 30px;
+	
+}
+
+.all_container{
+	margin-left: 20%;
+}
+.all_container a{
+	color : black;
+}
+
+.h_container2 {
+	border: none;
+	width: 30px;
+	display: inline-block;
+	height: 66px;
+	background-color: white;
+	border-radius: 7px;
+}
+
+.search {
+	width: 350px;
+	height: 66px;
+	font-size: 20px;
+	border: none;
+	border-radius: 7px;
+	position: absolute;
+}
+
+img {
+	margin-top: 20px;
+}
+
+.header2 {
+	background-color: #F6F7F9;
+}
+
+.h_bottom {
+	margin-left: 100px;
+}
+
+.list li {
+	display: inline-block;
+	width: 87px;
+}
+
+
+
+.h_underline {
+	margin-top: 20px;
+	border: solid;
+	height: 3px;
+}
+
+
+.all_1 a {
+	color: black;
+	width: 200px;
+}
+
+.ekqqus_title li{
+	display: inline-block;
+	width: 400px;
+	font-weight: bold;
+}
+
+#oo , #xx{
+	color: #787878;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../../include/admin_top.jsp" />
@@ -32,9 +151,12 @@
 				</ul>
 			</div>
 		</div>
-		<div class="asd"></div>
+		<div class="all_container">
+			<div class="asd"></div>
+		</div>
 		<div class="body">
-	<div class="all">
+		<div class="all_container">
+	<div class="all_1">
 	<c:set var="list" value="${list }" />
 	<c:forEach items="${list }" var="dto">
 			<div class="ekqqusx">
@@ -53,6 +175,7 @@
 				<br>
 			</div>
 		</c:forEach>
+		</div>
 		</div>
 		
 		<nav>

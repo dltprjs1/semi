@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.h_container {
+	margin-left: 19%;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 function pagination(page){
@@ -137,6 +142,17 @@ $(function(){
 	})
 })
 </script>
+<style type="text/css">
+
+.search {
+	width: 350px;
+	height: 66px;
+	font-size: 20px;
+	border: none;
+	border-radius: 7px;
+	position: absolute;
+}
+</style>
 </head>
 <body>
 	<div class="header">

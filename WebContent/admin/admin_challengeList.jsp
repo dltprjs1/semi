@@ -11,6 +11,31 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="<%=request.getContextPath() %>/admin/challenge.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/admin/challenge.css">
+<style type="text/css">
+	.container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+</style>
 <script type="text/javascript">
 </script>
 </head>
@@ -48,20 +73,33 @@
 	<div class = "con">
 	<c:set var="list" value="${list }" />
 		<div class="all">
-		<c:forEach items="${list }" var="dto">
-					<div class="alll">
-						<a class="block"
-							href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=운동&page=${page}"><img
-							src="<%=request.getContextPath() %>/uploadFile/${dto.chall_mainimage }"
-							width="64" height="54"> <br>
-						<br>
-							<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
-								상세보기 + </span> </a>
-					</div>
+			<c:forEach items="${list }" var="dto">
+				<c:if test="${!empty dto.chall_mainimage  }">
+				<div class="alll">
+					<a class="block"
+						href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=선택&page=${page}"><img
+						src="<%=request.getContextPath() %>/uploadFile/${dto.chall_mainimage }"
+						width="64" height="54"> <br>
+					<br>
+						<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
+							상세보기 + </span></a>
+				</div>
+				</c:if>
+				<c:if test="${empty dto.chall_mainimage  }">
+				<div class="alll">
+					<a class="block"
+						href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=선택&page=${page}"><img
+						src="<%=request.getContextPath() %>/uploadFile/admin/없음.png"
+						width="64" height="54"> <br>
+					<br>
+						<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
+							상세보기 + </span></a>
+				</div>
+				</c:if>
 				</c:forEach>
 	</div>
 	</div>
-	<br><br><br><br>
+	<br><br><br><br><br><br>
 	<nav>
 		  <ul class="pagination">
 		    <li class="page-item">

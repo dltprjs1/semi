@@ -25,6 +25,31 @@
 </script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath() %>/admin/challenge.css">
+<style type="text/css">
+	.container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+</style>
 </head>
 <body>
 	<jsp:include page="../../include/admin_top.jsp" />
@@ -61,14 +86,28 @@
 			<c:set var="list" value="${list }" />
 			<div class="all">
 				<c:forEach items="${list }" var="dto">
-					<div class="training">
-						<a class="block"
-							href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=운동&page=${page}"><img
-							src="<%=request.getContextPath() %>/uploadFile/${dto.chall_mainimage }"
-							width="64" height="54"> <br> <br>
-							<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
-								상세보기 + </span> </a>
-					</div>
+					<c:if test="${!empty dto.chall_mainimage  }">
+				<div class="alll">
+					<a class="block"
+						href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=선택&page=${page}"><img
+						src="<%=request.getContextPath() %>/uploadFile/${dto.chall_mainimage }"
+						width="64" height="54"> <br>
+					<br>
+						<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
+							상세보기 + </span></a>
+				</div>
+				</c:if>
+				<c:if test="${empty dto.chall_mainimage  }">
+				<div class="alll">
+					<a class="block"
+						href="<%=request.getContextPath()%>/challenge_modify.do?chall_num=${dto.chall_num}&chall_category=선택&page=${page}"><img
+						src="<%=request.getContextPath() %>/uploadFile/admin/없음.png"
+						width="64" height="54"> <br>
+					<br>
+						<h2>${dto.chall_title }</h2> <br> <span class="tkdtpqhrl">
+							상세보기 + </span></a>
+				</div>
+				</c:if>
 				</c:forEach>
 				</ul>
 			</div>
@@ -80,27 +119,27 @@
 		<nav>
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link"
-					href="selfcare_list.do?page=1">First</a></li>
+					href="selfcare_list.do?page=1&category_code=C009">First</a></li>
 				<li><a class="page-link"
-					href="selfcare_list.do?page=${page - 1 }">Previous</a></li>
+					href="selfcare_list.do?page=${page - 1 }&category_code=C009">Previous</a></li>
 				<c:forEach begin="${startBlock }" end="${lastBlock }" var="i">
 
 					<c:if test="${i == page }">
 						<li class="page-item active" aria-current="page"><a
-							class="page-link" href="selfcare_list.do?page=${i }">${i }</a></li>
+							class="page-link" href="selfcare_list.do?page=${i }&category_code=C009">${i }</a></li>
 					</c:if>
 
 					<c:if test="${i != page }">
 						<li class="page-item"><a class="page-link"
-							href="selfcare_list.do?page=${i }">${i }</a></li>
+							href="selfcare_list.do?page=${i }&category_code=C009">${i }</a></li>
 					</c:if>
 				</c:forEach>
 
 				<c:if test="${lastBlock < allPage }">
 					<li class="page-item"><a class="page-link"
-						href="selfcare_list.do?page=${page + 1 }">Next</a></li>
+						href="selfcare_list.do?page=${page + 1 }&category_code=C009">Next</a></li>
 					<li class="page-item"><a class="page-link"
-						href="selfcare_list.do?page=${allPage }">End</a></li>
+						href="selfcare_list.do?page=${allPage }&category_code=C009">End</a></li>
 				</c:if>
 			</ul>
 		</nav>
