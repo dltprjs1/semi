@@ -11,7 +11,7 @@ import com.chall.controller.ActionForward;
 import com.main.model.MainDAO;
 import com.search.model.SearchDAO;
 
-public class SearchListAction implements Action {
+public class SearchListAction2 implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -27,7 +27,7 @@ public class SearchListAction implements Action {
 		SearchDAO dao = SearchDAO.getinstance();
 		
 		if(!keyword.equals("") && keyword != null) {
-			str = dao.getSearchKeyList(keyword);
+			str = dao.getSearchKeyList2(keyword);
 		}else if(!category.equals("") && category != null) {
 			str = dao.getSearchCateList(category);
 		}else {

@@ -1,3 +1,5 @@
+<%@page import="com.chall.model.ChallJoinDTO"%>
+<%@page import="com.user.model.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,6 +12,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript" src="searchJS/getLocal.js"></script>
+
+<%
+	ChallJoinDTO dto = (ChallJoinDTO)request.getAttribute("challContent");
+%>
 <style type="text/css">
 	.join_hr {
 		border: 0;
@@ -27,6 +34,10 @@
 		session.setAttribute("memberName", dto.getMem_name());
 		session.setAttribute("memberNum", dto.getMem_num()); -->
 		<c:set var="dto" value="${challContent }"/>	<!-- 챌린지 정보 가져옴 -->
+		
+		<input type="hidden" id="local_num" value="${dto.getChall_num() }">
+		<input type="hidden" id="local_title" value="${dto.getChall_title() }">
+		<input type="hidden" id="local_image" value="${dto.getChall_mainImage() }">
 		
 		<div align="center">
 			<br>
