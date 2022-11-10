@@ -125,6 +125,32 @@
 	});
 </script>
 <style type="text/css">
+	.all_container{
+		margin-left: 20%;
+	}
+	.container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
 .pagination {
 	justify-content: center;
 }
@@ -156,7 +182,7 @@
 }
 
 .h_container {
-	margin-left: 120px;
+	margin-left: 19%;
 }
 
 .h_container2 {
@@ -204,33 +230,45 @@ img {
 	height: 3px;
 }
 
-.all {
-	margin-left: 150px;
-}
-
 .all a {
 	color: black;
 }
 
 .dlswmd, .tkdrma, .rufwp {
-	margin-top: 50px;
+	margin-top: 3%;
 }
 
 #dlswmd_1, #tkdrma_1, #rufwp_1 {
 	color: #787878;
 }
 #dlswmd_cont , #rufwp_cont , #tkdrma_cont{
-	margin-left: 100px;
+	margin-left: 10%;
 	color: gray;
 }
-.btn{
-	margin-left: 100px;
+.list{
+	margin-left: 14%;
+}
+.btn input {
+	border: none;
+	padding: 15px 30px;
+	border-radius: 7px;
+	font-family: "paybooc-Light", sans-serif;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+	text-decoration: none;
+	font-weight: 600;
+	transition: 0.25s;
+	background-color: #519d9e;
+	color: black;
+}
+
+.btn input:hover {
+	background-color: #77af9c;
+	color: #d7fff1;
 }
 </style>
 </head>
 <body>
 	<jsp:include page="../include/admin_top.jsp" />
-	<div>
 		<div class="header">
 			<div class="h_container">
 				<h4>검색어를 입력해 주십시오.</h4>
@@ -256,8 +294,11 @@ img {
 				</ul>
 			</div>
 		</div>
+		<div class="all_container">
 		<div class="asd"></div>
+		</div>
 		<div class="body">
+		<div class="all_container">
 		<c:set var="list" value="${list }" />
 
 		<c:if test="${!empty list }">
@@ -295,9 +336,11 @@ img {
 				</c:forEach>
 			</div>
 		</c:if>
-		<input type="button" value="글쓰기"
-			onclick="location.href='<%=request.getContextPath()%>/FAQ_write.do'">
-
+		<div class="btn">
+			<input type="button" value="글쓰기"
+				onclick="location.href='<%=request.getContextPath()%>/FAQ_write.do'">
+		</div>
+		</div>
 		<nav>
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link"
@@ -325,14 +368,9 @@ img {
 				</c:if>
 			</ul>
 		</nav>
+	
 	</div>
-	</div>
+	
 	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript">
-
-	
-
-</script>
 </html>

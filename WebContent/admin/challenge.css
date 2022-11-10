@@ -7,11 +7,6 @@
 	height: 247px;
 	padding: 60px 0px 30px;
 }
-
-.h_container {
-	margin-left: 120px;
-}
-
 .h_container2 {
 	border: none;
 	width: 30px;
@@ -21,7 +16,7 @@
 	border-radius: 7px;
 }
 
-.searching {
+.search {
 	width: 350px;
 	height: 66px;
 	font-size: 20px;
@@ -33,13 +28,11 @@
 img {
 	margin-top: 20px;
 }
-
+.list{
+	margin-left: 17.5%;
+}
 .header2 {
 	background-color: #F6F7F9;
-}
-
-.h_bottom {
-	margin-left: 100px;
 }
 
 .list li {
@@ -48,7 +41,7 @@ img {
 }
 
 .list li b {
-	margin-left: 15px;
+	margin-left: 1.5%;
 }
 
 .h_underline {
@@ -58,7 +51,7 @@ img {
 }
 .con{
 	display: grid;
-	grid-template-columns: 10% 80% 10%;
+	grid-template-columns: 20% 70% 10%;
 	grid-template-rows: 10% 80% 10%;
 }
 .all{

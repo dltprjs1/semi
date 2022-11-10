@@ -15,13 +15,10 @@
 	background-color: #F6F7F9;
 	height: 100%;
 	padding: 60px 0px 30px;
-}
-.h_container {
-	margin-left: 120px;
+	margin-left: 30%;
 }
 .h_container1{
 	margin-top: 100px;
-	margin-left: 120px;
 }
 
 .open_close , .name , .chall_category , .chall_cycle , .chall_guide , .chall_regitimestart , .chall_regitimeend{
@@ -44,12 +41,8 @@
 	border-radius: 7px;
 	position: absolute;
 }
-.btn {
-	margin-left: 120px;
-}
 
 .btn input {
-	
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -142,10 +135,10 @@
 					<input class="chall_maxpeople" name="chall_maxpeople" value="${content.chall_maxpeople }">
 				</div>
 				<br><br><br><br><br>
-				</div>
 				<div class="btn">
 					<input type="submit" value="수정하기">
 					<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath()%>/challenge_delete.do?chall_num=${content.chall_num }'">
+				</div>
 				</div>
 			</form>
 			</div>		

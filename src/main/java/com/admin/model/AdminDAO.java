@@ -319,4 +319,108 @@ public class AdminDAO {
 		}
 		return list;
 	}
+	public String findid(String admin_name, String admin_phone) {
+		String result = "";
+		openConn();
+		try {
+			sql = "select * from admin_member where admin_name = ? and admin_phone = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,admin_name);
+			st.setString(2,admin_phone);
+			rs = st.executeQuery();
+			result += "<results>";
+			result += "<aaa>";
+			if(rs.next()) {
+				result += "<result>" + rs.getInt(1) + "</result>";
+			}else {
+				result += "<result>none</result>";
+			}
+			result += "</aaa>";
+			result += "</results>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public String admin_info(String admin_name , String admin_phone) {
+		String info = "";
+		openConn();
+		try {
+			sql = "select * from admin_member where admin_name = ? and admin_phone = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,admin_name);
+			st.setString(2,admin_phone);
+			rs = st.executeQuery();
+			info +="<member_info>";
+			while(rs.next()) {
+				info +="<member_email>";
+				info +="<admin_id>" + rs.getString("admin_id") + "</admin_id>";
+				info +="<admin_email>" + rs.getString("admin_email") + "</admin_email>";
+				info +="<admin_name>" + rs.getString("admin_name") + "</admin_name>";
+				info += "</member_email>";
+			}
+			info +="</member_info>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return info;
+	}
+	public int checkid(String admin_id) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select * from admin_member where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, admin_id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+		
+	}
+	public String getMemberEmail(String id) {
+		String result = "";
+		openConn();
+		try {
+			sql = "select admin_email from admin_member where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("admin_email");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public int updateAdminPwd(String admin_pwd, String mem_id) {
+		openConn();
+		int result = 0;
+		try {
+			sql = "update admin_member set admin_pwd = ? where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,admin_pwd);
+			st.setString(2,mem_id);
+			result = st.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
 }
