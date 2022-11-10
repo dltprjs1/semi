@@ -21,7 +21,7 @@
 			place-items: center;
 			width: 100%;
 			grid-template-columns: 1fr 3fr 1fr;
-			grid-template-rows: 100px 100px 100px 500px 100px;	
+			grid-template-rows: 100px 100px 100px 1000px 100px;	
 		}
 		
 		.ongoingChall_title {
@@ -60,6 +60,13 @@
 			text-align: center;
 			grid-template-columns: repeat(10,1fr);
 			grid-template-rows: 10px 50px 10px;
+			font-size: 24px;
+			padding: 0px;
+		}
+		
+		.ongoingChall_navi_ul li{
+			width: 110px;
+			padding: 10px;
 		}
 		
 		.ongoingChall_navi_ul li:hover {
@@ -73,46 +80,55 @@
 		.ongoingChall_navi_ul li:nth-child(1){
 			grid-column: 1/2;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(2){
 			grid-column: 2/3;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(3){
 			grid-column: 3/4;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(4){
 			grid-column: 4/5;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(5){
 			grid-column: 5/6;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(6){
 			grid-column: 6/7;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(7){
 			grid-column: 7/8;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(8){
 			grid-column: 8/9;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(9){
 			grid-column: 9/10;
 			grid-row: 2/3;	
+			border-right: 1px solid lightgray;
 		}
 		
 		.ongoingChall_navi_ul li:nth-child(10){
@@ -123,22 +139,23 @@
 		
 		/* 챌린지 상태 CSS */
 		.status_ul{
-			padding: 0px;
+			padding: 0;
 			list-style: none;
 			display: grid;
 			place-items: center;
-			width: 360px;
-			height: 60px;
+			width: 420px;
+			height: 80px;
 			text-align: center;
 			grid-template-columns: 1fr 1fr 1fr;
 			grid-template-rows: 10px 50px 10px;
 			border-radius: 10px;	
 			box-shadow: 0px 20px 60px 1px lightgray;	
+			font-size: 18px
 		}
 		
 		.status_ul li {
-			margin: 10px 0px 10px 0px;
-			width: 120px;
+			padding : 0px;
+			width: 140px;
 		}
 		
 		.status_ul li:nth-child(1){
@@ -164,6 +181,26 @@
 		}
 		/* 챌린지 상태 CSS end*/
 		
+		.ongoingChal_content table {
+			width: 1000px;
+			font-size: 18px;
+			text-align: center;
+			border-radius: 20px;
+			border-spacing: 0px;
+			border-collapse : collapse;
+			border-style: hidden;
+  			box-shadow: 0 0 0 1px lightgray;
+			
+		}
+		
+		th {
+		 border-right: solid 1px lightgray;
+		}
+		
+		td {
+		 border-top: solid 1px lightgray;
+		 border-right: solid 1px lightgray;
+		}
 	
 	</style>
 	</head>
@@ -172,7 +209,7 @@
 		
 		<div class="ongoingChall_container" >
 		
-			<h2 class="ongoingChall_title" >진행 중인 챌린지</h2>
+			<h2 class="ongoingChall_title" >나의 진행 중인 챌린지</h2>
 			
 			<nav class="ongoingChall_navi">
 				<ul class="ongoingChall_navi_ul">
@@ -206,7 +243,7 @@
 				</div>
 				
 				<article class="ongoingChal_content">
-					<table border="1" cellspacing="0" width="400">
+					<table>
 						<tr>
 							<th></th> <th>챌린지 이름</th>
 							<th>챌린지 기간</th> <th>챌린지 상태</th>
@@ -216,7 +253,7 @@
 						<c:if test="${!empty list }">
 							<c:forEach items="${list }" var="dto">
 								<tr>
-									<td>${dto.getChall_mainimage()}</td>
+									<td><a><img src="<%=request.getContextPath()%>/uploadFile/${dto.getChall_mainimage()}"></img></a></td>
 									
 									<td>
 									${dto.getChall_title() }
