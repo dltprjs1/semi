@@ -182,6 +182,31 @@ function previewFile3() {
 		font-size: 20px;
 		font-weight: bold;
 	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
 <body>
@@ -194,14 +219,15 @@ function previewFile3() {
 			<br>
 			
     
-			<c:choose>
+    		<form id="form" method="post" enctype="multipart/form-data">
+			<%-- <c:choose>
 				<c:when test="${open=='admin'}">
 					<form id="form" method="post" enctype="multipart/form-data" action="admin_challJoin_2.do">
 				</c:when>
 				<c:otherwise>
 					<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_4.do">
 				</c:otherwise>
-			</c:choose>
+			</c:choose> --%>
 			<!-- 필수항목 --><span class="category">챌린지 제목</span><span class="required">*</span><br>
   			<input name="title" maxlength="30" id="title" placeholder="예) 1만보 걷기"><span id="title_text_count">( 0 / 30 )</span><br>
 			<span id="title_text_check" style="color: red">최소 3글자 이상 입력해주세요.</span>
@@ -328,8 +354,15 @@ function previewFile3() {
 			
 			<br><br>
 			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
-			<button type="button" id="tempSave_btn" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
-			<button type="submit" class="btn btn-dark" id="ok" disabled>다음</button>
+			<!-- <button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_challJoin_3_save.do">임시저장</button> -->
+			<c:choose>
+				<c:when test="${open=='admin'}">
+					<button id="ok" type="submit" class="btn btn-dark" formaction="admin_challJoin_2.do" disabled>다음</button>
+				</c:when>
+				<c:otherwise>
+					<button id="ok" type="submit" class="btn btn-dark" formaction="member_challJoin_4.do" disabled>다음</button>
+				</c:otherwise>
+			</c:choose>
 		</form>
 		</div>
 		

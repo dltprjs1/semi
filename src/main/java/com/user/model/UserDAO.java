@@ -46,7 +46,7 @@ public class UserDAO {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
 
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 
 
 		String user = "ADMIN";
@@ -692,4 +692,21 @@ public class UserDAO {
 		}
 		return result;
 	}	
+	
+	
+	// 인증 완료 시 경험치(mem_xp) +25
+	public void updateXp(int memberNum) {
+		try {
+			openConn();
+			sql = "update user_member set mem_xp = mem_xp+25 where mem_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, memberNum);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// updateXp() end
 }

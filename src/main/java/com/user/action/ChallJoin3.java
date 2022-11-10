@@ -16,11 +16,15 @@ public class ChallJoin3 implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, Exception {
-		
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		
-		String open = request.getParameter("openRadio").trim();
+		String open = "";
+		if(request.getParameter("openRadio") == null) {
+			open = (String)session.getAttribute("open");
+		}else {
+			open = request.getParameter("openRadio").trim();
+		}
 		
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
 		int chall_num = (Integer)session.getAttribute("chall_num");

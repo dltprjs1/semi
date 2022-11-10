@@ -138,7 +138,7 @@
 			</li>
 			<li>
 				<div class="make_challenge">
-					<a class="block" href="<%=request.getContextPath() %>/challenge_control.do">
+					<a class="block" href="<%=request.getContextPath() %>/admin_challJoin_1.do">
 						<br><br><br>
 						<img src="<%=request.getContextPath()%>/uploadFile/admin/챌린지만들기_image.png" width="64" height="54">
 						<h2>챌린지 만들기</h2>

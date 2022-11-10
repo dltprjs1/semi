@@ -17,6 +17,31 @@
     	background: #ff4d54;
     	opacity: 80;
 	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
 <body>
@@ -72,7 +97,7 @@
 				</c:when>
 				<c:otherwise>
 					<!-- 프로필사진도 불러오기 -->
-					${memberName} 님
+					${user_dto.getMem_id()} 님
 				</c:otherwise>
 			</c:choose>
 			<br>
@@ -104,7 +129,7 @@
 					<img id="image" height="300" width="300" border="2" 
 					src="<%=request.getContextPath()%>/memUpload/${user_dto.getMem_img()}" 
 					class="rounded mx-auto d-block">
-					${memberName} 님 <br>
+					${user_dto.getMem_id()} 님 <br>
 					챌린지개설 : ${user_dto.getChallenge_made_count()}개 / 평점 : ${user_dto.getChallenge_rating()}<br><!-- 챌린지개설 수와 평점 불러오기 -->
 				</c:otherwise>
 			</c:choose>
@@ -147,16 +172,24 @@
 			<c:choose>
 				<c:when test="${dto.getChall_status() eq '진행중'}">
 					<c:choose>
-						<c:when test="${dto.getChall_open() eq 'admin'}">
-							<button type="button" class="btn btn-dark" disabled>개설 완료</button>
+						<c:when test="${!empty admin_name}"> <!-- (관리자 로그인) -->
+							<button type="button" class="btn btn-dark" disabled>(관리자)</button>
 						</c:when>
-						<c:otherwise>
-							<button type="button" class="btn btn-dark" disabled>참가 완료</button>
+						<c:otherwise> <!-- (회원 로그인) -->
+							<c:choose>
+								<c:when test="${checkJoin == 1}"> <!-- (회원 로그인) 참가한 챌린지일 때 -->
+									<button type="button" class="btn btn-dark" disabled>참가 완료</button>
+									<button class="btn btn-dark" onclick="location.href='member_challProof.do'">인증하러 가기</button>
+								</c:when>
+								<c:otherwise> <!-- (회원 로그인) 참가 안한 챌린지일 때 -->
+									<button type="button" class="btn btn-dark">참가하기</button>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-							<button type="button" class="btn btn-dark" onclick="history.back()">다시 설정하기</button>
+					<button type="button" class="btn btn-dark" onclick="history.back()">다시 설정하기</button>
 					<c:choose>
 						<c:when test="${dto.getChall_open() eq 'admin'}">
 							<button class="btn btn-danger" onclick="location.href='admin_challJoin_complete.do'">개설하기</button>
