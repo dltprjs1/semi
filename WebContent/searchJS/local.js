@@ -110,7 +110,6 @@ function latelyViewItemRender(){
 			
 			if(!checkNull(latelyItemList[i])){
 				
-				console.log('if문 실행>>>' +[i]);
 				/*상품 그리는 부분 */
 				card += "<div class='card_items'>";
 				card += "<a href='" +getContextPath()+ "/search_content.do?num=" +latelyItemList[i].itemNum+ "'><img class='card_image' src='" +getContextPath()+ "/uploadFile/" +latelyItemList[i].itemImagePath+ "'>";
@@ -118,7 +117,7 @@ function latelyViewItemRender(){
 				card += "</div>";
 				
 			}else{
-				console.log('else문 실행')
+				card += "<div class='card_items'><div class='blank'></div></div>";
 			}
 		}
 		
@@ -127,7 +126,7 @@ function latelyViewItemRender(){
 	}else{ /*챌린지가 없을 경우*/
 		$("#card_qurency").empty();
 
-		$("#card_qurency").append("<div class='qurency_chall_items'>최근 조회한 챌린지가 없습니다</div>");
+		$("#card_qurency").append("<div class='none'>최근 조회한 챌린지가 없습니다</div>");
 	}
 } /* latelyViewItemRender() end*/
 
