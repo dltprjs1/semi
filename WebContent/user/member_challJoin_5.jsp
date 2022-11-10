@@ -85,6 +85,31 @@
     	background: #ff4d54;
     	opacity: 100;
 	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
 <body>
@@ -100,7 +125,7 @@
 					<form id="form" method="post" enctype="multipart/form-data" action="admin_challJoin_final.do">
 				</c:when>
 				<c:otherwise>
-					<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_final.do">
+					<form id="form" method="post" enctype="multipart/form-data">
 				</c:otherwise>
 			</c:choose>
 			
@@ -144,8 +169,8 @@
 			
 			<br><br>
 			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
-			<button type="button" id="tempSave_btn" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
-			<button type="submit" class="btn btn-dark">챌린지 개설하기</button>
+			<!-- <button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_challJoin_5_save.do">임시저장</button> -->
+			<button id="next" type="submit" class="btn btn-dark" formaction="member_challJoin_final.do">챌린지 개설하기</button>
 			</form>
 		</div>
 		<br>

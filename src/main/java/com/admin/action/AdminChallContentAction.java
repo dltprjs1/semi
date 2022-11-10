@@ -19,7 +19,7 @@ public class AdminChallContentAction implements Action {
 			throws IOException, Exception {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
-		int challNum = (Integer) session.getAttribute("challNum");
+		int challNum = (Integer) session.getAttribute("chall_num");
 		ChallJoinDAO dao = ChallJoinDAO.getInstance();
 		ChallJoinDTO chall_dto = dao.getChallContent(challNum);
 		request.setAttribute("challContent", chall_dto);
