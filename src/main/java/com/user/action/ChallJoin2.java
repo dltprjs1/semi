@@ -28,6 +28,8 @@ public class ChallJoin2 implements Action {
 			session.setAttribute("chall_num", res);
 		}else {	// '임시저장' chall_num를 세션에 그대로 유지
 			res = 2;
+			// '챌린지 상태' 정보 가져오기
+			// '공개 여부' 정보 가져오기
 		}
 		
 		ActionForward forward = new ActionForward();

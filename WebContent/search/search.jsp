@@ -11,10 +11,32 @@
 <script type="text/javascript" src="./searchJS/search_list.js"></script>
 <script type="text/javascript" src="searchJS/search_menu.js"></script>
 <%
-	String keyword = request.getParameter("keyword").trim();
-	System.out.println("jsp페이지 파라메터 >>> " +keyword);
+
+	String keyword="";
+ 	String category="";
+	if(request.getParameter("keyword") != "" &&request.getParameter("keyword") != null){
+		keyword = request.getParameter("keyword").trim();
+		System.out.println("search_jsp페이지 파라메터 키워드 >>> " +keyword);
+	}else{
+		System.out.println("키워드 else");
+	}
+
+	if(request.getParameter("category") != "" && request.getParameter("category") != null){
+		category = request.getParameter("category").trim();
+		System.out.println("search_jsp페이지 파라메터 카테고리 >>> " +category);	
+	}else{
+		System.out.println("카테고리 else");
+	}
 	
- 	String optionCy="";
+/* 	if(!request.getParameter("category").equals("")){
+		
+		keyword = request.getParameter("keyword").trim();
+		System.out.println("search_jsp페이지 파라메터 >>> " +keyword);
+		
+	} */
+	
+
+/*  	String optionCy="";
 	String optionCa="";
 	String optionDu="";
 	
@@ -30,11 +52,13 @@
 	
 	System.out.println("jsp optionCy >>> " +optionCy);
 	System.out.println("jsp optionCa >>> " +optionCa);
-	System.out.println("jsp optionDu >>> " +optionDu);
+	System.out.println("jsp optionDu >>> " +optionDu); */
 %>
 </head>
 <body>
-	<input type="hidden" value="<%=keyword %>" name="text" id="text">
+	<input type="hidden" value="<%=keyword %>" name="keyword" id="keyword">
+	<input type="hidden" value="<%=category %>" name="category" id="category">
+<%-- 	<input type="hidden" value="<%=category %>" name="keyword" id="keyword"> --%>
 <%-- 	<input type="hidden" value="<%=optionCy %>" name="optionCy" id="optionCy">
 	<input type="hidden" value="<%=optionCa %>" name="optionCa" id="optionCa">
 	<input type="hidden" value="<%=optionDu %>" name="optionDu" id="optionDu"> --%>
@@ -62,7 +86,7 @@
 	<%
 		}
 	%> --%>
-	
+	<jsp:include page="../include/chall_top.jsp" />
 	<aside id="side_category">
 		<ul class="search_menu">
 			<li class="option1">
@@ -121,7 +145,7 @@
 			</table>
 		</div>		
 	</article>
-
+	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 <style>
 
@@ -213,10 +237,10 @@ input[type="checkbox"]:checked +label a{
 	color: #000;
 }
 
-.chall_item img{
+.search_item img{
 
-	width: 150px;
-	height: 150px;
+	width: 100px;
+	height: 100px;
 	border: 0;
 
 }
@@ -226,6 +250,7 @@ table{
 	width: 60%;
 	border-spacing: 0 100px;
 	float: left;
+	margin-left: 100px;
 }
 
 table td{

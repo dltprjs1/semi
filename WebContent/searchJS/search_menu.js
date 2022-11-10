@@ -16,8 +16,6 @@ $(document).ready(function(){
 			subMenu.slideDown();
 			icon.text("-");
 		}
-	}).mouseover(function(){
-		subMenu.slideDown();
 	});
 	
 	// 체크박스 선택 이벤트
