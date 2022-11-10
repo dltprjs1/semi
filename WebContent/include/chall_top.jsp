@@ -18,10 +18,6 @@
 <!-- CS센터 페이지에서 쓰는 부분 -->
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<!-- bootstrp -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <!-- toastr -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -29,10 +25,9 @@
 <link rel="stylesheet" href="CScenter/CScenter.css?a">
 <script src="CScenter/CS_JS.js"></script>
 
-<script type="text/javascript" src="../searchJS/location.js"></script>
+<!-- <script type="text/javascript" src="searchJS/location.js"></script> -->
 <script type="text/javascript" src="searchJS/location.js"></script>
-<!-- <script type="text/javascript" src="../searchJS/move.js"></script>
-<script type="text/javascript" src="searchJS/move.js"></script> -->
+<script type="text/javascript" src="searchJS/local.js"></script>
 
 
 
@@ -131,6 +126,10 @@
 		font-size: 16px;
 	}
 	
+	#search_text{
+		cursor: pointer;
+	}
+	
 	.search_btn{
 		cursor: pointer;
 		width: 80px;
@@ -219,6 +218,207 @@
 	.footer a{
 		color: gray;
 	}
+	
+	/* 검색버튼 팝업창 css */
+	#search_layer {
+	position:fixed;
+	top:0;
+	left:0;
+	z-index: 10000; 
+	width: 100%; 
+	height: 100%; 
+	background-color: #fff; 
+	float: top;
+	display: none;
+	overflow-y : auto;
+	}
+	
+	
+	#search_box{
+		position: relative;
+		top:50%;
+		left:50%;
+		height: 100%; 
+		width: 60%;
+		transform:translate(-50%, -50%);
+		z-index:1002;
+		box-sizing:border-box;
+		background:#fff;
+		margin-top: 70px;
+		margin-left: 130px;
+	}
+	
+	#search_box_position{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	
+	#search_bar{
+		margin-bottom: 50px;
+		position: relative;
+	}
+	
+	.search_text2{
+		width:60%; 
+		height:40px;
+		padding: 0;
+		border-spacing: 1px;
+		border-color: black;
+		border-radius: 5px;
+		font-size: 16px;
+		float: left;
+	}
+	
+	.search_btn2{
+		margin-left:10px;
+		cursor: pointer;
+		width: 80px;
+		height: 43.99px;
+		background-color: #ff4d54;
+		color : white;
+		font-weight : bold;
+		font-size: 16px;
+		border-radius: 5px;
+		float: left;
+		
+	}
+	
+	#close{
+		float: right;
+		margin-right: 30px;
+		margin-top: 30px;
+	}
+	
+	.search_title{
+	
+		margin-top: 50px;
+		line-height:1.4rem;
+		font-size:20px; 
+		font-weight:bold;
+		text-align: left;
+	
+	}
+	
+	#search_card1{
+		margin: 0px 0px 28px;
+
+		
+	}
+	
+	#search_card2{
+		margin: 0px 0px 24px;
+	}
+	
+	#search_card3{
+		margin: 0px 0px 40px;
+		height: 300px;
+	}
+
+	.card_image {
+	width: 100px;
+	height: 100px;
+	}
+	
+	#card_most_category{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		justify-content: space-between;
+		margin: 25px 250px 25px 25px;
+			
+	
+	}	
+	
+	#card_most_keyword{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		justify-content: space-between;
+		margin: 50px;
+		flex-wrap:wrap;
+		align-content: space-around;
+		font-weight: bold;
+	}
+	
+	
+	#card_most_keyword li{
+		width: 50%;
+		margin-bottom: 30px;
+	}
+	
+	
+	
+	/* 최근 조회한 챌린지 */
+	#card_qurency{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		justify-content: space-around;
+		margin: 25px 250px 25px 25px;
+	}	
+	
+	
+	
+	/* 검색 */
+	
+	#search_wrap2{
+		display: none;
+	}
+	
+	.card_items{
+		cursor: pointer;
+	}
+	
+	.card_items_keyword{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		justify-content: space-between;
+		margin : 50px 50px 50px 0px;
+		flex-wrap:wrap;
+		align-content: space-between;
+		font-weight: bold;
+	}
+	
+	.card_keyword_icon{
+		float: left;
+	}
+	
+	.card_keyword_icon img{
+		width: 100px;
+		height: 100px;
+	}
+	
+	.card_keyword_info{
+		float: left;
+		margin-left: 50px;
+	}
+	
+	.none{
+		text-align: center;
+		font-size: 16px;
+		color: #AAA;
+		margin-right: 400px;
+	}
+	
+	.keyword_form{
+		cursor: pointer;
+	}
+	
+	
+	
+ input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+ 	-webkit-appearance: none;
+	height: 20px;
+	width: 20px;
+	border-radius: 10px;
+	background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -262,8 +462,10 @@
 
 		<div class="search">
 			<form id="form_searchText" method="post" onsubmit="return false;">
-				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
+				<a id="open">
+				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!" readonly>&nbsp;&nbsp;
 				<input id="search_btn" class="search_btn" type="button" value="검색">
+				</a>
 			</form>	
 		</div>
 
@@ -280,5 +482,62 @@
 		
 	</div>
 	<hr width=100% align="center">
+	
+		<div id="search_layer">
+		<input id="close" type="button"  value="닫기">
+		<div id="search_box">
+			<div id="search_box_position">
+				<div id="search_bar" class="search" align="center">
+					<form method="post" action="<%=request.getContextPath()%>/search.do">
+						<input type="search" id="search_text2" class="search_text2" name="keyword" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
+						<input type="hidden" id="category" class="category" name="category" value="">&nbsp;&nbsp;
+						<input id="search_btn2" class="search_btn2" type="submit" value="검색">
+					</form>
+				</div>
+				<div id="search_cont">
+					<div id="search_wrap">
+						<div id="search_card1" class="search_card">
+							<div class="search_title">
+								<span class="title">인기 검색어</span>
+							</div>
+							<div id="card_most_keyword">
+	
+							</div>
+						</div>
+						
+						<div id="search_card2" class="search_card">
+							<div class="search_title">
+								<span class="title">인기 카테고리</span>
+							</div>
+							<div id="card_most_category">
+							</div>
+						</div>
+						
+						<div id="search_card3" class="search_card">
+							<div class="search_title">
+							<span class="title">최근 조회한 챌린지</span>
+							</div>
+							<div id="card_qurency">
+							
+							</div>
+						</div>
+					</div>
+					
+					<div id="search_wrap2">
+						<div id="search_card4" class="search_card">
+							<div id="card_keyword">
+								
+							</div>
+						</div>
+					</div>
+					
+					<form id="form_search" method='post' action="<%=request.getContextPath()%>/search.do">
+						<input type="hidden" id="form_search_keyword" name="keyword" value="">			
+						<input type="hidden" id="form_search_category" name="category" value="">			
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<%-- 이하 영역은 본문 영역이 됨 --%>

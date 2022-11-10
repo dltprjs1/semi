@@ -382,6 +382,7 @@ public class ChallJoinDAO {
 				dto.setChall_ongoingPeople(rs.getInt("chall_ongoingPeople"));
 				dto.setChall_creater_num(rs.getInt("chall_creater_num"));
 				dto.setChall_status(rs.getString("chall_status"));
+				dto.setChall_num(rs.getInt("chall_num"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
