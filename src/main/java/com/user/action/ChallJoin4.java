@@ -44,7 +44,7 @@ public class ChallJoin4 implements Action {
 		
 		String success_img = multi.getFilesystemName("successImgFile");
 		String fail_img = multi.getFilesystemName("failImgFile");
-		String cont_imgs = multi.getFilesystemName("cont_imgs[]");
+		String cont_imgs = multi.getFilesystemName("contImgFile");
 		
 		/* 로그인하면 넘어오는 세션 값
 		 * session.setAttribute("memberId", dto.getMem_id());

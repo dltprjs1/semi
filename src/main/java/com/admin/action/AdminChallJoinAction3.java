@@ -40,6 +40,7 @@ public class AdminChallJoinAction3 implements Action {
 		String ad_id = (String)session.getAttribute("admin_id");
 		int challNum = dao.continueChallNum(ad_id);
 		dto.setChall_num(challNum);
+		session.setAttribute("chall_num", challNum);
 		
 		int res = dao.updateChall_3(dto);
 		
