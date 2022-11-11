@@ -29,13 +29,14 @@
 	<div class="kakao"></div>	
 		<a href="<%=request.getContextPath()%>/member_login.do">[회원 로그인]</a>
 		&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-
-		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a> --%>
+--%>
+		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a> 
 
 
 
 
 		<div class="main_container">
+		
  			<div class="main_container event">
 				<div class="slide_container">
 					<div class="slide fade active">

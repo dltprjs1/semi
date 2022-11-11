@@ -343,7 +343,7 @@ function execDaumPostcode() {
 			<article class="join_container" align="center">
 				<h2>회원가입</h2>
 				
-				<form class="join_form" method="post" action="<%=request.getContextPath() %>/member_join_ok.do">
+				<form enctype="multipart/form-data" class="join_form" method="post" action="<%=request.getContextPath() %>/member_join_ok.do">
 						
 						<!-- 아이디 입력 -->
 						<div class="join_id">		
@@ -377,8 +377,8 @@ function execDaumPostcode() {
 							
 						<input type='text' name="main_img" id='main_img' style='display: none;'> 
 						
-         				<img id="image_main" src='<%=request.getContextPath()%>/uploadFile/run.jpg' height="200" width="200" border="2" onclick='document.all.mainImgFile.click(); document.all.main_img.value=document.all.mainImgFile.value' class="rounded mx-auto d-block">
-         				<input type="file" name="mainImgFile" id="image_main_input" accept="image/jpg, image/jpeg, image/png, image/gif"
+         				<img id="image_main" src='<%=request.getContextPath()%>/uploadFile/run.jpg' height="200" width="200" border="2" onclick='document.all.memberImgFile.click(); document.all.main_img.value=document.all.memberImgFile.value' class="rounded mx-auto d-block">
+         				<input type="file" name="memberImgFile" id="image_main_input" accept="image/jpg, image/jpeg, image/png, image/gif"
               				onchange="previewFile1()" style='display: none;'>
               			<br>
               			<span>업로드 가능한 확장자 : .jpg / .jpeg / .png / .gif</span>
@@ -1084,7 +1084,7 @@ function execDaumPostcode() {
 	                    </div>
 	                    <br>
 	                    <br>
-	                    	<input type="submit" class="btn_join" value="가입하기" disabled="disabled">
+	                    	<input type="submit" class="btn_join" value="가입하기" >
 				</form>
 		
 			</article>

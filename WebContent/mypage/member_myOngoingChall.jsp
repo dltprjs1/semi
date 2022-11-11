@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-  
+
+<% 
+
+
+%> 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -261,26 +265,26 @@
 				<article class="ongoingChall_content">
 					<table id="ongoingChall_table">
 						<tr>
-							<th></th> <th>챌린지 이름</th>
+							<th></th> <th>[챌린지 번호] 챌린지 이름</th>
 							<th>챌린지 기간</th> <th>챌린지 상태</th>
 						</tr>
 						
 						<c:set var="list" value="${List }" />
 						<c:if test="${!empty list }">
-							<c:forEach items="${list }" var="dto">
+							<c:forEach items="${list }" var="listDto">
 								<tr>
-									<td><a><img width="200px" src="<%=request.getContextPath()%>/uploadFile/${dto.getChall_mainimage()}"></img></a></td>
+									<td><a href="<%=request.getContextPath() %>/member_myChallContent.do?chall_num=${listDto.getChall_num() }"><img width="200px" src="<%=request.getContextPath()%>/uploadFile/${listDto.getChall_mainimage()}"></img></a></td>
 									
 									<td>
-									${dto.getChall_title() }
+									[${listDto.getChall_num() }] ${listDto.getChall_title() }
 									</td>
 									
 									<td>
-									${dto.getChall_duration()}
+									${listDto.getChall_duration()}
 									</td>
 									
 									<td>
-									${dto.getChall_status() }
+									${listDto.getChall_status() }
 									</td>
 									
 								</tr>

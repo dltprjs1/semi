@@ -24,6 +24,7 @@ public class AdminLoginOkAction implements Action {
 		
 		PrintWriter out =response.getWriter();
 		HttpSession session = request.getSession();
+		session.invalidate();
 		ActionForward forward = new ActionForward();
 		
 		if(res > 0) {
