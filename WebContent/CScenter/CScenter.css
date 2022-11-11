@@ -1,5 +1,25 @@
 @charset "UTF-8";
 
+/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+/*    .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    } */
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
+
 
 	#CS_container {
 		margin-left : 10%;
@@ -262,4 +282,7 @@ a {
     border-color: #d1565b;
 }
 
-
+.pagination {
+	margin-left: 35%;
+	margin-right: 35%;
+}

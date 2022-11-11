@@ -30,6 +30,7 @@
 				<tr>
 					<th>제목</th>
 					<th>내용</th>
+					<th><a href="<%=request.getContextPath() %>/review/review_main.jsp" >임시리뷰페이지</a></th>
 				</tr>
 			</table>
 		</div>

@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
+
+#reviewList {
+	display : grid; 
+	width : 60%; 
+	grid-template-columns: 1fr 1fr 1fr; 
+	margin-left:auto; 
+	margin-right:auto;
+}
+
+.review-wrap {
+	margin : 10px;
+	border-radius: 10px;
+	background-color: rgb(240, 240, 240);
+	padding : 20px;
+}
+
+.dropdown-content{
+	display : none;
+}
+
+.dropdown-content.show{
+	display:block;
+	width: 92%;
+	height: 300px;
+	position: absolute;
+	background-color: white;
+	border : 1px solid gray;
+	border-top : 0px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.dropdown-content.show span {
+	cursor : pointer;
+}
+
+.chall-list:hover{
+	cursor : pointer;
+	color: #ff4d54;
+}
