@@ -206,6 +206,16 @@ function previewFile3() {
     .menu li{
     box-sizing: content-box;
     }
+    
+    #title {
+    	width: 15%;
+    }
+    #guide {
+    	width: 30%;
+    }
+    #cont {
+    	width: 30%;
+    }
 /* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
@@ -217,19 +227,12 @@ function previewFile3() {
 			<h3><b>챌린지를 만들어주세요!</b></h3>
 			<hr class="join_hr" width="50%" color="red">
 			<br>
-			
+
     
     		<form id="form" method="post" enctype="multipart/form-data">
-			<%-- <c:choose>
-				<c:when test="${open=='admin'}">
-					<form id="form" method="post" enctype="multipart/form-data" action="admin_challJoin_2.do">
-				</c:when>
-				<c:otherwise>
-					<form id="form" method="post" enctype="multipart/form-data" action="member_challJoin_4.do">
-				</c:otherwise>
-			</c:choose> --%>
+    		
 			<!-- 필수항목 --><span class="category">챌린지 제목</span><span class="required">*</span><br>
-  			<input name="title" maxlength="30" id="title" placeholder="예) 1만보 걷기"><span id="title_text_count">( 0 / 30 )</span><br>
+  			<input class="form-control" name="title" maxlength="30" id="title" placeholder="예) 1만보 걷기"><span id="title_text_count">( 0 / 30 )</span><br>
 			<span id="title_text_check" style="color: red">최소 3글자 이상 입력해주세요.</span>
 			
 			
@@ -287,7 +290,7 @@ function previewFile3() {
 			
 			<br><br>
 			<!-- 필수항목 --><span class="category">인증 방법</span><span class="required">*</span><br>
-  			<textarea name="guide" cols="55" rows="3" id="guide" maxlength="100" placeholder="예) 오늘 날짜와 걸음 수가 적힌 만보기 캡쳐 화면 업로드"></textarea><span id="guide_text_count">( 0 / 100 )</span>
+  			<textarea class="form-control" name="guide" cols="55" rows="3" id="guide" maxlength="100" placeholder="예) 오늘 날짜와 걸음 수가 적힌 만보기 캡쳐 화면 업로드"></textarea><span id="guide_text_count">( 0 / 100 )</span>
   			<br>
   			<span id="guide_text_check" style="color: red">최소 15글자 이상 입력해주세요.</span>
   			<br>
@@ -340,14 +343,14 @@ function previewFile3() {
 			<span class="category">챌린지 소개</span><br>
 			<a>사진과 글을 추가해 챌린지를 소개해보세요. <br>
   			혹시 알아요 리더님의 글에 반해서 의지가 불타오를지!</a><br>
-  			<textarea name="cont" cols="55" rows="3" id="cont" maxlength="100" placeholder="예) 매일 1만보 걷고 건강해지기! 오늘부터 같이 해봐요 :)"></textarea>
+  			<textarea class="form-control" name="cont" cols="55" rows="3" id="cont" maxlength="100" placeholder="예) 매일 1만보 걷고 건강해지기! 오늘부터 같이 해봐요 :)"></textarea>
   			<br>
   			<span id="cont_text_count">( 0 / 100 )</span>
 			
 			<br><br>
 			<span class="category">소개 사진 올리기</span><br>
 			<input type='text' name="cont_img" id='cont_img' style='display: none;'> 
-			<img id="image_cont" src='<%=request.getContextPath()%>/uploadFile/regi_shot_fail.jpg' height="100" width="100" border="2" onclick='document.all.contImgFile.click(); document.all.cont_img.value=document.all.contImgFile.value' class="rounded mx-auto d-block">
+			<img id="image_cont" src='<%=request.getContextPath()%>/uploadFile/regi_shot_fail.jpg' height="150" width="150" border="2" onclick='document.all.contImgFile.click(); document.all.cont_img.value=document.all.contImgFile.value' class="rounded mx-auto d-block">
 			<input type="file" name="contImgFile" id="image_cont_input" accept="image/jpg, image/jpeg, image/png, image/gif"
 			  	onchange="previewFile3()" style='display: none;'>
 			

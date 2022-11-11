@@ -30,7 +30,7 @@ public class ChallJoinDAO {
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -476,10 +476,28 @@ public class ChallJoinDAO {
 	
 	
 	// 결제완료 시 해당 회원 정보 업데이트(챌린지 개설 횟수 : +1 / 예치금 : 사용한 만큼 차감) challenge_made_count +1, 예치금(mem_money) 차감
-	public void memChallJoinUpdate(int mem_num, int dpM) {
+	public void memChallJoinUpdate_creater(int mem_num, int dpM) {
 		try {
 			openConn();
-			sql = "update user_member set challenge_made_count = challenge_made_count+1, mem_money = mem_money-? where mem_num = ?";
+			sql = "update user_member set challenge_count = challenge_count+1, challenge_made_count = challenge_made_count+1, mem_money = mem_money-? where mem_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dpM);
+			pstmt.setInt(2, mem_num);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}	// memChallJoinUpdate() end
+	
+	
+	// 결제완료 시 해당 회원 정보 업데이트(챌린지 개설 횟수 : +1 / 예치금 : 사용한 만큼 차감) challenge_made_count +1, 예치금(mem_money) 차감
+	public void memChallJoinUpdate_participant(int mem_num, int dpM) {
+		try {
+			openConn();
+			sql = "update user_member set challenge_count = challenge_count+1, mem_money = mem_money-? where mem_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dpM);
 			pstmt.setInt(2, mem_num);

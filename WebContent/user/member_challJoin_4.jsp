@@ -153,6 +153,26 @@
     .menu li{
     box-sizing: content-box;
     }
+    
+    #depositDefault{
+    width: 5%;
+    display: inline;
+    }
+    #depositMaxTextArea{
+    display: inline;
+    }
+    #depositMax{
+    width: 6%;
+    display: inline;
+    }
+    #code{
+    width: 10%;
+    display: inline;
+    }
+    #maxPeopleInput{
+    width: 4%;
+    display: inline;
+    }
 /* 부트스트랩 적용 후 바뀌는 부분(include) end */
 	
 </style>
@@ -172,16 +192,16 @@
 			<div id="depositMaxCont"><a>최소 1만원 ~ 최대 20만원 (만원 단위 가능)</a></div>
 			<input type="checkbox" id="deposit" checked>고정 예치금
 			<br>
-			<input id="depositDefault" name="depositDefault" value="1000" size="4">원
+			<input class="form-control" id="depositDefault" name="depositDefault" value="1000" size="4">원
 			<div id="depositMaxTextArea">~
-			<input id="depositMax" name="depositMax" size="4">원</div>
+			<input class="form-control" id="depositMax" name="depositMax" size="4">원</div>
 			
   			
   			<div id="private_code">
   			<br><br><!-- 비공개 챌린지에만 나타나는 항목 -->
 			<h5><b>비공개 참여 코드</b></h5><!-- 필수항목 -->
 			<a>프라이빗한 챌린지를 위해, 우리만의 코드를 정해보세요.</a><br>
-			<input type="text" name="privateCode" width="10" id="code" placeholder="예) 1234, 우리는챌린저스">
+			<input class="form-control" type="text" name="privateCode" width="10" id="code" placeholder="예) 1234, 우리는챌린저스">
 			</div>
 			
 			
@@ -192,7 +212,7 @@
 			  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
 			</div>
 			<div id="maxPeopleCont">(최소 2명 ~ 최대 1,000명)</div>
-			<div id="maxPeopleTextArea"><input id="maxPeopleInput" name="maxPeople" size="2">명 </div>
+			<div id="maxPeopleTextArea"><input class="form-control" id="maxPeopleInput" name="maxPeople" size="2">명 </div>
 			
 			
 			<br><br>

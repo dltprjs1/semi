@@ -197,7 +197,7 @@
 									<button class="btn btn-dark" onclick="location.href='member_challProof.do'">인증하러 가기</button>
 								</c:when>
 								<c:otherwise> <!-- (회원 로그인) 참가 안한 챌린지일 때 -->
-									<button type="button" class="btn btn-dark">참가하기</button>
+									<button type="button" class="btn btn-dark" onclick="location.href='member_challJoin_pay.do'">참가하기</button>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>

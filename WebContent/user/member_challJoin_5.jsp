@@ -109,6 +109,10 @@
     .menu li{
     box-sizing: content-box;
     }
+    
+    .form-control{
+    width: 5%;
+    }
 /* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
@@ -160,10 +164,10 @@
 			<h5>검색 키워드 입력</h5>
 			<a>어떻게 검색하면 챌린지를 찾을 수 있게 할까요? (최대 3개)</a><br>
 			<!-- 키워드 입력창 삭제 버튼 만들어야 함 -->
-			<input type="button" id="kwAdd_btn" value="+ 추가하기">
-			<span id="kw1"><input name="keyword1" placeholder="입력" class="add_btn" style="width:7%;"></span>
-			<span id="kw2"><input name="keyword2" placeholder="입력" class="add_btn" style="width:7%;"></span>
-			<span id="kw3"><input name="keyword3" placeholder="입력" class="add_btn" style="width:7%;"></span>
+			<input class="btn btn-info" type="button" id="kwAdd_btn" value="+ 추가하기">
+			<span id="kw1"><input class="form-control" name="keyword1" placeholder="입력" class="add_btn" style="width:7%;"></span>
+			<span id="kw2"><input class="form-control" name="keyword2" placeholder="입력" class="add_btn" style="width:7%;"></span>
+			<span id="kw3"><input class="form-control" name="keyword3" placeholder="입력" class="add_btn" style="width:7%;"></span>
 			
 			
 			
