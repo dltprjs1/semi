@@ -1,6 +1,7 @@
 package com.user.model;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.chall.controller.OjdbcUrl;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,13 +40,15 @@ public class UserDAO {
 		return instance;
 	}
 	
+	OjdbcUrl oju = new OjdbcUrl();
+	
 
 // Connection을 가져오는 메서드
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
 
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
+		String url = oju.getUrl();
 
 
 		String user = "ADMIN";

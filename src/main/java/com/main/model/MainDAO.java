@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.category.medel.CategoryDTO;
+import com.chall.controller.OjdbcUrl;
 import com.user.model.UserDTO;
 
 public class MainDAO {
@@ -28,12 +29,14 @@ public class MainDAO {
 		}
 		return instance;
 	}
+	
+	OjdbcUrl oju = new OjdbcUrl();
 
 // Connection을 가져오는 메서드
 	public void openConn() {
 
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
+		String url = oju.getUrl();
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 

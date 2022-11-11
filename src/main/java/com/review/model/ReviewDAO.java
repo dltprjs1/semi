@@ -14,6 +14,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.chall.controller.OjdbcUrl;
+
 
 public class ReviewDAO {
 	Connection con = null;
@@ -32,12 +34,13 @@ public class ReviewDAO {
 		return instance;
 	}
 	
+	OjdbcUrl oju = new OjdbcUrl();
 
 // Connection을 가져오는 메서드
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/downloads/ProjectChallengers/Wallet_ProjectChallengers/";
+		String url = oju.getUrl();
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
