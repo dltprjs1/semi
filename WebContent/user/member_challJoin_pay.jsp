@@ -160,6 +160,11 @@ onload = function() {
     .menu li{
     box-sizing: content-box;
     }
+    
+    .form-control{
+    width: 7%;
+    display: inline;
+    }
 /* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
@@ -179,7 +184,7 @@ onload = function() {
 			<c:if test="${!empty challContent.getChall_depositMax()}"> <!-- 고정예치금 X -->
 			<p>예치금 : 최소 <fmt:formatNumber value="${challContent.getChall_depositDefault()}"/>원 ~ 
 			최대 <fmt:formatNumber value="${challContent.getChall_depositMax()}"/>원(1만원 단위 가능)</p>
-			<input type="number" id="depositOG_input" step="10000" max="${challContent.getChall_depositMax()}">원
+			<input class="form-control" type="number" id="depositOG_input" step="10000" max="${challContent.getChall_depositMax()}">원
 			</c:if>
 			<hr class="join_hr" width="20%" color="red">
 			<fieldset>

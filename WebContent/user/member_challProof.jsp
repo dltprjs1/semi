@@ -131,8 +131,9 @@
 			<br>
 			<br>
 			
+			<span class="badge rounded-pill text-bg-primary">${challContent.getChall_cycle() }</span>
+			<span class="badge rounded-pill text-bg-success">${challContent.getChall_duration() }주</span>
 			<br>
-			${challContent.getChall_cycle() }, ${challContent.getChall_duration() }주 동안<br>
 			<%=startDate2 %> - <%=endDate2 %><br>
 			인증가능 시간 : ${challContent.getChall_regiTimeStart() }~${challContent.getChall_regiTimeEnd() }
 			<br>

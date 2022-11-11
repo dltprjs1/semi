@@ -54,8 +54,8 @@
 		<img id="image" height="300" width="300" border="2" src="<%=request.getContextPath()%>/memUpload/${challContent.getChall_mainImage() }" class="rounded mx-auto d-block">
 		<br>
 		<h6><b>${challContent.getChall_title() }</b></h6>
-		인증빈도 : ${challContent.getChall_cycle() } <br>
-		챌린지 기간 : ${challContent.getChall_duration() }주
+		<span class="badge rounded-pill text-bg-primary">${challContent.getChall_cycle() }</span>
+		<span class="badge rounded-pill text-bg-success">${challContent.getChall_duration() }주</span>
 		
 		<br><br>
 		<hr class="join_hr" width="20%" color="red">
