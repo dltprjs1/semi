@@ -41,7 +41,7 @@
 			grid-row: 3/4;		
 		}
 		
-		.ongoingChal_content{
+		.ongoingChall_content{
 			grid-column: 2/3;
 			grid-row: 4/5;		
 		}
@@ -189,7 +189,7 @@
 		}
 		/* 챌린지 상태 CSS end*/
 		
-		.ongoingChal_content table {
+		.ongoingChall_content table {
 			width: 1000px;
 			font-size: 18px;
 			text-align: center;
@@ -258,8 +258,8 @@
 					</ul>
 				</div>
 				
-				<article class="ongoingChal_content">
-					<table>
+				<article class="ongoingChall_content">
+					<table id="ongoingChall_table">
 						<tr>
 							<th></th> <th>챌린지 이름</th>
 							<th>챌린지 기간</th> <th>챌린지 상태</th>
@@ -269,7 +269,7 @@
 						<c:if test="${!empty list }">
 							<c:forEach items="${list }" var="dto">
 								<tr>
-									<td><a><img src="<%=request.getContextPath()%>/uploadFile/${dto.getChall_mainimage()}"></img></a></td>
+									<td><a><img width="200px" src="<%=request.getContextPath()%>/uploadFile/${dto.getChall_mainimage()}"></img></a></td>
 									
 									<td>
 									${dto.getChall_title() }
