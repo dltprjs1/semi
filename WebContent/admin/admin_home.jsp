@@ -91,7 +91,7 @@
 					<a class="block" href="<%=request.getContextPath() %>/admin_control.do">
 						<br><br><br>
 						<img src="<%=request.getContextPath()%>/uploadFile/admin/회원관리_image.png" width="64" height="54">
-						<h2>회원 관리</h2>
+						<h2>회원 신고 관리</h2>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 				</div>
@@ -138,7 +138,7 @@
 			</li>
 			<li>
 				<div class="make_challenge">
-					<a class="block" href="<%=request.getContextPath() %>/challenge_control.do">
+					<a class="block" href="<%=request.getContextPath() %>/admin_challJoin_1.do">
 						<br><br><br>
 						<img src="<%=request.getContextPath()%>/uploadFile/admin/챌린지만들기_image.png" width="64" height="54">
 						<h2>챌린지 만들기</h2>

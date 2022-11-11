@@ -126,6 +126,55 @@
     	opacity: 100;
 	}
 	
+	.form-check {
+		width: 0%;
+	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+    
+    #depositDefault{
+    width: 5%;
+    display: inline;
+    }
+    #depositMaxTextArea{
+    display: inline;
+    }
+    #depositMax{
+    width: 6%;
+    display: inline;
+    }
+    #code{
+    width: 10%;
+    display: inline;
+    }
+    #maxPeopleInput{
+    width: 4%;
+    display: inline;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
+	
 </style>
 </head>
 <body>
@@ -137,47 +186,46 @@
 			<hr class="join_hr" width="50%" color="red">
 			
 			
-			<c:choose>
-				<c:when test="${open=='admin'}">
-					<form id="form" method="post" action="admin_challJoin_3.do">
-				</c:when>
-				<c:otherwise>
-					<form id="form" method="post" action="member_challJoin_5.do">
-				</c:otherwise>
-			</c:choose>
+			<form id="form" method="post">
 			<h5><b>예치금</b></h5><!-- 필수항목 -->
 			<div id="depositDefaultCont"><a>고정 예치금은 최소 1천원부터 가능합니다.(천원 단위 가능)</a></div>
 			<div id="depositMaxCont"><a>최소 1만원 ~ 최대 20만원 (만원 단위 가능)</a></div>
 			<input type="checkbox" id="deposit" checked>고정 예치금
 			<br>
-			<input id="depositDefault" name="depositDefault" value="1000" width="30">원
+			<input class="form-control" id="depositDefault" name="depositDefault" value="1000" size="4">원
 			<div id="depositMaxTextArea">~
-			<input id="depositMax" name="depositMax" width="30">원</div>
+			<input class="form-control" id="depositMax" name="depositMax" size="4">원</div>
 			
   			
   			<div id="private_code">
   			<br><br><!-- 비공개 챌린지에만 나타나는 항목 -->
 			<h5><b>비공개 참여 코드</b></h5><!-- 필수항목 -->
 			<a>프라이빗한 챌린지를 위해, 우리만의 코드를 정해보세요.</a><br>
-			<input type="text" name="privateCode" width="10" id="code" placeholder="예) 1234, 우리는챌린저스">
+			<input class="form-control" type="text" name="privateCode" width="10" id="code" placeholder="예) 1234, 우리는챌린저스">
 			</div>
 			
 			
 			<br><br>
 			<h5><b>최대 모집 인원 설정하기</b></h5>
-			참가자 모집 인원을 제한하고 싶은 경우 설정할 수 있어요. <div id="maxPeopleCont">(최소 2명 ~ 최대 1,000명)</div>
-			<!-- 체크박스 가운데 위치하게 하기 -->
+			참가자 모집 인원을 제한하고 싶은 경우 설정할 수 있어요. 
 			<div class="form-check form-switch">
 			  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
 			</div>
-			<div id="maxPeopleTextArea"><input id="maxPeopleInput" name="maxPeople" width="10">명 </div>
+			<div id="maxPeopleCont">(최소 2명 ~ 최대 1,000명)</div>
+			<div id="maxPeopleTextArea"><input class="form-control" id="maxPeopleInput" name="maxPeople" size="2">명 </div>
 			
 			
 			<br><br>
 			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
-			<button type="button" id="tempSave_btn" class="btn btn-secondary" onclick="location.href='member_temp_save.do'">임시저장</button>
-			<button type="submit" class="btn btn-dark" id="ok" disabled>다음</button>
-			<!-- 버튼은 비활성화되어있다가 필수항목 모두 선택하면 활성화되게 -->
+			<!-- <button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_challJoin_4_save.do">임시저장</button> -->
+			<c:choose>
+				<c:when test="${open=='admin'}">
+					<button id="ok" type="submit" class="btn btn-dark" formaction="admin_challJoin_3.do" disabled>다음</button>
+				</c:when>
+				<c:otherwise>
+					<button id="ok" type="submit" class="btn btn-dark" formaction="member_challJoin_5.do" disabled>다음</button>
+				</c:otherwise>
+			</c:choose>
 			</form>
 		</div>
 		<br>

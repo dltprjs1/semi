@@ -80,13 +80,13 @@
 					<c:if test="${!empty content.mem_id_reported }">
 						<div class="h_container1">
 							<h2>피신고자</h2>
-							<input class="mem_id_reported" name="mem_id_reported" value="${content.mem_id_reported }">
+							<input class="mem_id_reported" name="mem_id_reported" value="${content.mem_id_reported }" readonly>
 						</div>
 					</c:if>
 					<c:if test="${empty content.mem_id_reported }">
 						<div class="h_container1">
 							<h2>피신고자</h2>
-							<input class="mem_name_reported" name="mem_name_reported" value="${content.mem_name_reported }">
+							<input class="mem_name_reported" name="mem_name_reported" value="${content.mem_name_reported }" readonly>
 						</div>
 					</c:if>
 					<div class="h_container1">
@@ -96,13 +96,6 @@
 					<div class="h_container1">
 						<h2>내 용</h2>
 						<textarea class="report_cont" rows="20" cols="100" readonly>${content.report_content }</textarea>
-					</div>
-					<c:if test="${!empty content.report_image }">
-						<div class="h_container1">
-							<img src="<%=request.getContextPath() %>/report_image/${content.report_image}" width="250px" height="250px">						
-						</div>
-					</c:if>
-					<div class="h_container1">
 					<h2>정지일</h2>
 					<select class="report_result" name="report_result">
 						<option value="">:::선택:::</option>
@@ -112,7 +105,12 @@
 						<option value="30">30일</option>
 						<option value="365">365일</option>
 					</select>
-					</div>		
+					</div>
+					<c:if test="${!empty content.report_image }">
+						<div class="h_container1">
+							<img src="<%=request.getContextPath() %>/report_image/${content.report_image}" width="250px" height="250px">						
+						</div>
+					</c:if>
 				</div>
 				</div>
 			<br><br><br><br><br>

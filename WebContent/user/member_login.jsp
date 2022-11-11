@@ -124,6 +124,10 @@
 		padding: 0;
 	}
 	
+	.sns_btn{
+		width: 183px;
+		height: 45px;
+	}
 	
 </style>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
@@ -164,10 +168,9 @@
 				</ul>
 				
 				<ul class="sns_login">
-					<li><a href="https://kauth.kakao.com/oauth/authorize?client_id=617a393522b6cb65ea54d2ed4350878e&redirect_uri=http://localhost:8282/Semi_Challengers/member_kakaoLoginOk.do&response_type=code&scope=account_email,gender,birthday" ><img alt="카카오 로그인" src="<%=request.getContextPath() %>/uploadFile/kakao_login_medium_narrow.png"></a></li>
-					<li><a href="">네이버로 시작</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/authorize?client_id=617a393522b6cb65ea54d2ed4350878e&redirect_uri=http://localhost:8282/Semi_Challengers/member_kakaoLoginOk.do&response_type=code&scope=account_email,gender,birthday,profile_image,profile_nickname&prompt=login" ><img class="sns_btn" alt="카카오 로그인" src="<%=request.getContextPath() %>/uploadFile/kakao_login_medium_narrow.png"></a></li>
+					<li><a href=""><img class="sns_btn" alt="네이버 로그인" src="<%=request.getContextPath() %>/uploadFile/네이버 로그인 버튼.png"></a></li>
 				</ul>
-				
 				
 		</article>
 	</div>

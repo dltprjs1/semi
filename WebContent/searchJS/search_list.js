@@ -7,9 +7,12 @@ $(document).ready(function(){
 		ContentType : "application/x-www-form-urlencoded;charset=UTF-8",
 		type : "post"		
 	});
-	console.log('========search_list.js 실행됨=======');
-	let keyword = $("#text").val();
 	
+	let keyword = $("#keyword").val();
+	let category = $("#category").val();
+	
+	console.log('JS 키워드 >>> ' +keyword);
+	console.log('JS 카테고리 >>>' +category);
 	
 	function getHash(strCy, strDu, strCa, keyword){
 		
@@ -32,47 +35,93 @@ $(document).ready(function(){
 	function check(str){
 		
 		if(typeof str == "undefined" || str == null || str == "")
-			return true;
+			return false;
 		else
-			return false ;
+			return true ;
 	}
 	
-	function getSearchList(keyword){
-
-		//var formData = $("#form_searchText, #from_searchOption").serialize();
+	function getCheckCategory(category){
 		
-		console.log("searchList 파라메터 >>>" +keyword);
+			$("input:checkbox[name='category']").each(function(){
+			
+				if(category == $(this).val()){
+					$(this).prop("checked", true);
+				}
+			
+			});
+	}
+	
+	function getSearchList(keyword, category){
+
 		
 		$.ajax({
 			
 			url : "/Semi_Challengers/search_list.do",
-			data : {"keyword" : keyword},
+			data : {"keyword" : keyword,
+					"category" : category
+			},
 			datatype : "xml",
 			async : false,
 			success : function(data){
-				
-				$(".search_item tr:gt(0)").remove();
+/*				let table = "";
+				$("#search_item").empty();
 			
-				let table = "";
-				let count = 0;
-				table += "<tr>";
+				if(data == 1){
+					table += "<tr><td class='none'>찾으시는 챌린지가 없습니다.</td></tr>"; 
+				}else{
+
+					let count = 0;
+					table += "<tr>";
+					$(data).find("chall_list").each(function() {
+						count += 1;
+						
+						table += "<td><a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";	
+						table += "<img src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'><br><br>";
+						table += $(this).find("chall_creater_name").text()+ "<br>";
+						table += $(this).find("chall_title").text()+ "<br>";
+						table += $(this).find("chall_cycle").text()+ "&nbsp;";
+						table += $(this).find("chall_duration").text()+ "&nbsp;";
+						
+						if(count%4==0){
+							table += "</tr>";
+							table += "<tr>";
+						}
+					});
+				}
+				table += "</tr>";
+				$(".search_item").append(table);*/
+				
+				$("#card_chall").empty();
+					
+				let card = "<div class='card_chall'>";
+				let count= 0;
+				
 				$(data).find("chall_list").each(function() {
-					count += 1;
+					count += 1
+					card += "<div class='chall_items'>";
+					card += "<a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'><img class='category_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_category_image").text()+ "'>";
+					card += "<p>" +$(this).find("chall_title").text()+ "</p></a>";
+					card += "<span>" +$(this).find("chall_cycle").text()+ "</span><br>";
+					card += "<span>" +$(this).find("chall_duration").text()+ "</span><br>";
+					card += "</div>";
 					
-					/*table += "<td><a href='" +getContextPath()+ "/search/search_content.jsp'><br><br>";*/
-					table += "<td><a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'><br><br>";	
-					table += $(this).find("chall_title").text()+ "<br>";
-					table += $(this).find("chall_cycle").text()+ "&nbsp;";
-					table += $(this).find("chall_duration").text()+ "&nbsp;";
-					
-					if(count%3==0){
-						table += "</tr>";
-						table += "<tr>";
+					if(count % 4 == 0){
+						card += "</div>";
+						card += "<div class='card_chall'>";
+						count = 0;
 					}
+					
 				});
 				
-				table += "</tr>";
-				$(".search_item").append(table);
+				if(count %4 != 0){
+					card += "<div class='chall_items'>";
+					card += "<div class='chall_none'></div>";
+					card += "</div>";
+				}
+				card += "</div>";
+				$("#card_chall").append(card);
+				
+				
 			},
 			error : function(){
 				alert('검색 목록 불러오기 실패');
@@ -97,24 +146,21 @@ $(document).ready(function(){
 			datatype : "xml",
 			success : function(data){
 				
-				console.log('optionCy >>> ' +cycle);
-				console.log('optionDu >>> ' +duration);
-				console.log('optionCa >>> ' +category);
-				console.log('에이젝스 성공 >>> ' +data);
-			
-				$(".search_item tr:gt(0)").remove();
+				$("#search_item").empty();
 			
 				let table = "";
 				let count = 0;
 				table += "<tr>";
 				$(data).find("chall_list").each(function() {
 					count += 1;
-					table += "<td><a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'><br><br>";		
+					table += "<td><a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";	
+					table += "<img src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'><br><br>";
+					table += $(this).find("chall_creater_name").text()+ "<br>";
 					table += $(this).find("chall_title").text()+ "<br>";
 					table += $(this).find("chall_cycle").text()+ "&nbsp;";
 					table += $(this).find("chall_duration").text()+ "&nbsp;";
 					
-					if(count%3==0){
+					if(count%4==0){
 						table += "</tr>";
 						table += "<tr>";
 					}
@@ -151,7 +197,6 @@ $(document).ready(function(){
 			});
 		}
 		
-		console.log('배열arrCy >>> ' +arrCy);	
 		
 		if(sizeDu>=1){
 			
@@ -162,7 +207,6 @@ $(document).ready(function(){
 			});
 		}
 		
-		console.log('배열arrDu >>> ' +arrDu);
 		
 		if(sizeCa>=1){
 			$("input:checkbox[name='category']:checked").each(function(){
@@ -171,15 +215,10 @@ $(document).ready(function(){
 			
 			});
 		}
-		console.log('배열 arrCa >>> ' +arrCa);
 		
 		let strCy = arrCy.join(',');
 		let strDu = arrDu.join(',');
 		let strCa = arrCa.join(',');
-		
-		console.log('변환 strCy >>> ' +strCy);
-		console.log('변환 strDu >>>' +strDu);
-		console.log('변환 strCa >>>' +strCa)
 		
 		getHash(strCy, strDu, strCa, keyword);
 			
@@ -192,11 +231,7 @@ $(document).ready(function(){
 		
 		let hash = document.location.hash;
 		
-		console.log('해쉬 변경 이벤트 시작 main hash >>>' +hash);
-		
 		let decodeHashURI = decodeURI(hash);
-		
-		console.log('decode >>> ' +decodeHashURI);
 		
 		let regEx = /#([a-zA-z]+)/;	
 		
@@ -215,12 +250,6 @@ $(document).ready(function(){
 					let cycle = match[3];
 					let duration = match[4];
 					let category = match[5];
-					
-					console.log('=====option 해쉬변경=====')
-					console.log('match >>> ' +match);
-					console.log('cycle >>> ' +cycle);
-					console.log('category >>> ' +category);	
-					console.log('keyword >>>' +keyword);
 					
 					getSearchListOption(key, cycle, duration, category);
 					
@@ -247,15 +276,15 @@ $(document).ready(function(){
 		
 	});	
 	
+
+		if(check(category)){
+			getCheckCategory(category);
+		}
 	
-		getSearchList(keyword);
-	
-	/*if(check(cycle) || check(category) || check(duration)){
-		console.log('====getSearchListOption===== 실행');
-		getSearchListOption(keyword, cycle, duration, category)			
-	}*/
-	
-});
+		getSearchList(keyword, category);
+
+		
+});	
 
 $('#search_list').on('ajaxComplete', function() {
 	

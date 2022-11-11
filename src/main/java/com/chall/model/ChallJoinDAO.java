@@ -382,6 +382,7 @@ public class ChallJoinDAO {
 				dto.setChall_ongoingPeople(rs.getInt("chall_ongoingPeople"));
 				dto.setChall_creater_num(rs.getInt("chall_creater_num"));
 				dto.setChall_status(rs.getString("chall_status"));
+				dto.setChall_num(rs.getInt("chall_num"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -403,6 +404,7 @@ public class ChallJoinDAO {
 			pstmt.setInt(1, createrNum);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
+				dto.setMem_id(rs.getString("mem_id"));
 				dto.setChallenge_made_count(rs.getInt("challenge_made_count"));
 				dto.setChallenge_rating(rs.getInt("challenge_rating"));
 				dto.setMem_img(rs.getString("mem_img"));
@@ -474,10 +476,10 @@ public class ChallJoinDAO {
 	
 	
 	// 결제완료 시 해당 회원 정보 업데이트(챌린지 개설 횟수 : +1 / 예치금 : 사용한 만큼 차감) challenge_made_count +1, 예치금(mem_money) 차감
-	public void memChallJoinUpdate(int mem_num, int dpM) {
+	public void memChallJoinUpdate_creater(int mem_num, int dpM) {
 		try {
 			openConn();
-			sql = "update user_member set challenge_made_count = challenge_made_count+1, mem_money = mem_money-? where mem_num = ?";
+			sql = "update user_member set challenge_count = challenge_count+1, challenge_made_count = challenge_made_count+1, mem_money = mem_money-? where mem_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dpM);
 			pstmt.setInt(2, mem_num);
@@ -491,24 +493,14 @@ public class ChallJoinDAO {
 	}	// memChallJoinUpdate() end
 	
 	
-	// 인증 테이블에 챌린지 개설 정보 넣기
-	public void proofInsert(int challNum, int memberNum, int deposit) {
-		int count = 0;
-
+	// 결제완료 시 해당 회원 정보 업데이트(챌린지 개설 횟수 : +1 / 예치금 : 사용한 만큼 차감) challenge_made_count +1, 예치금(mem_money) 차감
+	public void memChallJoinUpdate_participant(int mem_num, int dpM) {
 		try {
 			openConn();
-			sql = "select max(proof_num) from proof_shot";
+			sql = "update user_member set challenge_count = challenge_count+1, mem_money = mem_money-? where mem_num = ?";
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				count = rs.getInt(1) + 1;
-			}
-			sql = "insert into proof_shot values(?,?,?,'','','',?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, count);
-			pstmt.setInt(2, challNum);
-			pstmt.setInt(3, memberNum);
-			pstmt.setInt(4, deposit);
+			pstmt.setInt(1, dpM);
+			pstmt.setInt(2, mem_num);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -516,5 +508,6 @@ public class ChallJoinDAO {
 		} finally {
 			closeConn(rs, pstmt, con);
 		}
-	}	// proofInsert() end
+	}	// memChallJoinUpdate() end
+	
 }

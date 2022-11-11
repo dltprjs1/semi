@@ -51,7 +51,6 @@
 		width: 200px;
 		height: 50px;
 		text-align: center;
-		border-left: 1px solid lightgray;
 	}
 	
 	.findId_top a{
@@ -130,8 +129,55 @@
 		cursor: pointer;
 	}
 	
+	.bar {
+		font-size:30px;
+		color: lightgray; 
+	}
 	
 </style>
+<script type="text/javascript">
+
+	$(function(){
+		// 선택자 바꾸기~~~
+    	$("#reqError1").hide();
+    	
+    	/* 공통 함수 start*/    	
+    	// 에러메세지를 띄우는 함수
+   		function showMsg(msgDiv,msg){
+	        	msgDiv.text(msg);
+	        	msgDiv.show();
+   		} 	
+    	
+    	// 에러메세지를 숨기는 함수
+   		function hideMsg(msgDiv){
+	        	msgDiv.hide();     			
+   		} 	
+    	/* 공통함수 end */
+    	
+    	
+    	// 입력창 포커스가 사라질 때 유효성 검사 함수 호출	
+    	$("#idInput").blur(function() {
+    		checkId();
+    	});
+	
+  	
+    	// 아이디 유효성 검사 함수
+    	function checkId(){
+        	let inputId = $("#idInput");
+        	let msgDiv = $("#reqError");
+        	let msg = "아이디를 입력하세요.";
+        	
+        	// 필수값 검사
+    		if (inputId.val() == ""){	
+    			showMsg(msgDiv,msg);
+    		}else{
+    			hideMsg(msgDiv);
+    		}
+    	}		
+		
+	});
+
+</script>
 </head>
 <body>
 <!-- member_findIdOk.do 로 넘어가기-->
@@ -141,7 +187,8 @@
 		<!-- 아이디 찾기/ 비밀번호 찾기 공통 영역 start-->
 		<nav class="findId_top">
 			<ul>
-				<li class="findId"><a href="#">아이디 찾기</a></li> 
+				<li class="findId"><a href="#">아이디 찾기</a></li>
+				<span class="bar">|</span> 
 				<li class="findPwd"><a href="<%=request.getContextPath() %>/user/member_findPwd.jsp">비밀번호 찾기</a></li>
 			</ul>
 		</nav>

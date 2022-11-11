@@ -17,6 +17,31 @@
     	background: #ff4d54;
     	opacity: 100;
 	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
 <body>
@@ -29,8 +54,8 @@
 		<img id="image" height="300" width="300" border="2" src="<%=request.getContextPath()%>/memUpload/${challContent.getChall_mainImage() }" class="rounded mx-auto d-block">
 		<br>
 		<h6><b>${challContent.getChall_title() }</b></h6>
-		인증빈도 : ${challContent.getChall_cycle() } <br>
-		챌린지 기간 : ${challContent.getChall_duration() }주
+		<span class="badge rounded-pill text-bg-primary">${challContent.getChall_cycle() }</span>
+		<span class="badge rounded-pill text-bg-success">${challContent.getChall_duration() }주</span>
 		
 		<br><br>
 		<hr class="join_hr" width="20%" color="red">
@@ -39,8 +64,7 @@
 		<span>충전 금액</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><%=request.getAttribute("payFinal") %></span>원<br>
 		
 		<br><br><br>
-		<button class="btn btn-dark" onclick="location.href='member_challContent.do'">확인</button>
-		<br>*버튼 onclick 경로 : 인증페이지(만드는중)/일단 상세페이지로 연결해놓음
+		<button class="btn btn-dark" onclick="location.href='member_challProof.do'">인증하러 가기</button>
 		</div>
 	<jsp:include page="/include/chall_bottom.jsp" />
 </body>

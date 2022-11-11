@@ -185,6 +185,7 @@ function execDaumPostcode() {
 		border: 1px solid lightgray;
 		padding: 0px 0px 0px 15px;
 		border-radius: 5px;	
+		margin-bottom: 10px;
 	}
 	
 	.input_box_email1 {
@@ -260,8 +261,8 @@ function execDaumPostcode() {
 					<ul>
 						<li><a href="<%=request.getContextPath() %>/member_mypage.do?no=${dto.mem_num}">회원 정보 조회/수정</a></li>
 						<li><a href="<%=request.getContextPath() %>/member_mychall.do?no=${dto.mem_num}">나의 챌린지 현황</a></li>
-						<li><a href="<%=request.getContextPath() %>/member_mymoney.do?no=${dto.mem_num}">나의 예치금.상금</a></li>
-						<li><a href="<%=request.getContextPath() %>/member_mylevel.do?no=${dto.mem_num}">나의 레벨.배지</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_myMoney.do">나의 예치금.상금</a></li>
+						<li><a href="<%=request.getContextPath() %>/member_myLevel.do">나의 레벨</a></li>
 					</ul>
 			</nav>
 			<br>
@@ -992,9 +993,7 @@ function execDaumPostcode() {
 		                                        </option>
 		                        </select>
 
-							<input class="input_box_1" type="tel" id="phoneNo" name="phoneNo" value="${dto.phoneNo }" placeholder="전화번호 입력" maxlength="16">
-	                        <button class="btn_mini">인증번호 받기</button>
-	                        <input class="input_box" type="text" id="authNo" name="authNo" placeholder="인증번호 입력하세요" disabled maxlength="4">												
+							<input class="input_box" type="tel" id="phoneNo" name="phoneNo" value="${dto.phoneNo }" placeholder="-없이 입력해주세요." maxlength="16">
 		                </div>
 	                    
 	                    <!-- 주소 입력 -->

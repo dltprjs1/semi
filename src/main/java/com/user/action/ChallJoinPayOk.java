@@ -10,6 +10,9 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.chall.model.ChallJoinDAO;
 import com.chall.model.ChallJoinDTO;
+import com.chall.model.ChallMoneyLogDAO;
+import com.chall.model.ChallMoneyLogDTO;
+import com.chall.model.ChallProofDAO;
 
 public class ChallJoinPayOk implements Action {
 
@@ -27,23 +30,34 @@ public class ChallJoinPayOk implements Action {
 		HttpSession session = request.getSession();
 		int chall_num = (Integer)session.getAttribute("chall_num");
 		int memberNum = (Integer)session.getAttribute("memberNum");
-		ChallJoinDAO dao = ChallJoinDAO.getInstance();
-		// (list 테이블) 결제 완료 시 ongoingPeople +1 / status ‘임시저장’ → ‘진행중’
-		dao.challJoinOk(chall_num);
-		// (회원 테이블) 결제 완료 시 해당 회원의 challenge_made_count +1, 예치금(mem_money) 차감
-		dao.memChallJoinUpdate(memberNum, depositMinus);
-		// (인증 테이블) 결제 완료 시 ‘참가예치금’을 해당 회원의 ‘나의 예치금’으로 설정
-		dao.proofInsert(chall_num, memberNum, depositOriginal);
-		
+		ChallJoinDAO join_dao = ChallJoinDAO.getInstance();
+		ChallProofDAO proof_dao = ChallProofDAO.getInstance();
 		// (list 테이블) 챌린지 정보 가져오기
-		ChallJoinDTO dto = dao.getChallContent(chall_num);
-		request.setAttribute("challContent", dto);
+		ChallJoinDTO challContent_dto = join_dao.getChallContent(chall_num);
+		request.setAttribute("challContent", challContent_dto);
+		// (list 테이블) 결제 완료 시 ongoingPeople +1 / status ‘임시저장’ → ‘진행중’
+		join_dao.challJoinOk(chall_num);
+		
+		if(memberNum == challContent_dto.getChall_creater_num()) {
+			// (회원 테이블) 개설자 : 결제 완료 시 해당 회원의 참가횟수 +1, 개설횟수 +1, 예치금 차감
+			join_dao.memChallJoinUpdate_creater(memberNum, depositMinus);
+		}else {
+			// (회원 테이블) 일반 참가자 : 결제 완료 시 해당 회원의 참가횟수 +1, 예치금 차감
+			join_dao.memChallJoinUpdate_participant(memberNum, depositMinus);
+		}
+		
+		// (인증 테이블) 결제 완료 시 ‘참가예치금’을 해당 회원의 ‘나의 예치금’으로 설정
+		proof_dao.proofInsert(chall_num, memberNum, depositOriginal);
+		
+		// (예치금 테이블) 예치금 정보 저장하기
+		ChallMoneyLogDAO money_dao = ChallMoneyLogDAO.getInstance();
+		int mylatestDeposit = join_dao.getMemMoney(memberNum);
+		money_dao.insertMoneyLog(memberNum, chall_num, depositMinus, mylatestDeposit);
 
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("user/member_challJoin_pay_ok.jsp");
 		return forward;
-		
 	}
 
 }

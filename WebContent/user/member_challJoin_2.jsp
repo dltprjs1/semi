@@ -37,6 +37,31 @@
     	background: #ff4d54;
     	opacity: 100;
 	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 	
 </style>
 </head>
@@ -63,7 +88,7 @@
 			<br>(초대받은 사람만 참여할 수 있어요)</label>
 			
 			<br><br><br>
-			<button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_temp_save.do">임시저장</button>
+			<!-- <button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_challJoin_2_save.do">임시저장</button> -->
 			<button id="next" type="submit" class="btn btn-dark" formaction="member_challJoin_3.do" disabled>다음</button>
 			</form>
 		</div>

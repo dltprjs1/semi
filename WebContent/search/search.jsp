@@ -11,10 +11,32 @@
 <script type="text/javascript" src="./searchJS/search_list.js"></script>
 <script type="text/javascript" src="searchJS/search_menu.js"></script>
 <%
-	String keyword = request.getParameter("keyword").trim();
-	System.out.println("jsp페이지 파라메터 >>> " +keyword);
+
+	String keyword="";
+ 	String category="";
+	if(request.getParameter("keyword") != "" &&request.getParameter("keyword") != null){
+		keyword = request.getParameter("keyword").trim();
+		System.out.println("search_jsp페이지 파라메터 키워드 >>> " +keyword);
+	}else{
+		System.out.println("키워드 else");
+	}
+
+	if(request.getParameter("category") != "" && request.getParameter("category") != null){
+		category = request.getParameter("category").trim();
+		System.out.println("search_jsp페이지 파라메터 카테고리 >>> " +category);	
+	}else{
+		System.out.println("카테고리 else");
+	}
 	
- 	String optionCy="";
+/* 	if(!request.getParameter("category").equals("")){
+		
+		keyword = request.getParameter("keyword").trim();
+		System.out.println("search_jsp페이지 파라메터 >>> " +keyword);
+		
+	} */
+	
+
+/*  	String optionCy="";
 	String optionCa="";
 	String optionDu="";
 	
@@ -30,11 +52,13 @@
 	
 	System.out.println("jsp optionCy >>> " +optionCy);
 	System.out.println("jsp optionCa >>> " +optionCa);
-	System.out.println("jsp optionDu >>> " +optionDu);
+	System.out.println("jsp optionDu >>> " +optionDu); */
 %>
 </head>
 <body>
-	<input type="hidden" value="<%=keyword %>" name="text" id="text">
+	<input type="hidden" value="<%=keyword %>" name="keyword" id="keyword">
+	<input type="hidden" value="<%=category %>" name="category" id="category">
+<%-- 	<input type="hidden" value="<%=category %>" name="keyword" id="keyword"> --%>
 <%-- 	<input type="hidden" value="<%=optionCy %>" name="optionCy" id="optionCy">
 	<input type="hidden" value="<%=optionCa %>" name="optionCa" id="optionCa">
 	<input type="hidden" value="<%=optionDu %>" name="optionDu" id="optionDu"> --%>
@@ -62,7 +86,7 @@
 	<%
 		}
 	%> --%>
-	
+	<jsp:include page="../include/chall_top.jsp" />
 	<aside id="side_category">
 		<ul class="search_menu">
 			<li class="option1">
@@ -115,16 +139,26 @@
 	</aside>
 	
 	<article id="art" align="center">
-		<div id="search_list" align="center">
-			<table id="search_item" class="search_item">
-
-			</table>
+		<div id="card_container" align="center">
+			<div id="card_chall">
+			
+			</div>
 		</div>		
 	</article>
-
+	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 <style>
 
+
+.a:link{
+	color: #000;
+	font-weight: bold;
+}
+
+a:visited{
+	color: #000;
+	font-weight: bold;
+}
 .search_menu{
 	text-align: left;
 }
@@ -213,31 +247,50 @@ input[type="checkbox"]:checked +label a{
 	color: #000;
 }
 
-.chall_item img{
+.search_item img{
 
-	width: 150px;
-	height: 150px;
+	width: 100px;
+	height: 100px;
 	border: 0;
 
-}
-
-table{
-	text-align:center;
-	width: 60%;
-	border-spacing: 0 100px;
-	float: left;
-}
-
-table td{
-	height: 100px;
-}
-
-table th{
-	height: 70px;
 }
 
 .art{
 	float: left;
 }
-</style>
+
+/* 챌린지 아이템 */
+
+#card_container{
+	position:relative;
+ 	margin-top: 20px;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
+}
+
+#card_chall{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px;
+	flex-wrap:wrap;
+	align-content: space-between;
+	font-weight: bold;
+}
+
+.chall_items{
+	overflow: auto;
+	position: absolute;
+	width: 80%;
+	height: 480px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+
+
+
+
 </html>
