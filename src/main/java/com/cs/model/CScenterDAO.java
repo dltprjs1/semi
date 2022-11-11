@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chall.controller.OjdbcUrl;
+
 public class CScenterDAO {
 	Connection con = null;
 	PreparedStatement pstmt = null;
@@ -25,12 +27,14 @@ public class CScenterDAO {
 		return instance;
 	}
 	
+	OjdbcUrl ojd = new OjdbcUrl();
+	
 
 // Connection을 가져오는 메서드
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/downloads/ProjectChallengers/Wallet_ProjectChallengers/";
+		String url = ojd.getUrl();
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	

@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.FAQ.model.FAQDTO;
+import com.chall.controller.OjdbcUrl;
 import com.user.model.UserDTO;
 
 public class QuestionDAO {
@@ -31,11 +32,13 @@ public class QuestionDAO {
 
 		return instance;
 	}
+	
+	OjdbcUrl oju = new OjdbcUrl();
 
 	public void openConn() {
 		
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = oju.getUrl();
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
