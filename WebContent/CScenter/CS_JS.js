@@ -5,4 +5,4 @@ $(function(){
 		type : "post"								
 	}); // ajaxSetup 끝
 	
-});
+});	

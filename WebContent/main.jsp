@@ -81,6 +81,9 @@
 			<input type="hidden" id="form_category" name="category" value="">			
 			</form>
 
+<a href="<%=request.getContextPath() %>/review/review_main.jsp" >임시리뷰페이지</a>
+
+		
 	</article>
 	<jsp:include page="include/chall_bottom.jsp" />
 </body>

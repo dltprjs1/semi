@@ -6,8 +6,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
 <%
 	int userNum = Integer.parseInt(request.getParameter("pq_user_no").trim());
 	UserDAO dao = UserDAO.getinstance();
@@ -15,15 +13,36 @@
 	
 	CScenterDAO csdao = CScenterDAO.getinstance();
 	List<Q_categoryDTO> qcatelist = csdao.getQ_categoryList();
+	
+	 
+	int mem_num = (int)session.getAttribute("memberNum");
+
+	int rowsize = 5;
+	int block = 3;
+
 %>
-    
-<!-- <div id="alert">
-	<div class="wrap">
-		<div><i class="bi bi-exclamation-triangle"></i></div>
-		<div>내용</div>
-	</div>
-</div> -->
-    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<!-- toastr -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="../searchJS/location.js"></script>
+<script type="text/javascript" src="searchJS/location.js"></script>
+<!-- bootstrp -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+<!-- js & css -->
+<link rel="stylesheet" href="CScenter/CScenter.css?a">
+</head>
+<body>
+
 <div>
 	<c:set value="<%=dto %>" var="userInfo"/>
 	<c:set value="<%=qcatelist %>" var="qcatelist" />
@@ -89,7 +108,7 @@
 				</div>
 
 				<input id="reportbtn" type="submit" value="신고하기" onclick="report()">
-				<input type="button" value="취소" onclick="if(confirm('정말 취소하시겠습니까? 작성한 내용이 모두 사라집니다.')){ location.href='CS_privateQ.do' } else { return; }">
+				<input type="button" value="취소">
 				
 			</form>
 		</div>
@@ -159,39 +178,38 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
     
 	});
 
-	function getPraviteQList() {
+	function getPrivateQList(page) {
+		
+		if (page == null){
+			page = 1;
+		}
+		
+		$.ajaxSetup({
+			ContentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			type : "post"								
+		}); // ajaxSetup 끝
+		
 		$.ajax({
-			url : "<%= request.getContextPath()%>/CS_privateQ_list.do",
+			url : "<%= request.getContextPath()%>/CS_privateQ_list.do?page="+page,
+			async : false,
 			data : {
-				pq_user_no : ${userInfo.getMem_num() }
+				pq_user_no : <%= mem_num%>,
+				rowsize : <%= rowsize %>,
+				block : <%= block %>
 			},
 			datatype: "xml",
 			success : function(data){
 				
+				$("#paging").empty();
+				
 				let result = "";
-				let table = "";
 				let answerStatus = "";
 				let answer = "";
 				
-				table = "<div id = 'PQ_content'><div id='PQ_table_th'>"
-					+"<span>접수번호</span>"
-					+"<span>문의</span>"
-					+"<span>등록일</span>"
-					+"<span>상태</span>"
-					+"</div><div id='PQ_Accordian_wrap'>"
-					+"<div align ='center'>"
-					+"<p><span>아직 일대일 문의를 등록하지 않으셨네요!</span></p>"
-					+"<p><span>오른쪽 하단의 문의하기 버튼을 이용해주세요.</span></p>"
-					+"</div></div></div>"
-					+"<div id='PQ_write_button'>"
-					+"<button onclick='pqWrite()' class='btn btn-primary'>문의하기</button></div>"
-				
-				$("#PQ_content").empty();
-				$("#PQ_content").append(table);
-				
 				if ($(data).find("regdate").text() != null){
-					$("#PQ_Accordian_wrap").empty();
-				}
+						$("#PQ_Accordian_wrap").empty();
+					}
+				
 				$(data).find("PQNA").each(function(){
 					
 					if($(this).find("answerCont").text() == "null") {
@@ -207,16 +225,52 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 							answer = "답변 등록일 : "+$(this).find("answerRegdate").text().substring(0, 10)+"<br><br>"+$(this).find("answerCont").text();
 						}
 					
-					result +=  "<div class='question'><span>"+$(this).find("num").text()+"</span>"				
-					result +=  "<span>"+$(this).find("title").text()+"</span>"
-					result +=  "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>"
-					result +=  "<span>"+answerStatus + "</span></div>"
+					result += "<div class='question'><span>"+$(this).find("num").text()+"</span>";				
+					result += "<span>"+$(this).find("title").text()+"</span>";
+					result += "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>";
+					result += "<span>"+answerStatus + "</span></div>";
 					result += "<div class='answer'>"+"<span>"+$(this).find("content").text()+"</span>"+"<br><br>"+
 								"<div><span>"+answer+"</span></div>"+"</div>";
 					
+					
 				});
 				
+				console.log("ajax success page 값 >>> "+page);
+				let block = <%=block %>;
+				console.log("ajax success block 값 >>> "+block);
+				let allPage = $(data).find("allPage").text();
+				console.log("ajax success allPage 값 >>> "+allPage);
+				let startNo = $(data).find("startNo").text();
+				console.log("ajax success startNo 값 >>> "+startNo);
+				let endNo = $(data).find("endNo").text();
+				console.log("ajax success endNo 값 >>> "+endNo);
+				let startBlock = $(data).find("startBlock").text();
+				console.log("ajax success startBlock 값 >>> "+startBlock);
+				let endBlock = $(data).find("endBlock").text();
+				console.log("ajax success endblock 값 >>> "+endBlock);
+				
+				let pagination = "<ul class='pagination'>";
+				
+				if (page > block){
+					pagination += "<li id='goFirstPage'><a class='page-link' href='#' onclick='getPrivateQList(1)'><i class='bi bi-chevron-double-left'></i></a></li>";
+					pagination += "<li id='goPrevPage'><a class='page-link' href='#' onclick='getPrivateQList("+startBlock+"-1)'><i class='bi bi-chevron-left'></i></a></li>";
+				}
+				
+				for (var i = startBlock; i <= endBlock; i++){
+					if (i == page){
+						pagination += "<li class='page-item active' aria-current='page'><a class='page-link' href='#' onclick='getPrivateQList("+i+")'>"+i+"</a></li>";
+					}else {
+						pagination += "<li class='page-item' aria-current='page'><a class='page-link' href='#' onclick='getPrivateQList("+i+")'>"+i+"</a></li>";
+					}
+				}
+				
+				if (endBlock < allPage){
+					pagination += " <li id='goNextPage'><a class='page-link' href='#' onclick='getPrivateQList("+endBlock+"+1)'><i class='bi bi-chevron-right'></i></a></li>";
+					pagination += "<li id='goLastPage'><a class='page-link' href='#' onclick='getPrivateQList("+allPage+")'><i class='bi bi-chevron-double-right'></i></a></li>";
+				}
+				
 				$("#PQ_Accordian_wrap").append(result);
+				$("#paging").append(pagination);
 				
 				$(".question").click(function(){
 					if ($(this).hasClass('show')){
@@ -228,13 +282,16 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 					}
 				});
 				
-				
 			},
 			error : function(){
 				toastr.warning('데이터 통신 에러');
 			}
+			
 		}); // ajax 끝
+
 	} // function getPraviteQList(); 끝 
+	
+	
 	function insertPQ(){
 		
 		$.ajax({
@@ -249,7 +306,7 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 			success : function(data){
 				if (data > 0) {
 					toastr.success('일대일문의가 등록되었습니다');
-					getPraviteQList();
+					getPrivateQList(1);
 				}else {
 					toastr.error('필수 사항을 모두 입력해주세요.');
 				}
@@ -280,3 +337,5 @@ document.querySelector("#pq_regdate span:nth-child(2)").innerHTML = today;
 	
 </script>
 
+</body>
+</html>
