@@ -68,7 +68,7 @@
 }
 
 img {
-	margin-top: 20px;
+	margin-top: 40px;
 }
 .category_div{
 	display: inline-block;
